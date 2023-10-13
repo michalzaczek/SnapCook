@@ -1,0 +1,15 @@
+.camera {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+
+    input {
+        display: none;
+    }
+}
+
+.logo {
+    width: 37%;
+    max-width: 200px;
+    height: auto;
+}

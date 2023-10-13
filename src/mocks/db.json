@@ -1,0 +1,44 @@
+{
+    "ingredients": [
+        {
+            "name": "Tomatoes",
+            "percentage": 42
+        },
+        {
+            "name": "Cheese",
+            "percentage": 68
+        },
+        {
+            "name": "Eggs",
+            "percentage": 15
+        },
+        {
+            "name": "Milk",
+            "percentage": 93
+        },
+        {
+            "name": "Butter",
+            "percentage": 57
+        },
+        {
+            "name": "Lettuce",
+            "percentage": 29
+        },
+        {
+            "name": "Chicken",
+            "percentage": 71
+        },
+        {
+            "name": "Onions",
+            "percentage": 84
+        },
+        {
+            "name": "Carrots",
+            "percentage": 36
+        },
+        {
+            "name": "Yogurt",
+            "percentage": 22
+        }
+    ]
+}

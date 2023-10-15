@@ -1,11 +1,16 @@
 export interface IProps {
     /**
+     * Whether it's selected.
+     */
+    selected: boolean;
+
+    /**
      * Ingredient name.
      */
     name: string;
 
     /**
-     * Percentage to display in UI.
+     * Callback executed on selection.
      */
-    percentage: number;
+    onSelect: () => void;
 }

@@ -5,15 +5,45 @@ import { red } from '@mui/material/colors';
 const deafultTheme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#9ACE98',
+      light: '#9FD39E4D',
+      dark: '#001509',
+      contrastText: '#fff'
+
     },
     secondary: {
-      main: '#19857b',
+      main: '#ffff',
     },
     error: {
       main: red.A400,
     },
   },
+  components: {
+    MuiChip: {
+      styleOverrides: {
+        outlined: {
+          background: "#fff",
+          "&&:hover": {
+            background: "#fff"
+          }
+        },
+        filled: {
+          "&&:hover": {
+            background: "#9ACE98"
+          }
+        }
+      }
+    }
+  },
+  typography: {
+    allVariants: {
+      color: '#001509',
+      fontFamily: 'Lobster'
+    },
+    button: {
+      fontFamily: 'Lato'
+    }
+  }
 });
 
 export default deafultTheme;

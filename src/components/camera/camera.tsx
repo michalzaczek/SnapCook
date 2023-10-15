@@ -4,8 +4,11 @@ import snapCookLogo from "../../assets/logo.png";
 import styles from "./camera.module.scss";
 import { ingredientsService } from "../../services/ingredients.service";
 import Loader from "../loader/loader";
+import { IPageProps } from "../../pages/page-props.interface";
 
-export default function Camera() {
+export default function Camera({ setPageTitle }: IPageProps) {
+    setPageTitle("SnapCook");
+
     const navigate = useNavigate();
     const ref = useRef(null);
     const [isLoading, setIsLoading] = useState(false);

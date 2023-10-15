@@ -33,6 +33,16 @@ const deafultTheme = createTheme({
           }
         }
       }
+    },
+    MuiButton: {
+      styleOverrides: {
+        outlined: {
+          background: "#fff",
+          "&&:hover": {
+            background: "#fff"
+          }
+        }
+      }
     }
   },
   typography: {

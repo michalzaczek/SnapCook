@@ -5,7 +5,7 @@ import styles from "./camera.module.scss";
 import { ingredientsService } from "../../services/ingredients.service";
 import Loader from "../loader/loader";
 import { IPageProps } from "../../pages/page-props.interface";
-import { useIngredients } from "../../contexts/ingredients.context.ts/ingredients.context";
+import { useIngredients } from "../../contexts/ingredients/ingredients.context";
 
 export default function Camera({ setPageTitle }: IPageProps) {
     // setPageTitle("SnapCook");

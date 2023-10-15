@@ -1,16 +1,30 @@
 import Ingredient from "../../components/ingredient/ingredient";
-import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IPageProps } from "../page-props.interface";
-import { useIngredients } from "../../contexts/ingredients.context.ts/ingredients.context";
+import { useIngredients } from "../../contexts/ingredients/ingredients.context";
+import { recipesService } from "../../services/recipes.service";
+import Loader from "../../components/loader/loader";
+import { useNavigate } from "react-router-dom";
+import { useRecipes } from "../../contexts/recipes/recipes.context";
+import AddIcon from '@mui/icons-material/Add';
+import { IIngredient } from "./ingredient.interface";
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function IngredientsPage({ setPageTitle }: IPageProps) {
     // setPageTitle("Select Ingredients");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { ingredients, toggleIngredient, setIngredientSelection } = useIngredients();
+    const [newIngredient, setNewIngredient] = useState<string>();
+
+    const { setRecipes } = useRecipes();
+
+    const { ingredients, toggleIngredient, setIngredientSelection, addIngredient } = useIngredients();
 
     const [allSelected, setAllSelected] = useState(ingredients?.every(i => i.isConfirmed));
+
+    const navigate = useNavigate();
 
     const handleSelection = (name: string) => {
         const selected = toggleIngredient(name);
@@ -30,6 +44,36 @@ export default function IngredientsPage({ setPageTitle }: IPageProps) {
         setAllSelected((allSelected) => !allSelected);
     };
 
+    const handleSearchRecipe = async () => {
+        setIsLoading(true);
+
+        const data = await recipesService();
+
+        setRecipes(data);
+
+        setIsLoading(false);
+
+        navigate("/recipes");
+    }
+
+    const handleNewIngredientChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewIngredient(e.target.value);
+    }
+
+    const addNewIngredient = () => {
+        if (!newIngredient) {
+            return;
+        }
+
+        addIngredient({
+            isConfirmed: true,
+            name: newIngredient!,
+            percentage: 100
+        });
+
+        setNewIngredient("");
+    }
+
     return (
         <Box>
             <Container sx={{ display: "flex", flexDirection: "column" }} >
@@ -40,8 +84,14 @@ export default function IngredientsPage({ setPageTitle }: IPageProps) {
                         key={i.name}
                         onSelect={() => handleSelection(i.name)}></Ingredient>
                 )}
-                <FormControlLabel control={<Checkbox onChange={handleSelectAll} checked={allSelected} />} label="Select all" />
-                <Button variant="contained">Find Recipe</Button>
+                {ingredients.length > 0 &&
+                    <FormControlLabel control={<Checkbox onChange={handleSelectAll} checked={allSelected} />} label="Select all" />
+                }
+                <TextField label="New ingredient" variant="outlined" onChange={handleNewIngredientChange} value={newIngredient} sx={{ mt: 6 }} />
+                <Button variant="outlined" startIcon={<AddIcon />} sx={{ mb: 2, mt: 1 }} onClick={addNewIngredient}>
+                    Add more
+                </Button>
+                <LoadingButton loading={isLoading} variant="contained" onClick={handleSearchRecipe} disabled={!ingredients.length} sx={{ my: 2 }}>Find Recipe</LoadingButton>
             </Container >
         </Box >
     )

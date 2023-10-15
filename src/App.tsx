@@ -7,7 +7,9 @@ import TopBar from './components/top-bar/top-bar';
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
 import defaultTheme from "./themes/deafultTheme";
 import { useState } from 'react';
-import { IngredientsProvider } from './contexts/ingredients.context.ts/ingredients.context';
+import { IngredientsProvider } from './contexts/ingredients/ingredients.context';
+import Recipes from './pages/recipes/recipes';
+import { RecipesProvider } from './contexts/recipes/recipes.context';
 
 function App() {
   const [pageTitle, setPageTitle] = useState("SnapCook");
@@ -18,17 +20,20 @@ function App() {
         <CssBaseline />
         <Container sx={{ display: "flex", flexDirection: "column", width: "100vw", minHeight: "100vh", background: "url('./public/background.png')" }}>
           <TopBar title={pageTitle}></TopBar>
-          <IngredientsProvider>
-            <BrowserRouter>
-              <Box sx={{ display: "flex", flexGrow: "1", justifyContent: "center", pb: 10 }}>
-                <Routes>
-                  <Route path='ingredients' element={<IngredientsPage setPageTitle={setPageTitle} />}></Route>
-                  <Route path='/' element={<Camera setPageTitle={setPageTitle} />}></Route>
-                </Routes>
-              </Box>
-              <Navbar></Navbar>
-            </BrowserRouter>
-          </IngredientsProvider>
+          <RecipesProvider>
+            <IngredientsProvider>
+              <BrowserRouter>
+                <Box sx={{ display: "flex", flexGrow: "1", justifyContent: "center", pb: 10 }}>
+                  <Routes>
+                    <Route path='ingredients' element={<IngredientsPage setPageTitle={setPageTitle} />}></Route>
+                    <Route path='/' element={<Camera setPageTitle={setPageTitle} />}></Route>
+                    <Route path='recipes' element={<Recipes />}></Route>
+                  </Routes>
+                </Box>
+                <Navbar></Navbar>
+              </BrowserRouter>
+            </IngredientsProvider>
+          </RecipesProvider>
         </Container>
       </ThemeProvider>
     </>

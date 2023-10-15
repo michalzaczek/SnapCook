@@ -1,44 +1,37 @@
-import { useLocation } from "react-router-dom";
 import Ingredient from "../../components/ingredient/ingredient";
-import { Box, Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
 import { Container } from "@mui/system";
-import { IIngredient } from "./ingredient.interface";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IPageProps } from "../page-props.interface";
+import { useIngredients } from "../../contexts/ingredients.context.ts/ingredients.context";
 
-export default function IngredientsPage({setPageTitle}: IPageProps) {
-    setPageTitle("Select Ingredients");
+export default function IngredientsPage({ setPageTitle }: IPageProps) {
+    // setPageTitle("Select Ingredients");
 
-    const location = useLocation();
-
-    const [ingredients, setIngredients] = useState(location.state as IIngredient[]);
-
-    useEffect(() => {
-        setIngredients(ingredients?.map(i => ({ ...i, isConfirmed: i.percentage > 75 })));
-    }, []);
+    const { ingredients, toggleIngredient, setIngredientSelection } = useIngredients();
 
     const [allSelected, setAllSelected] = useState(ingredients?.every(i => i.isConfirmed));
 
     const handleSelection = (name: string) => {
-        const updatedIngredients = ingredients.map(i =>
-            i.name === name ?
-                { ...i, isConfirmed: !i.isConfirmed } :
-                i
-        )
+        const selected = toggleIngredient(name);
 
-        setIngredients(updatedIngredients);
-        setAllSelected(updatedIngredients.every(i => i.isConfirmed));
+        if (!selected) {
+            setAllSelected(false);
+            return;
+        }
+
+        if (ingredients.every(i => i.isConfirmed)) {
+            setAllSelected(true);
+        }
     }
 
     const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIngredients(ingredients.map(i => ({ ...i, isConfirmed: event.target.checked })));
-        setAllSelected(event.target.checked);
+        ingredients.forEach(i => setIngredientSelection(i.name, event.target.checked));
+        setAllSelected((allSelected) => !allSelected);
     };
 
     return (
         <Box>
-            {/* {ingredients?.filter(i => i.isConfirmed).map(i => <Typography component="p">{i.name}</Typography>)} */}
-
             <Container sx={{ display: "flex", flexDirection: "column" }} >
                 {ingredients?.map(i =>
                     <Ingredient

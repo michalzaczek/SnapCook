@@ -4,8 +4,9 @@ import { Container } from "@mui/system";
 import { useRecipes } from "../../contexts/recipes/recipes.context";
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent } from "react";
+import { Link } from "react-router-dom";
 
-export default function Recipes() {
+export default function RecipesPage() {
     const { recipes, setSearchQuery, searchQuery } = useRecipes();
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,9 @@ export default function Recipes() {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button>View</Button>
+                                <Link to={`/recipe/${recipe.id}`}>
+                                    <Button>View</Button>
+                                </Link>
                             </CardActions>
                         </Card>
                     </Grid>

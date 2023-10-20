@@ -1,20 +1,37 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
-import { IIngredient } from "../../pages/ingredients/ingredient.interface";
+import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { IIngredient } from "../../pages/ingredients-page/ingredient.interface";
 import { IIngredientsContext } from "./ingredients-context.interface";
 
 const IngredientsContext = createContext<IIngredientsContext | undefined>(undefined);
 
 function IngredientsProvider({ children }: { children: ReactNode }) {
-    const [ingredients, setIngredients] = useState<IIngredient[]>([]);
+    const localStorageKey = "ingredients";
+    const [ingredients, setIngredients] = useState<IIngredient[]>(() => {
+        const stored = localStorage.getItem(localStorageKey);
 
-    const addIngredient = (ingredient: IIngredient) => {
+        if (!stored) {
+            return [];
+        }
+
+        return JSON.parse(stored);
+    });
+
+    useEffect(() => {
+        localStorage.setItem(localStorageKey, JSON.stringify(ingredients));
+    }, [ingredients]);
+
+    function addIngredient(ingredient: IIngredient): void {
         if (!ingredients.find(i => i.name === ingredient.name)) {
             // throw `Ingredient ${ingredient.name} is already on the list`;
             setIngredients((ingredients) => [...ingredients, ingredient]);
         }
     }
 
-    const toggleIngredient = (name: string): boolean => {
+    function resetIngredients(): void {
+        setIngredients([]);
+    }
+
+    function toggleIngredient(name: string): boolean {
         const i = ingredients.find(i => i.name === name);
 
         if (!i) {
@@ -28,7 +45,7 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
         return i.isConfirmed;
     };
 
-    const setIngredientSelection = (name: string, value: boolean) => {
+    function setIngredientSelection(name: string, value: boolean) {
         const ingredient = ingredients.find(i => i.name === name);
 
         ingredient!.isConfirmed = value;
@@ -41,7 +58,8 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
             ingredients,
             addIngredient,
             toggleIngredient,
-            setIngredientSelection
+            setIngredientSelection,
+            resetIngredients
         }
     }, [ingredients])
 

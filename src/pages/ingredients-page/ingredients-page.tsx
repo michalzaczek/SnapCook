@@ -4,19 +4,16 @@ import { Container } from "@mui/system";
 import { ChangeEvent, useState } from "react";
 import { IPageProps } from "../page-props.interface";
 import { useIngredients } from "../../contexts/ingredients/ingredients.context";
-import { recipesService } from "../../services/recipes.service";
-import Loader from "../../components/loader/loader";
 import { useNavigate } from "react-router-dom";
 import { useRecipes } from "../../contexts/recipes/recipes.context";
 import AddIcon from '@mui/icons-material/Add';
-import { IIngredient } from "./ingredient.interface";
 import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function IngredientsPage({ setPageTitle }: IPageProps) {
     // setPageTitle("Select Ingredients");
     const [isLoading, setIsLoading] = useState(false);
 
-    const [newIngredient, setNewIngredient] = useState<string>();
+    const [newIngredient, setNewIngredient] = useState<string>("");
 
     const { setRecipes } = useRecipes();
 
@@ -47,9 +44,11 @@ export default function IngredientsPage({ setPageTitle }: IPageProps) {
     const handleSearchRecipe = async () => {
         setIsLoading(true);
 
-        const data = await recipesService();
+        const selectedIngredients = ingredients
+            .filter(i => i.isConfirmed)
+            .map(i => i.name);
 
-        setRecipes(data);
+        await setRecipes(selectedIngredients);
 
         setIsLoading(false);
 

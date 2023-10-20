@@ -1,4 +1,4 @@
-import { IIngredient } from "../pages/ingredients/ingredient.interface";
+import { IIngredient } from "../pages/ingredients-page/ingredient.interface";
 
 export const ingredientsService = async () => {
     try {

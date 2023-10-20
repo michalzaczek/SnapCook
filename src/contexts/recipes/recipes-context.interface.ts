@@ -3,7 +3,7 @@ import { IRecipe } from "../../services/recipe.interface";
 
 export interface IRecipesContext {
     recipes: IRecipe[];
-    setRecipes: Dispatch<SetStateAction<IRecipe[]>>;
+    setRecipes: (ingredients: string[]) => Promise<void>;
     searchQuery: string;
     setSearchQuery: Dispatch<SetStateAction<string>>
 }

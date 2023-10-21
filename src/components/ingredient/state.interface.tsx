@@ -1,3 +1,3 @@
 export interface IState {
-    confirmed: boolean;
+  confirmed: boolean;
 }

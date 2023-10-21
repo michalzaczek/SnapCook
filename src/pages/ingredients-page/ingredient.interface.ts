@@ -1,5 +1,5 @@
 export interface IIngredient {
-    name: string;
-    isConfirmed: boolean;
-    percentage: number;
+  name: string;
+  isConfirmed: boolean;
+  percentage: number;
 }

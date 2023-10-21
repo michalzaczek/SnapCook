@@ -8,8 +8,7 @@ const deafultTheme = createTheme({
       main: '#9ACE98',
       light: '#9FD39E4D',
       dark: '#001509',
-      contrastText: '#fff'
-
+      contrastText: '#fff',
     },
     secondary: {
       main: '#ffff',
@@ -22,38 +21,38 @@ const deafultTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         outlined: {
-          background: "#fff",
-          "&&:hover": {
-            background: "#fff"
-          }
+          background: '#fff',
+          '&&:hover': {
+            background: '#fff',
+          },
         },
         filled: {
-          "&&:hover": {
-            background: "#9ACE98"
-          }
-        }
-      }
+          '&&:hover': {
+            background: '#9ACE98',
+          },
+        },
+      },
     },
     MuiButton: {
       styleOverrides: {
         outlined: {
-          background: "#fff",
-          "&&:hover": {
-            background: "#fff"
-          }
-        }
-      }
-    }
+          background: '#fff',
+          '&&:hover': {
+            background: '#fff',
+          },
+        },
+      },
+    },
   },
   typography: {
     allVariants: {
       color: '#001509',
-      fontFamily: 'Lobster'
+      fontFamily: 'Lobster',
     },
     button: {
-      fontFamily: 'Lato'
-    }
-  }
+      fontFamily: 'Lato',
+    },
+  },
 });
 
 export default deafultTheme;

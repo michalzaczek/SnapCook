@@ -1,6 +1,6 @@
 export interface IProps {
-    /**
-     * A title to display.
-     */
-    title: string;
+  /**
+   * A title to display.
+   */
+  title: string;
 }

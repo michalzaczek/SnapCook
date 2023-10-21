@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 export interface IPageProps {
-    setPageTitle: Dispatch<SetStateAction<string>>;
+  setPageTitle: Dispatch<SetStateAction<string>>;
 }

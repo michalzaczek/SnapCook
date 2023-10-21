@@ -1,11 +1,11 @@
-import { IExtendedIngredient } from "./extended-ingredients.interface";
+import { IExtendedIngredient } from './extended-ingredients.interface';
 
 export interface IRecipeInfo {
-    id: number;
-    title: string;
-    image: string;
-    imageType: string;
-    readyInMinutes: number;
-    instructions: string;
-    extendedIngredients: IExtendedIngredient[];
+  id: number;
+  title: string;
+  image: string;
+  imageType: string;
+  readyInMinutes: number;
+  instructions: string;
+  extendedIngredients: IExtendedIngredient[];
 }

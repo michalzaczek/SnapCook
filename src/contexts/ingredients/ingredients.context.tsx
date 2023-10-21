@@ -1,78 +1,91 @@
-import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
-import { IIngredient } from "../../pages/ingredients-page/ingredient.interface";
-import { IIngredientsContext } from "./ingredients-context.interface";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
+import { IIngredientsContext } from './ingredients-context.interface';
 
-const IngredientsContext = createContext<IIngredientsContext | undefined>(undefined);
+const IngredientsContext = createContext<IIngredientsContext | undefined>(
+  undefined
+);
 
 function IngredientsProvider({ children }: { children: ReactNode }) {
-    const localStorageKey = "ingredients";
-    const [ingredients, setIngredients] = useState<IIngredient[]>(() => {
-        const stored = localStorage.getItem(localStorageKey);
+  const localStorageKey = 'ingredients';
+  const [ingredients, setIngredients] = useState<IIngredient[]>(() => {
+    const stored = localStorage.getItem(localStorageKey);
 
-        if (!stored) {
-            return [];
-        }
-
-        return JSON.parse(stored);
-    });
-
-    useEffect(() => {
-        localStorage.setItem(localStorageKey, JSON.stringify(ingredients));
-    }, [ingredients]);
-
-    function addIngredient(ingredient: IIngredient): void {
-        if (!ingredients.find(i => i.name === ingredient.name)) {
-            // throw `Ingredient ${ingredient.name} is already on the list`;
-            setIngredients((ingredients) => [...ingredients, ingredient]);
-        }
+    if (!stored) {
+      return [];
     }
 
-    function resetIngredients(): void {
-        setIngredients([]);
+    return JSON.parse(stored);
+  });
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(ingredients));
+  }, [ingredients]);
+
+  function addIngredient(ingredient: IIngredient): void {
+    if (!ingredients.find((i) => i.name === ingredient.name)) {
+      // throw `Ingredient ${ingredient.name} is already on the list`;
+      setIngredients((ingredients) => [...ingredients, ingredient]);
+    }
+  }
+
+  function resetIngredients(): void {
+    setIngredients([]);
+  }
+
+  function toggleIngredient(name: string): boolean {
+    const i = ingredients.find((i) => i.name === name);
+
+    if (!i) {
+      throw new Error('Tried to toggle an unexisting ingredient');
     }
 
-    function toggleIngredient(name: string): boolean {
-        const i = ingredients.find(i => i.name === name);
+    i.isConfirmed = !i.isConfirmed;
 
-        if (!i) {
-            throw new Error("Tried to toggle an unexisting ingredient");
-        }
+    setIngredients((ingredients) => [...ingredients]);
 
-        i.isConfirmed = !i.isConfirmed;
+    return i.isConfirmed;
+  }
 
-        setIngredients((ingredients) => [...ingredients]);
+  function setIngredientSelection(name: string, value: boolean) {
+    const ingredient = ingredients.find((i) => i.name === name);
 
-        return i.isConfirmed;
+    ingredient!.isConfirmed = value;
+
+    setIngredients((ingredients) => [...ingredients]);
+  }
+
+  const value: IIngredientsContext = useMemo(() => {
+    return {
+      ingredients,
+      addIngredient,
+      toggleIngredient,
+      setIngredientSelection,
+      resetIngredients,
     };
+  }, [ingredients]);
 
-    function setIngredientSelection(name: string, value: boolean) {
-        const ingredient = ingredients.find(i => i.name === name);
-
-        ingredient!.isConfirmed = value;
-
-        setIngredients((ingredients) => [...ingredients]);
-    }
-
-    const value: IIngredientsContext = useMemo(() => {
-        return {
-            ingredients,
-            addIngredient,
-            toggleIngredient,
-            setIngredientSelection,
-            resetIngredients
-        }
-    }, [ingredients])
-
-    return (
-        <IngredientsContext.Provider value={value}>{children}</IngredientsContext.Provider>
-    );
+  return (
+    <IngredientsContext.Provider value={value}>
+      {children}
+    </IngredientsContext.Provider>
+  );
 }
 
 function useIngredients() {
-    const context = useContext(IngredientsContext);
-    if (context === undefined)
-        throw new Error("IngredientsContext was used outside of the IngredientsProvider");
-    return context;
+  const context = useContext(IngredientsContext);
+  if (context === undefined)
+    throw new Error(
+      'IngredientsContext was used outside of the IngredientsProvider'
+    );
+  return context;
 }
 
 export { IngredientsProvider, useIngredients };

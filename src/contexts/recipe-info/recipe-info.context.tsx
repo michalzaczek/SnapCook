@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IRecipeInfo } from '../../services/recipe-info/recipe-info.interface';
-import { recipeInfoService } from '../../services/recipe-info.service';
+import { recipeInfoService } from '../../services/recipe-info/recipe-info.service';
 
 function useRecipeInfo(id: number) {
   const localStorageKey = 'recipeInfo';
@@ -26,14 +26,14 @@ function useRecipeInfo(id: number) {
         return;
       }
 
-      const fetchedRecipe = await recipeInfoService();
+      const fetchedRecipe = (await recipeInfoService(id)).data;
 
       setRecipes((r) => [...r, fetchedRecipe]);
       setRecipe(fetchedRecipe);
     }
 
     fetchRecipeInfo();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(localStorageKey, JSON.stringify(recipes));

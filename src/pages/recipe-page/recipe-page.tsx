@@ -72,8 +72,8 @@ export default function RecipePage() {
         <Grid item xs={8}>
           {recipe?.extendedIngredients.map((i) => {
             return (
-              <Paper key={i.originalString}>
-                <p>{i.originalString}</p>
+              <Paper key={i.originalName || i.originalString}>
+                <p>{i.originalName || i.originalString}</p>
               </Paper>
             );
           })}

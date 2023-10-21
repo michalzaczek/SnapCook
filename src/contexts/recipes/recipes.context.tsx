@@ -58,7 +58,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
         return promise;
       }
 
-      const recipes = await recipesService();
+      const recipes = (await recipesService(ingredients)).data;
 
       const updatedStorage: IRecipeStorage[] = [
         ...localStorageRecipes,
@@ -74,7 +74,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
       return promise;
     }
 
-    const recipes = await recipesService();
+    const recipes = (await recipesService(ingredients)).data;
 
     localStorage.setItem(
       localStorageKey,

@@ -3,6 +3,7 @@ export interface IExtendedIngredient {
   name: string;
   image: string;
   unit: string;
-  originalString: string;
+  originalString?: string;
+  originalName?: string;
   amount: number;
 }

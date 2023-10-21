@@ -32,7 +32,7 @@ export default function RecipesPage() {
         sx={{ mb: 4 }}
       ></Input>
       <Grid container spacing={4}>
-        {recipes.map((recipe) => (
+        {recipes?.map((recipe) => (
           <Grid item key={recipe.id} xs={12} sm={6} md={4}>
             <Card
               sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}

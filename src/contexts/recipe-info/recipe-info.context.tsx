@@ -26,10 +26,14 @@ function useRecipeInfo(id: number) {
         return;
       }
 
-      const fetchedRecipe = (await recipeInfoService(id)).data;
+      try {
+        const fetchedRecipe = (await recipeInfoService(id)).data;
 
-      setRecipes((r) => [...r, fetchedRecipe]);
-      setRecipe(fetchedRecipe);
+        setRecipes((r) => [...r, fetchedRecipe]);
+        setRecipe(fetchedRecipe);
+      } catch (error) {
+        throw `Failed to fetch the recipe information. Error: ${error}`;
+      }
     }
 
     fetchRecipeInfo();

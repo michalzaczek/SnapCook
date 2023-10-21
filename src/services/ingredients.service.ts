@@ -1,14 +1,15 @@
+import axios, { AxiosResponse } from 'axios';
 import { IIngredient } from '../pages/ingredients-page/ingredient.interface';
 
-export const ingredientsService = async () => {
+export const ingredientsService = async (): Promise<
+  AxiosResponse<IIngredient[], any>
+> => {
   try {
-    const response = await fetch('http://localhost:3000/ingredients');
-    const data = (await response.json()) as IIngredient[];
-
-    data.map((i) => ({ ...i, isConfirmed: i.percentage > 75 }));
-
-    return data;
-  } catch (error) {
-    throw error;
+    const response = await axios.request<IIngredient[]>({
+      url: 'http://localhost:3000/ingredients',
+    });
+    return new Promise((resolve) => resolve(response));
+  } catch (error: any) {
+    return new Promise((resolve) => resolve(error));
   }
 };

@@ -58,31 +58,39 @@ function RecipesProvider({ children }: { children: ReactNode }) {
         return promise;
       }
 
+      try {
+        const recipes = (await recipesService(ingredients)).data;
+
+        const updatedStorage: IRecipeStorage[] = [
+          ...localStorageRecipes,
+          {
+            queryIngredients: ingredients,
+            recipes,
+          },
+        ];
+
+        localStorage.setItem(localStorageKey, JSON.stringify(updatedStorage));
+        setRecipes(recipes);
+
+        return promise;
+      } catch (error) {
+        throw `Failed to fetch recipes. Error: ${error}`;
+      }
+    }
+
+    try {
       const recipes = (await recipesService(ingredients)).data;
 
-      const updatedStorage: IRecipeStorage[] = [
-        ...localStorageRecipes,
-        {
-          queryIngredients: ingredients,
-          recipes,
-        },
-      ];
-
-      localStorage.setItem(localStorageKey, JSON.stringify(updatedStorage));
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify([{ recipes, queryIngredients: ingredients }])
+      );
       setRecipes(recipes);
 
       return promise;
+    } catch (error) {
+      throw `Failed to fetch recipes. Error: ${error}`;
     }
-
-    const recipes = (await recipesService(ingredients)).data;
-
-    localStorage.setItem(
-      localStorageKey,
-      JSON.stringify([{ recipes, queryIngredients: ingredients }])
-    );
-    setRecipes(recipes);
-
-    return promise;
   }
 
   const searchedRecipes =

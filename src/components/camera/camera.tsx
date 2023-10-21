@@ -20,7 +20,7 @@ export default function Camera({ setPageTitle }: IPageProps) {
 
     resetIngredients();
 
-    const ingredients = await ingredientsService();
+    const ingredients = (await ingredientsService()).data;
 
     ingredients.forEach((i) => addIngredient(i));
 

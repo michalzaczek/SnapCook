@@ -30,10 +30,12 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
   }, [ingredients]);
 
   function addIngredient(ingredient: IIngredient): void {
-    if (!ingredients.find((i) => i.name === ingredient.name)) {
-      // throw `Ingredient ${ingredient.name} is already on the list`;
-      setIngredients((ingredients) => [...ingredients, ingredient]);
-    }
+    setIngredients((ingredients) => {
+      if (!ingredients.find((i) => i.name === ingredient.name)) {
+        return [...ingredients, ingredient];
+      }
+      throw 'Ingredient is already on the list';
+    });
   }
 
   function resetIngredients(): void {

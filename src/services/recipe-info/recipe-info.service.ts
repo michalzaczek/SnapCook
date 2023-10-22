@@ -1,9 +1,9 @@
-import { IRecipeInfo } from './recipe-info.interface';
+import { IRecipeInfoData } from './recipe-info-data.interface';
 import axios, { AxiosResponse } from 'axios';
 
-export const recipeInfoService = async (
+export const fetchRecipeInfo = async (
   id: number
-): Promise<AxiosResponse<IRecipeInfo, any>> => {
+): Promise<AxiosResponse<IRecipeInfoData, any>> => {
   const options = {
     method: 'GET',
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
@@ -14,7 +14,7 @@ export const recipeInfoService = async (
   };
 
   try {
-    const response = await axios.request<IRecipeInfo>(options);
+    const response = await axios.request<IRecipeInfoData>(options);
     return new Promise((resolve) => resolve(response));
   } catch (error: any) {
     return new Promise((resolve) => resolve(error));

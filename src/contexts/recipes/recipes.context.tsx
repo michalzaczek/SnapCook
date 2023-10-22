@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
 import { IRecipesContext } from './recipes-context.interface';
-import { IRecipe } from '../../services/recipe.interface';
+import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import { IRecipeStorage } from './recipe-storage.interface';
-import { recipesService } from '../../services/recipes.service';
+import { fetchRecipes } from '../../services/recipe/recipe.service';
 import { useIngredients } from '../ingredients/ingredients.context';
 
 const RecipesContext = createContext<IRecipesContext | undefined>(undefined);
@@ -11,7 +11,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
   const { ingredients } = useIngredients();
   const localStorageKey = 'recipes';
 
-  const [recipes, setRecipes] = useState<IRecipe[]>(() => {
+  const [recipes, setRecipes] = useState<IRecipeData[]>(() => {
     const storage = localStorage.getItem(localStorageKey);
 
     if (storage) {
@@ -59,7 +59,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const recipes = (await recipesService(ingredients)).data;
+        const recipes = (await fetchRecipes(ingredients)).data;
 
         const updatedStorage: IRecipeStorage[] = [
           ...localStorageRecipes,
@@ -79,7 +79,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const recipes = (await recipesService(ingredients)).data;
+      const recipes = (await fetchRecipes(ingredients)).data;
 
       localStorage.setItem(
         localStorageKey,

@@ -1,4 +1,4 @@
-export interface IExtendedIngredient {
+export interface IExtendedIngredientData {
   id: number;
   name: string;
   image: string;

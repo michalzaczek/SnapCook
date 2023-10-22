@@ -1,5 +1,5 @@
-import { IRecipe } from '../../services/recipe.interface';
+import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 
 export interface IProps {
-  recipe: IRecipe;
+  recipe: IRecipeData;
 }

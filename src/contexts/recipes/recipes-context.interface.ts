@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
-import { IRecipe } from '../../services/recipe.interface';
+import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 
 export interface IRecipesContext {
-  recipes: IRecipe[];
+  recipes: IRecipeData[];
   setRecipes: (ingredients: string[]) => Promise<void>;
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;

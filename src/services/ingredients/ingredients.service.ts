@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { IIngredient } from '../pages/ingredients-page/ingredient.interface';
+import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
 
-export const ingredientsService = async (): Promise<
+export const fetchIngredients = async (): Promise<
   AxiosResponse<IIngredient[], any>
 > => {
   try {

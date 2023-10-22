@@ -1,12 +1,13 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info.context';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecipeInfo } from '../../hooks/use-recipe-info/useRecipeInfo';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 export default function RecipePage() {
   const { id } = useParams();
-  const { recipe } = useRecipeInfo(parseInt(id!));
+  const { recipe, setIsFavorite } = useRecipeInfo(parseInt(id!));
   const navigate = useNavigate();
 
   return (
@@ -57,7 +58,13 @@ export default function RecipePage() {
                     textAlign: 'right',
                   }}
                 >
-                  <FavoriteBorderOutlinedIcon />
+                  {recipe?.isFavorite ? (
+                    <FavoriteIcon onClick={() => setIsFavorite(false)} />
+                  ) : (
+                    <FavoriteBorderOutlinedIcon
+                      onClick={() => setIsFavorite(true)}
+                    />
+                  )}
                 </Box>
               </Grid>
             </Grid>
@@ -70,10 +77,10 @@ export default function RecipePage() {
           <Typography variant='h6'>{recipe?.readyInMinutes} minutes</Typography>
         </Grid>
         <Grid item xs={8}>
-          {recipe?.extendedIngredients.map((i) => {
+          {recipe?.extendedIngredients.map((ingredient, index) => {
             return (
-              <Paper key={i.originalName || i.originalString}>
-                <p>{i.originalName || i.originalString}</p>
+              <Paper key={index}>
+                <p>{ingredient.originalName || ingredient.originalString}</p>
               </Paper>
             );
           })}

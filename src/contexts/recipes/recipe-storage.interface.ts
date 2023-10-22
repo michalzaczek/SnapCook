@@ -1,4 +1,4 @@
-import { IRecipe } from '../../services/recipe.interface';
+import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 
 /**
  * Recipes grouped by queries with which they were fetched.
@@ -12,5 +12,5 @@ export interface IRecipeStorage {
   /**
    * Recipes.
    */
-  recipes: IRecipe[];
+  recipes: IRecipeData[];
 }

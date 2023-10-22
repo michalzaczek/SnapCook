@@ -11,6 +11,7 @@ import { IngredientsProvider } from './contexts/ingredients/ingredients.context'
 import RecipesPage from './pages/recipes-page/recipes-page';
 import { RecipesProvider } from './contexts/recipes/recipes.context';
 import RecipePage from './pages/recipe-page/recipe-page';
+import AccountPage from './pages/account-page/account-page';
 
 function App() {
   const [pageTitle, setPageTitle] = useState('SnapCook');
@@ -51,6 +52,7 @@ function App() {
                     ></Route>
                     <Route path='recipes' element={<RecipesPage />}></Route>
                     <Route path='recipe/:id' element={<RecipePage />}></Route>
+                    <Route path='account' element={<AccountPage />}></Route>
                   </Routes>
                 </Box>
                 <Navbar></Navbar>

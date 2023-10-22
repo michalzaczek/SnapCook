@@ -49,7 +49,11 @@ export default function Navbar() {
           to='recipes'
           icon={<SearchIcon />}
         />
-        <BottomNavigationAction icon={<PersonIcon />} />
+        <BottomNavigationAction
+          component={Link}
+          to='account'
+          icon={<PersonIcon />}
+        />
       </BottomNavigation>
     </Paper>
   );

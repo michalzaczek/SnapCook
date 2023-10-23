@@ -93,21 +93,14 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const searchedRecipes =
-    searchQuery.length > 0
-      ? recipes.filter((recipe) =>
-          recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      : recipes;
-
   const value: IRecipesContext = useMemo(() => {
     return {
-      recipes: searchedRecipes,
+      recipes,
       setRecipes: fetchAndSet,
       searchQuery,
       setSearchQuery,
     };
-  }, [recipes, searchedRecipes, searchQuery]);
+  }, [recipes, searchQuery]);
 
   return (
     <RecipesContext.Provider value={value}>{children}</RecipesContext.Provider>

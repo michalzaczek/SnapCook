@@ -31,8 +31,11 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
 
   function addIngredient(ingredient: IIngredient): void {
     setIngredients((ingredients) => {
-      if (!ingredients.find((i) => i.name === ingredient.name)) {
-        return [...ingredients, ingredient];
+      if (!ingredients.find((i) => i.name === ingredient.name.toLowerCase())) {
+        return [
+          ...ingredients,
+          { ...ingredient, name: ingredient.name.toLowerCase() },
+        ];
       }
       throw 'Ingredient is already on the list';
     });

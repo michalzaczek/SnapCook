@@ -12,6 +12,7 @@ import RecipesPage from './pages/recipes-page/recipes-page';
 import { RecipesProvider } from './contexts/recipes/recipes.context';
 import RecipePage from './pages/recipe-page/recipe-page';
 import AccountPage from './pages/account-page/account-page';
+import { RecipeInfoProvider } from './contexts/recipe-info/recipe-info-context';
 
 function App() {
   const [pageTitle, setPageTitle] = useState('SnapCook');
@@ -32,31 +33,35 @@ function App() {
           <TopBar title={pageTitle}></TopBar>
           <IngredientsProvider>
             <RecipesProvider>
-              <BrowserRouter>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexGrow: '1',
-                    justifyContent: 'center',
-                    pb: 10,
-                  }}
-                >
-                  <Routes>
-                    <Route
-                      path='ingredients'
-                      element={<IngredientsPage setPageTitle={setPageTitle} />}
-                    ></Route>
-                    <Route
-                      path='/'
-                      element={<Camera setPageTitle={setPageTitle} />}
-                    ></Route>
-                    <Route path='recipes' element={<RecipesPage />}></Route>
-                    <Route path='recipe/:id' element={<RecipePage />}></Route>
-                    <Route path='account' element={<AccountPage />}></Route>
-                  </Routes>
-                </Box>
-                <Navbar></Navbar>
-              </BrowserRouter>
+              <RecipeInfoProvider>
+                <BrowserRouter>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexGrow: '1',
+                      justifyContent: 'center',
+                      pb: 10,
+                    }}
+                  >
+                    <Routes>
+                      <Route
+                        path='ingredients'
+                        element={
+                          <IngredientsPage setPageTitle={setPageTitle} />
+                        }
+                      ></Route>
+                      <Route
+                        path='/'
+                        element={<Camera setPageTitle={setPageTitle} />}
+                      ></Route>
+                      <Route path='recipes' element={<RecipesPage />}></Route>
+                      <Route path='recipe/:id' element={<RecipePage />}></Route>
+                      <Route path='account' element={<AccountPage />}></Route>
+                    </Routes>
+                  </Box>
+                  <Navbar></Navbar>
+                </BrowserRouter>
+              </RecipeInfoProvider>
             </RecipesProvider>
           </IngredientsProvider>
         </Box>

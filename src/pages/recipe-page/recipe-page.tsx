@@ -1,14 +1,32 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecipeInfo } from '../../hooks/use-recipe-info/useRecipeInfo';
+import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { useEffect, useState } from 'react';
+import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 
 export default function RecipePage() {
   const { id } = useParams();
-  const { recipe, setIsFavorite } = useRecipeInfo(parseInt(id!));
+  const { getRecipeInfo, setIsFavorite } = useRecipeInfo();
   const navigate = useNavigate();
+  const [recipe, setRecipe] = useState<IRecipeInfo>();
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      const recipe = await getRecipeInfo(parseInt(id!));
+      setRecipe(recipe);
+    };
+
+    getRecipe();
+  }, []);
+
+  function setFavorite(id: number, value: boolean) {
+    const recipe = setIsFavorite(id, value);
+
+    setRecipe(recipe);
+  }
 
   return (
     <>
@@ -59,12 +77,14 @@ export default function RecipePage() {
                   }}
                 >
                   {recipe?.isFavorite ? (
-                    <FavoriteIcon onClick={() => setIsFavorite(false)} />
-                  ) : (
-                    <FavoriteBorderOutlinedIcon
-                      onClick={() => setIsFavorite(true)}
+                    <FavoriteIcon
+                      onClick={() => setFavorite(recipe.id, false)}
                     />
-                  )}
+                  ) : recipe ? (
+                    <FavoriteBorderOutlinedIcon
+                      onClick={() => setFavorite(recipe.id, true)}
+                    />
+                  ) : null}
                 </Box>
               </Grid>
             </Grid>

@@ -116,6 +116,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
 
 function useRecipes() {
   const context = useContext(RecipesContext);
+
   if (context === undefined)
     throw new Error('RecipesContext was used outside of the RecipesProvider');
   return context;

@@ -42,14 +42,16 @@ function RecipesProvider({ children }: { children: ReactNode }) {
   });
 
   async function fetchAndSet(ingredients: string[]): Promise<void> {
-    const promise = new Promise<void>((resolve) => resolve());
+    if (!ingredients.length) {
+      return;
+    }
 
     const recipesForQuery = getRecipesForQuery(ingredients);
 
     if (recipesForQuery.length) {
       setRecipes(recipesForQuery);
 
-      return promise;
+      return;
     }
 
     try {
@@ -66,7 +68,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
       setAllRecipes(updatedStorage);
       setRecipes(recipes);
 
-      return promise;
+      return;
     } catch (error) {
       throw `Failed to fetch recipes. Error: ${error}`;
     }

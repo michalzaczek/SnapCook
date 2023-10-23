@@ -10,31 +10,21 @@ import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState(0);
-  const { recipes } = useRecipes();
-  const { getRecipeInfo } = useRecipeInfo();
-  const [favorites, setFavorites] = useState<IRecipeData[] | null>(null);
+  const { allRecipes } = useRecipes();
+  const [recipes] = useState<IRecipeData[]>(() => {
+    const recipes = allRecipes.flatMap((r) => r.recipes);
 
-  useEffect(() => {
-    const setFavoritesAsync = async () => {
-      const promises = recipes.map(async (r) => {
-        const isFav = (await getRecipeInfo(r.id)).isFavorite;
-        return {
-          id: r.id,
-          isFav,
-        };
-      });
-
-      const recipeInfo = await Promise.all(promises);
-
-      const favorites = recipes.filter(
-        (r) => recipeInfo.find((i) => r.id === i.id)?.isFav
-      );
-
-      setFavorites(favorites);
-    };
-
-    setFavoritesAsync();
-  }, [recipes]);
+    return recipes.reduce((prev: IRecipeData[], r) => {
+      if (!prev.find((recipe) => recipe.id === r.id)) {
+        prev.push(r);
+      }
+      return prev;
+    }, []);
+  });
+  const { isFavorite } = useRecipeInfo();
+  const [favorites] = useState<IRecipeData[]>(() => {
+    return recipes.filter((r) => isFavorite(r.id));
+  });
 
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);

@@ -28,7 +28,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
   });
 
   async function getRecipeInfo(id: number) {
-    let recipe = recipes.find((r) => r.id === id);
+    const recipe = recipes.find((r) => r.id === id);
 
     if (recipe) {
       return new Promise<IRecipeInfo>((resolve) => resolve(recipe!));
@@ -43,10 +43,20 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
       };
 
       setRecipes((r) => [...r, recipeInfo]);
-      return new Promise<IRecipeInfo>((resolve) => resolve(recipe!));
+      return new Promise<IRecipeInfo>((resolve) => resolve(recipeInfo));
     } catch (error) {
       throw `Failed to fetch the recipe information. Error: ${error}`;
     }
+  }
+
+  function isFavorite(id: number): boolean {
+    const recipe = recipes.find((r) => r.id === id);
+
+    if (!recipe) {
+      return false;
+    }
+
+    return recipe.isFavorite;
   }
 
   useEffect(() => {
@@ -79,7 +89,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
   }
 
   const value: IRecipeInfoContext = useMemo(() => {
-    return { getRecipeInfo, setIsFavorite };
+    return { getRecipeInfo, setIsFavorite, isFavorite };
   }, [recipes]);
 
   return (

@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { IRecipesContext } from './recipes-context.interface';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import { IRecipeStorage } from './recipe-storage.interface';
@@ -10,81 +17,53 @@ const RecipesContext = createContext<IRecipesContext | undefined>(undefined);
 function RecipesProvider({ children }: { children: ReactNode }) {
   const { ingredients } = useIngredients();
   const localStorageKey = 'recipes';
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const [recipes, setRecipes] = useState<IRecipeData[]>(() => {
+  const [allRecipes, setAllRecipes] = useState<IRecipeStorage[]>(() => {
     const storage = localStorage.getItem(localStorageKey);
 
     if (storage) {
-      const localStorageRecipes = JSON.parse(storage) as IRecipeStorage[];
-
-      const selectedIngredients = ingredients
-        .filter((i) => i.isConfirmed)
-        .map((i) => i.name);
-
-      const recipesForEqualQuery = localStorageRecipes.find(
-        (recipeStorage) =>
-          selectedIngredients.every((i) =>
-            recipeStorage.queryIngredients.includes(i)
-          ) &&
-          selectedIngredients.length === recipeStorage.queryIngredients.length
-      );
-
-      return recipesForEqualQuery ? recipesForEqualQuery.recipes : [];
+      return JSON.parse(storage) as IRecipeStorage[];
     }
 
     return [];
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(allRecipes));
+  }, [allRecipes]);
 
-  // TODO: refactor (extract local storage logic)
+  const [recipes, setRecipes] = useState<IRecipeData[]>(() => {
+    const selectedIngredients = ingredients
+      .filter((i) => i.isConfirmed)
+      .map((i) => i.name);
+
+    return getRecipesForQuery(selectedIngredients);
+  });
+
   async function fetchAndSet(ingredients: string[]): Promise<void> {
-    const storage = localStorage.getItem(localStorageKey);
     const promise = new Promise<void>((resolve) => resolve());
 
-    if (storage) {
-      const localStorageRecipes = JSON.parse(storage) as IRecipeStorage[];
+    const recipesForQuery = getRecipesForQuery(ingredients);
 
-      const recipesForEqualQuery = localStorageRecipes.find(
-        (recipeStorage) =>
-          ingredients.every((i) =>
-            recipeStorage.queryIngredients.includes(i)
-          ) && ingredients.length === recipeStorage.queryIngredients.length
-      );
+    if (recipesForQuery.length) {
+      setRecipes(recipesForQuery);
 
-      if (recipesForEqualQuery) {
-        setRecipes(recipesForEqualQuery.recipes);
-
-        return promise;
-      }
-
-      try {
-        const recipes = (await fetchRecipes(ingredients)).data;
-
-        const updatedStorage: IRecipeStorage[] = [
-          ...localStorageRecipes,
-          {
-            queryIngredients: ingredients,
-            recipes,
-          },
-        ];
-
-        localStorage.setItem(localStorageKey, JSON.stringify(updatedStorage));
-        setRecipes(recipes);
-
-        return promise;
-      } catch (error) {
-        throw `Failed to fetch recipes. Error: ${error}`;
-      }
+      return promise;
     }
 
     try {
       const recipes = (await fetchRecipes(ingredients)).data;
 
-      localStorage.setItem(
-        localStorageKey,
-        JSON.stringify([{ recipes, queryIngredients: ingredients }])
-      );
+      const updatedStorage: IRecipeStorage[] = [
+        ...allRecipes,
+        {
+          queryIngredients: ingredients,
+          recipes,
+        },
+      ];
+
+      setAllRecipes(updatedStorage);
       setRecipes(recipes);
 
       return promise;
@@ -93,8 +72,20 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  function getRecipesForQuery(ingredients: string[]): IRecipeData[] {
+    return (
+      allRecipes.find(
+        (recipeStorage) =>
+          ingredients.every((i) =>
+            recipeStorage.queryIngredients.includes(i)
+          ) && ingredients.length === recipeStorage.queryIngredients.length
+      )?.recipes || []
+    );
+  }
+
   const value: IRecipesContext = useMemo(() => {
     return {
+      allRecipes,
       recipes,
       setRecipes: fetchAndSet,
       searchQuery,

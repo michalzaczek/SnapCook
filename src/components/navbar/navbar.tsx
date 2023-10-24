@@ -4,6 +4,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Paper,
+  SxProps,
 } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
@@ -16,9 +17,20 @@ export default function Navbar() {
   const [value, setValue] = useState(0);
   const { ingredients } = useIngredients();
 
+  const iconStyle: SxProps = {
+    color: 'primary.navbarIcon',
+    fontSize: '35px',
+    '.Mui-selected &': { color: 'black' },
+  };
+
   return (
     <Paper
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}
       elevation={3}
     >
       <BottomNavigation
@@ -27,11 +39,12 @@ export default function Navbar() {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        sx={{ backgroundColor: 'primary.light', height: 80 }}
       >
         <BottomNavigationAction
           component={Link}
           to='/'
-          icon={<CameraAltIcon />}
+          icon={<CameraAltIcon sx={iconStyle} />}
         />
         <BottomNavigationAction
           component={Link}
@@ -40,19 +53,19 @@ export default function Navbar() {
             <Badge
               badgeContent={ingredients.filter((i) => i.isConfirmed).length}
             >
-              <ShoppingBagIcon />
+              <ShoppingBagIcon sx={iconStyle} />
             </Badge>
           }
         />
         <BottomNavigationAction
           component={Link}
           to='recipes'
-          icon={<SearchIcon />}
+          icon={<SearchIcon sx={iconStyle} />}
         />
         <BottomNavigationAction
           component={Link}
           to='account'
-          icon={<PersonIcon />}
+          icon={<PersonIcon sx={iconStyle} />}
         />
       </BottomNavigation>
     </Paper>

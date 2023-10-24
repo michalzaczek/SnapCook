@@ -27,10 +27,8 @@ function App() {
             flexDirection: 'column',
             width: '100vw',
             minHeight: '100vh',
-            background: "url('./public/background.png')",
           }}
         >
-          <TopBar title={pageTitle}></TopBar>
           <IngredientsProvider>
             <RecipesProvider>
               <RecipeInfoProvider>
@@ -41,6 +39,7 @@ function App() {
                       flexGrow: '1',
                       justifyContent: 'center',
                       pb: 10,
+                      background: "url('./public/background.png')",
                     }}
                   >
                     <Routes>

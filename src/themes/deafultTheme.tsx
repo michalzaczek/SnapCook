@@ -1,6 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
+declare module '@mui/material/styles' {
+  interface SimplePaletteColorOptions {
+    navbarIcon?: string;
+  }
+  interface PaletteColor {
+    navbarIcon?: string;
+  }
+}
+
 // A custom theme for this app
 const deafultTheme = createTheme({
   palette: {
@@ -9,6 +18,7 @@ const deafultTheme = createTheme({
       light: '#9FD39E4D',
       dark: '#001509',
       contrastText: '#fff',
+      navbarIcon: '#001C0C80',
     },
     secondary: {
       main: '#ffff',
@@ -43,14 +53,25 @@ const deafultTheme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        subtitle1: ({ theme }) => ({
+          color: theme.palette.primary.navbarIcon,
+          fontSize: '25px',
+        }),
+      },
+    },
   },
   typography: {
     allVariants: {
       color: '#001509',
-      fontFamily: 'Lobster',
+      fontFamily: 'Lato',
     },
     button: {
       fontFamily: 'Lato',
+    },
+    h1: {
+      fontFamily: 'Lobster',
     },
   },
 });

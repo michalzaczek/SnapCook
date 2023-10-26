@@ -13,6 +13,7 @@ import { RecipesProvider } from './contexts/recipes/recipes.context';
 import RecipePage from './pages/recipe-page/recipe-page';
 import AccountPage from './pages/account-page/account-page';
 import { RecipeInfoProvider } from './contexts/recipe-info/recipe-info-context';
+import { display } from '@mui/system';
 
 function App() {
   const [pageTitle, setPageTitle] = useState('SnapCook');
@@ -33,6 +34,7 @@ function App() {
             <RecipesProvider>
               <RecipeInfoProvider>
                 <BrowserRouter>
+                  <TopBar title={''}></TopBar>
                   <Box
                     sx={{
                       display: 'flex',

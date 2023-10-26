@@ -43,7 +43,10 @@ export default function Camera({ setPageTitle }: IPageProps) {
       }}
     >
       <Grid item sx={{ mt: 4 }}>
-        <Typography variant='h1' sx={{ fontSize: '80px' }}>
+        <Typography
+          variant='h1'
+          sx={{ fontSize: '80px', display: { md: 'none' } }}
+        >
           Snapcook
         </Typography>
       </Grid>

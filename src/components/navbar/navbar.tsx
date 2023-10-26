@@ -18,9 +18,9 @@ export default function Navbar() {
   const { ingredients } = useIngredients();
 
   const iconStyle: SxProps = {
-    color: 'primary.navbarIcon',
+    color: 'primary.inactiveText',
     fontSize: '35px',
-    '.Mui-selected &': { color: 'black' },
+    '.Mui-selected &': { color: 'primary.activeText' },
   };
 
   return (
@@ -30,6 +30,7 @@ export default function Navbar() {
         bottom: 0,
         left: 0,
         right: 0,
+        display: { md: 'none' },
       }}
       elevation={3}
     >

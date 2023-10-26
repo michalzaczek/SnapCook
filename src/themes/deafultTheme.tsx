@@ -3,10 +3,12 @@ import { red } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
   interface SimplePaletteColorOptions {
-    navbarIcon?: string;
+    activeText?: string;
+    inactiveText?: string;
   }
   interface PaletteColor {
-    navbarIcon?: string;
+    activeText?: string;
+    inactiveText?: string;
   }
 }
 
@@ -18,7 +20,8 @@ const deafultTheme = createTheme({
       light: '#9FD39E4D',
       dark: '#001509',
       contrastText: '#fff',
-      navbarIcon: '#001C0C80',
+      inactiveText: 'rgba(0, 28, 12, 0.5)',
+      activeText: '#001C0C80',
     },
     secondary: {
       main: '#ffff',
@@ -43,20 +46,10 @@ const deafultTheme = createTheme({
         },
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        outlined: {
-          background: '#fff',
-          '&&:hover': {
-            background: '#fff',
-          },
-        },
-      },
-    },
     MuiTypography: {
       styleOverrides: {
         subtitle1: ({ theme }) => ({
-          color: theme.palette.primary.navbarIcon,
+          color: theme.palette.primary.activeText,
           fontSize: '25px',
         }),
       },

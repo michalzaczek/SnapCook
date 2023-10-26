@@ -17,11 +17,11 @@ const deafultTheme = createTheme({
   palette: {
     primary: {
       main: '#9ACE98',
-      light: '#9FD39E4D',
+      light: '#e2f2e2',
       dark: '#001509',
       contrastText: '#fff',
-      inactiveText: 'rgba(0, 28, 12, 0.5)',
-      activeText: '#001C0C80',
+      inactiveText: '#6c8373',
+      activeText: '#001c0c',
     },
     secondary: {
       main: '#ffff',
@@ -31,21 +31,6 @@ const deafultTheme = createTheme({
     },
   },
   components: {
-    MuiChip: {
-      styleOverrides: {
-        outlined: {
-          background: '#fff',
-          '&&:hover': {
-            background: '#fff',
-          },
-        },
-        filled: {
-          '&&:hover': {
-            background: '#9ACE98',
-          },
-        },
-      },
-    },
     MuiTypography: {
       styleOverrides: {
         subtitle1: ({ theme }) => ({
@@ -54,16 +39,37 @@ const deafultTheme = createTheme({
         }),
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderRadius: '50px',
+          fontSize: '20px',
+          color: theme.palette.primary.inactiveText,
+          fontWeight: 700,
+          backgroundColor: theme.palette.secondary.main,
+          padding: '4px 30px',
+          border: `2px solid ${theme.palette.primary.inactiveText}`,
+          textTransform: 'capitalize',
+        }),
+      },
+    },
   },
   typography: {
+    fontFamily: 'Lato',
     allVariants: {
       color: '#001509',
-      fontFamily: 'Lato',
-    },
-    button: {
-      fontFamily: 'Lato',
+      fontSize: '20px',
     },
     h1: {
+      fontFamily: 'Lobster',
+    },
+    h2: {
+      fontFamily: 'Lobster',
+    },
+    h3: {
+      fontFamily: 'Lobster',
+    },
+    h4: {
       fontFamily: 'Lobster',
     },
   },

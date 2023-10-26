@@ -5,7 +5,7 @@ import { fetchIngredients } from '../../services/ingredients/ingredients.service
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { CircularProgress, Grid, Input, Typography } from '@mui/material';
 
-export default function Camera() {
+export default function MainPage() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);

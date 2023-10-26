@@ -14,6 +14,7 @@ import { useRecipes } from '../../contexts/recipes/recipes.context';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingButton from '@mui/lab/LoadingButton';
+import PageHeader from '../../components/page-header/page-header';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -89,7 +90,8 @@ export default function IngredientsPage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
+      <PageHeader title='Select Ingredients'></PageHeader>
       <Container sx={{ display: 'flex', flexDirection: 'column' }}>
         {ingredients?.map((i) => (
           <Ingredient
@@ -100,7 +102,13 @@ export default function IngredientsPage() {
           ></Ingredient>
         ))}
         {ingredients.length > 0 && (
-          <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <FormControlLabel
               control={
                 <Checkbox onChange={handleSelectAll} checked={allSelected} />
@@ -115,7 +123,7 @@ export default function IngredientsPage() {
             >
               Remove ingredients
             </Button>
-          </>
+          </Box>
         )}
         <TextField
           label='New ingredient'

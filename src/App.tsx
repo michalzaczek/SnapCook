@@ -1,5 +1,5 @@
 import './App.scss';
-import Camera from './components/camera/camera';
+import MainPage from './pages/main-page/main-page';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import IngredientsPage from './pages/ingredients-page/ingredients-page';
 import Navbar from './components/navbar/navbar';
@@ -45,7 +45,7 @@ function App() {
                         path='ingredients'
                         element={<IngredientsPage />}
                       ></Route>
-                      <Route path='/' element={<Camera />}></Route>
+                      <Route path='/' element={<MainPage />}></Route>
                       <Route path='recipes' element={<RecipesPage />}></Route>
                       <Route path='recipe/:id' element={<RecipePage />}></Route>
                       <Route path='account' element={<AccountPage />}></Route>

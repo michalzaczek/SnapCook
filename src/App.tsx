@@ -12,6 +12,7 @@ import { RecipesProvider } from './contexts/recipes/recipes.context';
 import RecipePage from './pages/recipe-page/recipe-page';
 import AccountPage from './pages/account-page/account-page';
 import { RecipeInfoProvider } from './contexts/recipe-info/recipe-info-context';
+import SettingsPage from './pages/settings-page/settings-page';
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
                       <Route path='recipes' element={<RecipesPage />}></Route>
                       <Route path='recipe/:id' element={<RecipePage />}></Route>
                       <Route path='account' element={<AccountPage />}></Route>
+                      <Route
+                        path='account/settings'
+                        element={<SettingsPage />}
+                      ></Route>
                     </Routes>
                   </Box>
                   <Navbar></Navbar>

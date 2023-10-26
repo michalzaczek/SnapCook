@@ -7,8 +7,11 @@ import { useRecipes } from '../../contexts/recipes/recipes.context';
 import RecipeThumbnail from '../../components/recipe-thumbnail/recipe-thumbnail';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { Input } from '@mui/material';
+import { Button, Grid, IconButton, Input, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { NavLink } from 'react-router-dom';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -56,6 +59,70 @@ export default function AccountPage() {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          backgroundColor: 'primary.light',
+          p: 3,
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+          <Box
+            sx={{
+              backgroundColor: 'primary.activeText',
+              borderRadius: '100px',
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              placeContent: 'center',
+            }}
+          >
+            <PersonIcon
+              sx={{ color: 'primary.light', fontSize: '33px' }}
+            ></PersonIcon>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            flexGrow: '1',
+          }}
+        >
+          <Typography
+            variant='subtitle1'
+            sx={{
+              lineHeight: '1',
+              textAlign: 'left',
+              fontSize: '18px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Name Username
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            sx={{
+              lineHeight: '1',
+              textAlign: 'left',
+              fontSize: '17px',
+              color: 'primary.inactiveText',
+              textTransform: 'lowercase',
+            }}
+          >
+            @username
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton component={NavLink} to='settings'>
+            <SettingsOutlinedIcon
+              sx={{ fontSize: '50px', color: 'primary.activeText' }}
+            />
+          </IconButton>
+        </Box>
+      </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth'>
           <Tab label='Favorite Recipes' />

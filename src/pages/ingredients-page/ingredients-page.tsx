@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import { Container } from '@mui/system';
 import { ChangeEvent, useState } from 'react';
-import { IPageProps } from '../page-props.interface';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
@@ -16,8 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-export default function IngredientsPage({ setPageTitle }: IPageProps) {
-  // setPageTitle("Select Ingredients");
+export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [newIngredient, setNewIngredient] = useState<string>('');

@@ -2,14 +2,10 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import snapCookLogo from '../../assets/logo.png';
 import { fetchIngredients } from '../../services/ingredients/ingredients.service';
-import { IPageProps } from '../../pages/page-props.interface';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
-import { Box, CircularProgress, Grid, Input, Typography } from '@mui/material';
-import { height } from '@mui/system';
+import { CircularProgress, Grid, Input, Typography } from '@mui/material';
 
-export default function Camera({ setPageTitle }: IPageProps) {
-  // setPageTitle("SnapCook");
-
+export default function Camera() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);

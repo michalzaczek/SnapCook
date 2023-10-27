@@ -17,6 +17,7 @@ export default function TopBar({ title }: IProps) {
     color: 'primary.inactiveText',
     borderWidth: '2px',
     fontWeight: 700,
+    borderRadius: '4px',
     '&&:hover, &&.active': {
       backgroundColor: 'primary.main',
       color: 'primary.activeText',

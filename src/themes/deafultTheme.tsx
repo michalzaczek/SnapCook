@@ -12,6 +12,12 @@ declare module '@mui/material/styles' {
   }
 }
 
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    cta: true;
+  }
+}
+
 // A custom theme for this app
 const deafultTheme = createTheme({
   palette: {
@@ -52,6 +58,19 @@ const deafultTheme = createTheme({
           textTransform: 'capitalize',
         }),
       },
+      variants: [
+        {
+          props: { variant: 'cta' },
+          style: ({ theme }) => ({
+            backgroundColor: theme.palette.primary.activeText,
+            color: theme.palette.primary.light,
+            '&&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.activeText,
+            },
+          }),
+        },
+      ],
     },
   },
   typography: {

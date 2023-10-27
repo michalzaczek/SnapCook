@@ -37,7 +37,7 @@ function App() {
                       display: 'flex',
                       flexGrow: '1',
                       justifyContent: 'center',
-                      pb: 10,
+                      pb: { xs: 10, md: 0 },
                       background: "url('./public/background.png')",
                     }}
                   >

@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, IconButton, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -10,7 +10,6 @@ import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 export default function RecipePage() {
   const { id } = useParams();
   const { getRecipeInfo, setIsFavorite } = useRecipeInfo();
-  const navigate = useNavigate();
   const [recipe, setRecipe] = useState<IRecipeInfo>();
 
   useEffect(() => {
@@ -61,10 +60,9 @@ export default function RecipePage() {
                     textAlign: 'left',
                   }}
                 >
-                  <ArrowBackIcon
-                    onClick={() => navigate(-1)}
-                    sx={{ color: 'primary.contrastText' }}
-                  />
+                  <IconButton component={NavLink} to={-1 as any}>
+                    <ArrowBackIcon sx={{ color: 'primary.contrastText' }} />
+                  </IconButton>
                 </Box>
               </Grid>
               <Grid item xs={6}>

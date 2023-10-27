@@ -7,7 +7,7 @@ import { useRecipes } from '../../contexts/recipes/recipes.context';
 import RecipeThumbnail from '../../components/recipe-thumbnail/recipe-thumbnail';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { Button, Grid, IconButton, Input, Typography } from '@mui/material';
+import { IconButton, Input, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -18,7 +18,7 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState(0);
   const { allRecipes } = useRecipes();
   const [recipes] = useState<IRecipeData[]>(() => {
-    const recipes = allRecipes.flatMap((r) => r.recipes);
+    const recipes = allRecipes.flatMap((r) => r.recipes) || [];
 
     return recipes.reduce((prev: IRecipeData[], r) => {
       if (!prev.find((recipe) => recipe.id === r.id)) {

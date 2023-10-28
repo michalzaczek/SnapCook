@@ -33,6 +33,7 @@ function App() {
             <RecipesProvider>
               <RecipeInfoProvider>
                 <BrowserRouter>
+                  <ScrollToTop />
                   <TopBar title={''}></TopBar>
                   <Box
                     sx={{

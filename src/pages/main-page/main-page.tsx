@@ -17,7 +17,7 @@ export default function MainPage() {
 
     resetIngredients();
 
-    const ingredients = (await fetchIngredients()).data;
+    const ingredients = (await fetchIngredients()).data || [];
 
     ingredients.forEach((i) => addIngredient(i));
 
@@ -48,7 +48,10 @@ export default function MainPage() {
         onChange={handleUpload}
         sx={{ display: 'none' }}
       />
-      <Typography variant='subtitle1' sx={{ mt: 4 }}>
+      <Typography
+        variant='subtitle1'
+        sx={{ mt: 4, fontSize: '25px', color: 'primary.text' }}
+      >
         Tap to take a photo...
       </Typography>
     </MainLayout>

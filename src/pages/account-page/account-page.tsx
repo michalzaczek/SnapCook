@@ -70,7 +70,7 @@ export default function AccountPage() {
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
           <Box
             sx={{
-              backgroundColor: 'primary.activeText',
+              backgroundColor: 'primary.dark',
               borderRadius: '100px',
               width: '40px',
               height: '40px',
@@ -108,7 +108,7 @@ export default function AccountPage() {
               lineHeight: '1',
               textAlign: 'left',
               fontSize: '17px',
-              color: 'primary.inactiveText',
+              color: 'primary.text',
               textTransform: 'lowercase',
             }}
           >
@@ -118,7 +118,7 @@ export default function AccountPage() {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton component={NavLink} to='settings'>
             <SettingsOutlinedIcon
-              sx={{ fontSize: '50px', color: 'primary.activeText' }}
+              sx={{ fontSize: '50px', color: 'primary.dark' }}
             />
           </IconButton>
         </Box>

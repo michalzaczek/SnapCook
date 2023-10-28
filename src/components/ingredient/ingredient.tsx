@@ -8,18 +8,21 @@ export default function Ingredient({ name, onSelect, selected }: IProps) {
       variant={selected ? 'filled' : 'outlined'}
       onClick={onSelect}
       sx={{
+        width: { xs: '100%', md: 'auto' },
+        maxWidth: '400px',
         backgroundColor: 'secondary.main',
         my: 2,
-        color: 'secondary.activeText',
+        mx: { xs: 0, md: 1 },
+        color: 'primary.dark',
         fontSize: '20px',
         fontWeight: 700,
         textTransform: 'capitalize',
-        borderColor: 'primary.activeText',
+        borderColor: 'primary.dark',
         borderWidth: '2px',
         p: 2.5,
         borderRadius: '30px',
         '&&.MuiChip-filled': {
-          borderColor: 'primary.activeText',
+          borderColor: 'primary.dark',
           borderWidth: '2px',
           borderStyle: 'solid',
           backgroundColor: 'primary.main',
@@ -28,8 +31,8 @@ export default function Ingredient({ name, onSelect, selected }: IProps) {
           },
         },
         '&&.MuiChip-outlined': {
-          color: 'primary.inactiveText',
-          borderColor: 'primary.inactiveText',
+          color: 'primary.text',
+          borderColor: 'primary.text',
           '&&:hover': {
             backgroundColor: 'secondary.main',
           },

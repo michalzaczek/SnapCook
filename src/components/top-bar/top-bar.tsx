@@ -14,15 +14,17 @@ export default function TopBar({ title }: IProps) {
     px: 2,
     my: 1,
     mx: 1.5,
-    color: 'primary.inactiveText',
+    color: 'primary.text',
     borderWidth: '2px',
     fontWeight: 700,
     borderRadius: '4px',
+    backgroundColor: 'primary.light',
+    borderColor: 'primary.dark',
     '&&:hover, &&.active': {
       backgroundColor: 'primary.main',
-      color: 'primary.activeText',
-      borderColor: 'primary.activeText',
+      color: 'primary.dark',
       borderWidth: '2px',
+      borderColor: 'primary.dark',
     },
   };
 

@@ -3,12 +3,10 @@ import { red } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
   interface SimplePaletteColorOptions {
-    activeText?: string;
-    inactiveText?: string;
+    text?: string;
   }
   interface PaletteColor {
-    activeText?: string;
-    inactiveText?: string;
+    text?: string;
   }
 }
 
@@ -24,10 +22,9 @@ const deafultTheme = createTheme({
     primary: {
       main: '#9ACE98',
       light: '#e2f2e2',
-      dark: '#001509',
+      dark: '#01321D',
+      text: '#677d73',
       contrastText: '#fff',
-      inactiveText: '#6c8373',
-      activeText: '#001c0c',
     },
     secondary: {
       main: '#ffff',
@@ -35,52 +32,68 @@ const deafultTheme = createTheme({
     error: {
       main: red.A400,
     },
+    text: {
+      primary: '#000',
+      secondary: '#555',
+    },
   },
   components: {
-    MuiTypography: {
-      styleOverrides: {
-        subtitle1: ({ theme }) => ({
-          color: theme.palette.primary.activeText,
-          fontSize: '25px',
-        }),
-      },
-    },
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: '50px',
           fontSize: '20px',
-          color: theme.palette.primary.inactiveText,
+          color: theme.palette.primary.text,
           fontWeight: 700,
           backgroundColor: theme.palette.secondary.main,
           padding: '4px 30px',
-          border: `2px solid ${theme.palette.primary.inactiveText}`,
+          border: `2px solid ${theme.palette.primary.text}`,
           textTransform: 'capitalize',
+          '&&:hover': {
+            borderColor: theme.palette.primary.text,
+            backgroundColor: theme.palette.secondary.main,
+            borderWidth: '2px',
+          },
         }),
       },
       variants: [
         {
           props: { variant: 'cta' },
           style: ({ theme }) => ({
-            backgroundColor: theme.palette.primary.activeText,
+            backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
             '&&:hover': {
               backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.activeText,
+              color: theme.palette.primary.dark,
             },
+          }),
+        },
+        {
+          props: { variant: 'cta', disabled: true },
+          style: ({ theme }) => ({
+            backgroundColor: 'transparent',
           }),
         },
       ],
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          background: theme.palette.secondary.main,
+          borderRadius: '150px !important',
+        }),
+      },
+    },
   },
-  typography: {
+  typography: (palette) => ({
     fontFamily: 'Lato',
     allVariants: {
-      color: '#001509',
+      color: palette.text.primary,
       fontSize: '20px',
     },
     h1: {
       fontFamily: 'Lobster',
+      color: 'palette.primary.dark',
     },
     h2: {
       fontFamily: 'Lobster',
@@ -91,7 +104,7 @@ const deafultTheme = createTheme({
     h4: {
       fontFamily: 'Lobster',
     },
-  },
+  }),
 });
 
 export default deafultTheme;

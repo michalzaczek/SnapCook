@@ -18,9 +18,9 @@ export default function Navbar() {
   const { ingredients } = useIngredients();
 
   const iconStyle: SxProps = {
-    color: 'primary.inactiveText',
+    color: 'primary.text',
     fontSize: '35px',
-    '.Mui-selected &': { color: 'primary.activeText' },
+    '.Mui-selected &': { color: 'primary.dark' },
   };
 
   return (

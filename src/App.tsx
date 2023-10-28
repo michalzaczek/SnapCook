@@ -5,7 +5,7 @@ import IngredientsPage from './pages/ingredients-page/ingredients-page';
 import Navbar from './components/navbar/navbar';
 import TopBar from './components/top-bar/top-bar';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
-import defaultTheme from './themes/deafultTheme';
+import defaultTheme from './themes/defaultTheme';
 import { IngredientsProvider } from './contexts/ingredients/ingredients.context';
 import RecipesPage from './pages/recipes-page/recipes-page';
 import { RecipesProvider } from './contexts/recipes/recipes.context';

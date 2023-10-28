@@ -9,8 +9,8 @@ export default function LoginPage() {
   };
 
   const buttonStyle: SxProps = {
-    borderColor: 'primary.activeText',
-    color: 'primary.activeText',
+    borderColor: 'primary.dark',
+    color: 'primary.dark',
     p: '8px 40px',
     boxShadow: 2,
     '&&:hover': {

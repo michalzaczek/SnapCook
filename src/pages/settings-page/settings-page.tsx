@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 export default function SettingsPage() {
   const borderStyle: SxProps = {
     borderBottom: '1px solid',
-    borderColor: 'primary.inactiveText',
+    borderColor: 'primary.text',
   };
 
   const h2Style: SxProps = {
@@ -21,7 +21,7 @@ export default function SettingsPage() {
     fontSize: '18px',
     mb: 1,
     fontWeight: 700,
-    color: 'primary.inactiveText',
+    color: 'primary.text',
   };
 
   return (
@@ -38,7 +38,7 @@ export default function SettingsPage() {
           <ArrowBackIcon
             sx={{
               fontSize: '40px',
-              color: 'primary.inactiveText',
+              color: 'primary.text',
               position: 'relative',
               left: '-5px',
             }}

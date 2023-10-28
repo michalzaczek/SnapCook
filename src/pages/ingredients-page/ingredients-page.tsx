@@ -92,15 +92,28 @@ export default function IngredientsPage() {
   return (
     <Box sx={{ width: '100%' }}>
       <PageHeader title='Select Ingredients'></PageHeader>
-      <Container sx={{ display: 'flex', flexDirection: 'column' }}>
-        {ingredients?.map((i) => (
-          <Ingredient
-            name={i.name}
-            selected={i.isConfirmed}
-            key={i.name}
-            onSelect={() => handleSelection(i.name)}
-          ></Ingredient>
-        ))}
+      <Container
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: { xs: 'column', md: 'row' },
+          }}
+        >
+          {ingredients?.map((i) => (
+            <Ingredient
+              name={i.name}
+              selected={i.isConfirmed}
+              key={i.name}
+              onSelect={() => handleSelection(i.name)}
+            ></Ingredient>
+          ))}
+        </Box>
         {ingredients.length > 0 && (
           <Box
             sx={{
@@ -110,6 +123,7 @@ export default function IngredientsPage() {
             }}
           >
             <FormControlLabel
+              sx={{ mb: 2 }}
               control={
                 <Checkbox onChange={handleSelectAll} checked={allSelected} />
               }
@@ -118,37 +132,51 @@ export default function IngredientsPage() {
             <Button
               variant='outlined'
               startIcon={<DeleteIcon />}
-              sx={{ mb: 2, mt: 1 }}
+              sx={{
+                mb: 2,
+                mt: 1,
+                width: '100%',
+                maxWidth: '280px',
+              }}
               onClick={resetIngredients}
             >
               Remove ingredients
             </Button>
           </Box>
         )}
-        <TextField
-          label='New ingredient'
-          variant='outlined'
-          onChange={handleNewIngredientChange}
-          value={newIngredient}
-          sx={{ mt: 6 }}
-        />
-        <Button
-          variant='outlined'
-          startIcon={<AddIcon />}
-          sx={{ mb: 2, mt: 1 }}
-          onClick={addNewIngredient}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
         >
-          Add more
-        </Button>
-        <LoadingButton
-          loading={isLoading}
-          variant='contained'
-          onClick={handleSearchRecipe}
-          disabled={!ingredients.length}
-          sx={{ my: 2 }}
-        >
-          Find Recipe
-        </LoadingButton>
+          <TextField
+            label='New ingredient'
+            variant='outlined'
+            onChange={handleNewIngredientChange}
+            value={newIngredient}
+            sx={{ mt: 6, width: '100%', maxWidth: '280px', mb: 2 }}
+          />
+          <Button
+            variant='outlined'
+            startIcon={<AddIcon />}
+            sx={{ mb: 2, mt: 1, width: '100%', maxWidth: '280px' }}
+            onClick={addNewIngredient}
+          >
+            Add more
+          </Button>
+          <LoadingButton
+            loading={isLoading}
+            variant='cta'
+            onClick={handleSearchRecipe}
+            disabled={!ingredients.length}
+            sx={{ my: 2, width: '100%', maxWidth: '400px' }}
+          >
+            Find Recipe
+          </LoadingButton>
+        </Box>
       </Container>
     </Box>
   );

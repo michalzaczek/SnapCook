@@ -9,6 +9,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
         flexDirection: 'column',
         justifyContent: 'center',
         width: '100%',
+        p: '20px',
       }}
     >
       <Grid item sx={{ mt: 4 }}>

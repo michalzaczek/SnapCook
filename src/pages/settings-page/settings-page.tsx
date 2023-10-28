@@ -78,7 +78,9 @@ export default function SettingsPage() {
         >
           Unlock unlimited search recipes and start to cook whenever you want!
         </Typography>
-        <Button variant='cta'>Upgrade Plan</Button>
+        <Button variant='cta' component={NavLink} to='/subscription'>
+          Upgrade Plan
+        </Button>
       </Box>
       <Box sx={{ ...borderStyle, textAlign: 'left', mb: 2 }}>
         <Typography variant='h2' sx={{ ...h2Style }}>

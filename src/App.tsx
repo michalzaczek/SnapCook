@@ -14,6 +14,7 @@ import AccountPage from './pages/account-page/account-page';
 import { RecipeInfoProvider } from './contexts/recipe-info/recipe-info-context';
 import SettingsPage from './pages/settings-page/settings-page';
 import LoginPage from './pages/login-page/login-page';
+import SubscriptionPage from './pages/subscription-page/subscription-page';
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
                         element={<SettingsPage />}
                       ></Route>
                       <Route path='login' element={<LoginPage />}></Route>
+                      <Route
+                        path='subscription'
+                        element={<SubscriptionPage />}
+                      ></Route>
                     </Routes>
                   </Box>
                   <Navbar></Navbar>

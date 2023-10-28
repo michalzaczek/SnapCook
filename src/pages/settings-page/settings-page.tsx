@@ -111,7 +111,9 @@ export default function SettingsPage() {
         </Typography>
       </Box>
       <Box sx={{ mb: 4 }}>
-        <Button>Sign Out</Button>
+        <Button component={NavLink} to='/login'>
+          Sign Out
+        </Button>
       </Box>
       <Box sx={{ textAlign: 'left' }}>
         <Typography variant='body1' sx={body1Style}>

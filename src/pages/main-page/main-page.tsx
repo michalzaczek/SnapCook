@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import snapCookLogo from '../../assets/logo.png';
 import { fetchIngredients } from '../../services/ingredients/ingredients.service';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
-import { CircularProgress, Grid, Input, Typography } from '@mui/material';
+import { CircularProgress, Input, Typography } from '@mui/material';
+import MainLayout from '../../components/main-layout/main-layout';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -30,53 +31,26 @@ export default function MainPage() {
   }
 
   return (
-    <Grid
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        width: '100%',
-      }}
-    >
-      <Grid item sx={{ mt: 4 }}>
-        <Typography
-          variant='h1'
-          sx={{ fontSize: '80px', display: { md: 'none' } }}
-        >
-          Snapcook
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        sx={{
-          flexGrow: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          pt: 2,
-        }}
-      >
-        {isLoading && <CircularProgress />}
-        {!isLoading && (
-          <img
-            style={{ height: 'auto', width: '250px' }}
-            onClick={handleClick}
-            src={snapCookLogo}
-            alt=''
-          />
-        )}
-        <Input
-          inputRef={inputRef}
-          type='file'
-          inputProps={{ accept: 'image/*', capture: 'environment' }}
-          onChange={handleUpload}
-          sx={{ display: 'none' }}
+    <MainLayout>
+      {isLoading && <CircularProgress />}
+      {!isLoading && (
+        <img
+          style={{ height: 'auto', width: '250px' }}
+          onClick={handleClick}
+          src={snapCookLogo}
+          alt=''
         />
-        <Typography variant='subtitle1' sx={{ mt: 4 }}>
-          Tap to take a photo...
-        </Typography>
-      </Grid>
-    </Grid>
+      )}
+      <Input
+        inputRef={inputRef}
+        type='file'
+        inputProps={{ accept: 'image/*', capture: 'environment' }}
+        onChange={handleUpload}
+        sx={{ display: 'none' }}
+      />
+      <Typography variant='subtitle1' sx={{ mt: 4 }}>
+        Tap to take a photo...
+      </Typography>
+    </MainLayout>
   );
 }

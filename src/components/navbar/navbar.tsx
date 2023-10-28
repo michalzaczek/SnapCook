@@ -45,7 +45,11 @@ export default function Navbar() {
         <BottomNavigationAction
           component={Link}
           to='/'
-          icon={<CameraAltIcon sx={iconStyle} />}
+          icon={
+            <CameraAltIcon
+              sx={{ ...iconStyle, position: 'relative', top: '2px' }}
+            />
+          }
         />
         <BottomNavigationAction
           component={Link}

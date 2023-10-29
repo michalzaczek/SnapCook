@@ -63,7 +63,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(localStorageKey, JSON.stringify(recipes));
   }, [recipes]);
 
-  function setIsFavorite(id: number, value: boolean): IRecipeInfo {
+  function setIsFavorite(id: number, value: boolean) {
     const errorMsg =
       'Tried setting isFavorite property of an unexisting recipeInfo';
 
@@ -84,12 +84,10 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     recipe.isFavorite = value;
 
     setRecipes(recipes);
-
-    return recipe;
   }
 
   const value: IRecipeInfoContext = useMemo(() => {
-    return { getRecipeInfo, setIsFavorite, isFavorite };
+    return { getRecipeInfo, setIsFavorite, isFavorite, recipes };
   }, [recipes]);
 
   return (

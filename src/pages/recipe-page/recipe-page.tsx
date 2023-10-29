@@ -10,15 +10,14 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useEffect, useState } from 'react';
 import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
+import FavoriteRecipeIcon from '../../components/favorite-recipe-icon/favorite-recipe-icon';
 
 export default function RecipePage() {
   const { id } = useParams();
-  const { getRecipeInfo, setIsFavorite } = useRecipeInfo();
+  const { getRecipeInfo, recipes } = useRecipeInfo();
   const [recipe, setRecipe] = useState<IRecipeInfo>();
 
   const iconStyle: SxProps = {
@@ -27,7 +26,7 @@ export default function RecipePage() {
 
   const h2Style: SxProps = {
     textAlign: 'left',
-    fontSize: '24px',
+    fontSize: { xs: '24px', md: '32px' },
     fontFamily: 'Lato',
     fontWeight: 700,
     mb: 3,
@@ -40,22 +39,16 @@ export default function RecipePage() {
     };
 
     getRecipe();
-  }, []);
-
-  function setFavorite(id: number, value: boolean) {
-    const recipe = setIsFavorite(id, value);
-
-    setRecipe(recipe);
-  }
+  }, [recipes]);
 
   return (
-    <Container sx={{ px: { xs: 0 } }}>
+    <Container sx={{ px: { xs: 0 }, p: { md: '60px' } }}>
       <Box mb={3}>
         <CardMedia
           sx={{
             position: 'relative',
             backgroundColor: 'grey.800',
-            color: '#fff',
+            color: 'secondary.main',
             mb: 0,
             height: { xs: '300px' },
           }}
@@ -71,10 +64,10 @@ export default function RecipePage() {
               height: '100px',
               background:
                 'linear-gradient(180deg, rgba(0,0,0,0.7456232492997199) 0%, rgba(0,0,0,0.4907212885154062) 50%, rgba(0,212,255,0) 100%)',
-              display: { sm: 'none' },
+              display: { md: 'none' },
             }}
           />
-          <Grid container>
+          <Grid container sx={{ display: { md: 'none' } }}>
             <Grid item xs={6}>
               <Box
                 sx={{
@@ -105,35 +98,38 @@ export default function RecipePage() {
                   textAlign: 'right',
                 }}
               >
-                {recipe?.isFavorite ? (
-                  <FavoriteIcon
-                    onClick={() => setFavorite(recipe.id, false)}
-                    sx={iconStyle}
-                  />
-                ) : recipe ? (
-                  <FavoriteBorderOutlinedIcon
-                    onClick={() => setFavorite(recipe.id, true)}
-                    sx={iconStyle}
-                  />
-                ) : null}
+                <FavoriteRecipeIcon recipe={recipe} sx={iconStyle} />
               </Box>
             </Grid>
           </Grid>
         </CardMedia>
       </Box>
-      <Box px={2} display='flex' flexDirection='column'>
-        <Box sx={{ borderBottom: '1px solid', pb: 2, mb: 2 }}>
+      <Box sx={{ p: { xs: 2, md: 0 } }} display='flex' flexDirection='column'>
+        <Box
+          sx={{
+            borderBottom: '1px solid',
+            borderColor: 'text.secondary',
+            pb: 2,
+            mb: 2,
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
           <Typography
             variant='h1'
             sx={{
               textAlign: 'left',
-              fontSize: '28px',
+              fontSize: { xs: '28px', md: '34px' },
               fontFamily: 'Lato',
               fontWeight: 700,
             }}
           >
             {recipe?.title}
           </Typography>
+          <FavoriteRecipeIcon
+            recipe={recipe}
+            sx={{ fontSize: '40px', display: { xs: 'none', md: 'block' } }}
+          />
         </Box>
         <Box mb={3}>
           <Typography
@@ -142,10 +138,10 @@ export default function RecipePage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              fontSize: '18px',
+              fontSize: { xs: '18px', md: '24px' },
             }}
           >
-            <TimerOutlinedIcon sx={{ mr: 1 }} />
+            <TimerOutlinedIcon sx={{ mr: 1, fontSize: { md: '30px' } }} />
             {recipe?.readyInMinutes} minutes
           </Typography>
         </Box>
@@ -180,7 +176,9 @@ export default function RecipePage() {
           <Typography variant='h2' sx={h2Style}>
             Instructions
           </Typography>
-          <p>{recipe?.instructions}</p>
+          <Typography variant='subtitle1' sx={{ fontSize: { md: '26px' } }}>
+            {recipe?.instructions}
+          </Typography>
         </Box>
       </Box>
     </Container>

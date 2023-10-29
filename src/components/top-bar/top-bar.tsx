@@ -45,10 +45,16 @@ export default function TopBar({ title }: IProps) {
     >
       <Toolbar sx={{ flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <Typography
+          component={NavLink}
+          to='/'
           variant='h1'
           sx={{
             fontSize: '70px',
             textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+            color: 'primary.dark',
+            '&&:hover': {
+              color: 'primary.dark',
+            },
           }}
         >
           Snapcook

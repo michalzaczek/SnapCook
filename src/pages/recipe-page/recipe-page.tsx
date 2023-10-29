@@ -67,12 +67,12 @@ export default function RecipePage() {
               display: { md: 'none' },
             }}
           />
-          <Grid container sx={{ display: { md: 'none' } }}>
+          <Grid container>
             <Grid item xs={6}>
               <Box
                 sx={{
                   position: 'relative',
-                  p: { xs: 3, md: 6 },
+                  p: { xs: 3 },
                   pr: { md: 0 },
                   textAlign: 'left',
                 }}
@@ -98,7 +98,10 @@ export default function RecipePage() {
                   textAlign: 'right',
                 }}
               >
-                <FavoriteRecipeIcon recipe={recipe} sx={iconStyle} />
+                <FavoriteRecipeIcon
+                  recipe={recipe}
+                  sx={{ ...iconStyle, display: { md: 'none' } }}
+                />
               </Box>
             </Grid>
           </Grid>

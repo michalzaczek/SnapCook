@@ -55,7 +55,12 @@ export default function SubscriptionPage() {
             </Typography>
           </ListItem>
         </List>
-        <Button variant='cta' sx={{ boxShadow: 3 }}>
+        <Button
+          variant='cta'
+          sx={{ boxShadow: 3 }}
+          href='https://buy.stripe.com/14kbJQcx70pA7605kk'
+          target='_blank'
+        >
           Subscribe for 2$/monthly
         </Button>
       </Box>

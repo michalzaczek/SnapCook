@@ -97,6 +97,28 @@ const deafultTheme = createTheme({
         },
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.secondary.main,
+        }),
+        indicator: ({ theme }) => ({
+          backgroundColor: theme.palette.text.primary,
+        }),
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.text.primary,
+          textTransform: 'capitalize',
+          fontWeight: 700,
+          '&&.Mui-selected': {
+            color: theme.palette.text.primary,
+          },
+        }),
+      },
+    },
   },
   typography: (palette) => ({
     fontFamily: 'Lato',

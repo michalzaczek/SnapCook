@@ -94,7 +94,7 @@ export default function RecipeThumbnail({ recipe }: IProps) {
               textAlign: 'left',
               fontSize: '18px',
               color: 'text.secondary',
-              '&& span': { fontSize: '10px', mx: 0.5 },
+              '&& .separator': { fontSize: '10px', mx: 0.5 },
             }}
           >
             {recipe.usedIngredients.map((i, index) => {
@@ -102,9 +102,10 @@ export default function RecipeThumbnail({ recipe }: IProps) {
                 index + 1 === recipe.usedIngredients.length ? '' : '•';
 
               return (
-                <>
-                  {i.originalName} <span>{separator} </span>
-                </>
+                <span key={i.originalName}>
+                  {i.originalName}{' '}
+                  <span className='separator'>{separator} </span>
+                </span>
               );
             })}
           </Typography>

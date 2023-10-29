@@ -92,9 +92,12 @@ const deafultTheme = createTheme({
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: {
-          top: '-7px',
-        },
+        root: ({ theme }) => ({
+          top: '-9px',
+          left: '25px',
+          backgroundColor: 'transparent',
+          color: theme.palette.primary.text,
+        }),
       },
     },
     MuiTabs: {

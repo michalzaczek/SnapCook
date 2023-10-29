@@ -4,15 +4,15 @@ import { Box } from '@mui/system';
 import { useState, SyntheticEvent, useMemo, ChangeEvent } from 'react';
 import { TabPanel } from '../../components/tab-panel/tab-panel';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
-import RecipeThumbnail from '../../components/recipe-thumbnail/recipe-thumbnail';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { IconButton, Input, TextField, Typography } from '@mui/material';
+import { CardMedia, IconButton, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
 import RecipeList from '../../components/recipe-list/recipe-list';
+import { useAuth } from '../../contexts/auth/auth-context';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -28,6 +28,8 @@ export default function AccountPage() {
       return prev;
     }, []);
   });
+
+  const { user } = useAuth();
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {
@@ -79,9 +81,16 @@ export default function AccountPage() {
               placeContent: 'center',
             }}
           >
-            <PersonIcon
-              sx={{ color: 'primary.light', fontSize: '33px' }}
-            ></PersonIcon>
+            {user?.photoURL ? (
+              <CardMedia
+                sx={{ height: '100%', width: '100%', borderRadius: '100px' }}
+                image={user?.photoURL || ''}
+              ></CardMedia>
+            ) : (
+              <PersonIcon
+                sx={{ color: 'primary.light', fontSize: '33px' }}
+              ></PersonIcon>
+            )}
           </Box>
         </Box>
         <Box
@@ -101,7 +110,7 @@ export default function AccountPage() {
               textTransform: 'uppercase',
             }}
           >
-            Name Username
+            {user?.displayName}
           </Typography>
           <Typography
             variant='subtitle1'
@@ -113,7 +122,7 @@ export default function AccountPage() {
               textTransform: 'lowercase',
             }}
           >
-            @username
+            {user?.email}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

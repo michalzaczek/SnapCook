@@ -2,9 +2,18 @@ import { Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Typography } from '@mui/material';
 import { Box, SxProps } from '@mui/system';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth/auth-context';
 
 export default function SettingsPage() {
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await logOut();
+    navigate('/login');
+  };
+
   const borderStyle: SxProps = {
     borderBottom: '1px solid',
     borderColor: 'primary.text',
@@ -113,9 +122,7 @@ export default function SettingsPage() {
         </Typography>
       </Box>
       <Box sx={{ mb: 4 }}>
-        <Button component={NavLink} to='/login'>
-          Sign Out
-        </Button>
+        <Button onClick={() => signOut()}>Sign Out</Button>
       </Box>
       <Box sx={{ textAlign: 'left' }}>
         <Typography variant='body1' sx={body1Style}>

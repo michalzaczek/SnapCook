@@ -1,10 +1,9 @@
-import { Grid, Input, Skeleton, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
-import RecipeThumbnail from '../../components/recipe-thumbnail/recipe-thumbnail';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import PageHeader from '../../components/page-header/page-header';
 import RecipeList from '../../components/recipe-list/recipe-list';

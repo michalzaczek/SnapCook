@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import { FormLabel } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface SimplePaletteColorOptions {
@@ -76,12 +77,24 @@ const deafultTheme = createTheme({
         },
       ],
     },
-    MuiInputBase: {
+    MuiOutlinedInput: {
       styleOverrides: {
         root: ({ theme }) => ({
           background: theme.palette.secondary.main,
-          borderRadius: '150px !important',
+          borderRadius: '150px',
+          height: '45px',
+          color: theme.palette.text.secondary,
         }),
+        notchedOutline: ({ theme }) => ({
+          borderWidth: '2px',
+        }),
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          top: '-7px',
+        },
       },
     },
   },

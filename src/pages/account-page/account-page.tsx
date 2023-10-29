@@ -7,11 +7,12 @@ import { useRecipes } from '../../contexts/recipes/recipes.context';
 import RecipeThumbnail from '../../components/recipe-thumbnail/recipe-thumbnail';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { IconButton, Input, Typography } from '@mui/material';
+import { IconButton, Input, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
+import RecipeList from '../../components/recipe-list/recipe-list';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -130,28 +131,26 @@ export default function AccountPage() {
         </Tabs>
       </Box>
       <TabPanel value={activeTab} index={0}>
-        <Input
+        <TextField
           onChange={handleSearch}
           value={searchQuery}
-          placeholder='Search for a recipe...'
-          endAdornment={<SearchIcon />}
-          sx={{ mb: 4 }}
-        ></Input>
-        {filteredFavorites?.map((r) => (
-          <RecipeThumbnail key={r.id} recipe={r} />
-        ))}
+          label='Search for a recipe...'
+          InputProps={{ endAdornment: <SearchIcon /> }}
+          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+        ></TextField>
+        <RecipeList recipes={filteredFavorites} />
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
-        <Input
+        <TextField
           onChange={handleSearch}
           value={searchQuery}
-          placeholder='Search for a recipe...'
-          endAdornment={<SearchIcon />}
-          sx={{ mb: 4 }}
-        ></Input>
-        {filteredHistory.toReversed().map((r) => (
-          <RecipeThumbnail key={r.id} recipe={r} />
-        ))}
+          label='Search for a recipe...'
+          InputProps={{ endAdornment: <SearchIcon /> }}
+          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+        ></TextField>
+        <Box>
+          <RecipeList recipes={filteredHistory} />
+        </Box>
       </TabPanel>
     </Box>
   );

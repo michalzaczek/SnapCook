@@ -17,6 +17,7 @@ import LoginPage from './pages/login-page/login-page';
 import SubscriptionPage from './pages/subscription-page/subscription-page';
 import ScrollToTop from './components/scroll-to-top';
 import { AuthProvider } from './contexts/auth/auth-context';
+import ProtectedRoute from './components/protected-route/protected-route';
 
 function App() {
   return (
@@ -49,24 +50,54 @@ function App() {
                     >
                       <Routes>
                         <Route
-                          path="ingredients"
-                          element={<IngredientsPage />}
+                          path='ingredients'
+                          element={
+                            <ProtectedRoute>
+                              <IngredientsPage />
+                            </ProtectedRoute>
+                          }
                         ></Route>
-                        <Route path="/" element={<MainPage />}></Route>
-                        <Route path="recipes" element={<RecipesPage />}></Route>
+                        <Route path='/' element={<MainPage />}></Route>
                         <Route
-                          path="recipe/:id"
-                          element={<RecipePage />}
+                          path='recipes'
+                          element={
+                            <ProtectedRoute>
+                              <RecipesPage />
+                            </ProtectedRoute>
+                          }
                         ></Route>
-                        <Route path="account" element={<AccountPage />}></Route>
                         <Route
-                          path="account/settings"
-                          element={<SettingsPage />}
+                          path='recipe/:id'
+                          element={
+                            <ProtectedRoute>
+                              <RecipePage />
+                            </ProtectedRoute>
+                          }
                         ></Route>
-                        <Route path="login" element={<LoginPage />}></Route>
                         <Route
-                          path="subscription"
-                          element={<SubscriptionPage />}
+                          path='account'
+                          element={
+                            <ProtectedRoute>
+                              <AccountPage />
+                            </ProtectedRoute>
+                          }
+                        ></Route>
+                        <Route
+                          path='account/settings'
+                          element={
+                            <ProtectedRoute>
+                              <SettingsPage />
+                            </ProtectedRoute>
+                          }
+                        ></Route>
+                        <Route path='login' element={<LoginPage />}></Route>
+                        <Route
+                          path='subscription'
+                          element={
+                            <ProtectedRoute>
+                              <SubscriptionPage />
+                            </ProtectedRoute>
+                          }
                         ></Route>
                       </Routes>
                     </Box>

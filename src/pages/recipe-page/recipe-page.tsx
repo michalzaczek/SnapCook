@@ -42,7 +42,9 @@ export default function RecipePage() {
   }, [recipes]);
 
   return (
-    <Container sx={{ px: { xs: 0 }, p: { md: '60px' } }}>
+    <Container
+      sx={{ px: { xs: 0 }, p: { md: '60px' }, bgcolor: 'secondary.main' }}
+    >
       <Box mb={3}>
         <CardMedia
           sx={{

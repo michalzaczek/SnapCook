@@ -122,6 +122,15 @@ const deafultTheme = createTheme({
         }),
       },
     },
+    MuiBadge: {
+      styleOverrides: {
+        badge: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.secondary.main,
+          fontWeight: 700,
+        }),
+      },
+    },
   },
   typography: (palette) => ({
     fontFamily: 'Lato',

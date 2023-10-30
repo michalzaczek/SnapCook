@@ -6,7 +6,7 @@ import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { CircularProgress, Input, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
 
-export default function MainPage() {
+export default function HomePage() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ export default function MainPage() {
 
   return (
     <MainLayout>
-      {isLoading && <CircularProgress />}
+      {isLoading && <CircularProgress size={80} />}
       {!isLoading && (
         <img
           style={{ height: 'auto', width: '250px' }}

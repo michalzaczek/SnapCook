@@ -1,12 +1,11 @@
 import { AppBar, Button, SxProps, Toolbar, Typography } from '@mui/material';
-import { IProps } from './top-bar.interface';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import { NavLink } from 'react-router-dom';
 
-export default function TopBar({ title }: IProps) {
+export default function TopBar() {
   const navButtonStyle: SxProps = {
     textTransform: 'none',
     fontSize: '18px',

@@ -26,7 +26,7 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 function AuthProvider({ children }: { children: ReactNode }) {
   // State to hold the current user and isLoading state
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => auth.currentUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       logOut,
       loginGoogle,
     }),
-    [user]
+    [user, isLoading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

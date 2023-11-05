@@ -1,7 +1,7 @@
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: 'AIzaSyAARy99lrxox2WCIrfNchNos4yhkQVw6dM',
   authDomain: 'snapcook-5db3f.firebaseapp.com',
   projectId: 'snapcook-5db3f',
@@ -13,6 +13,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+auth.useDeviceLanguage();
 
-export { auth, provider };
+const googleProvider = new GoogleAuthProvider();
+
+export { auth, googleProvider };

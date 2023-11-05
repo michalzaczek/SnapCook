@@ -1,27 +1,65 @@
-# React + TypeScript + Vite
+# SnapCook: Turn Your Fridge's Contents into Delicious Dishes!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SnapCook is an intuitive web and mobile application designed to turn your food photos into delicious recipes. Whether you're looking at leftovers in your fridge or fresh ingredients from the market, SnapCook will recommend delightful recipes for you!
 
-Currently, two official plugins are available:
+## Features 🚀
+1. **Ingredient Recognition**: Take a photo of your food items, and our state-of-the-art AI will recognize and list down the ingredients for you.
+2. **Recipe Suggestions**: Based on the identified ingredients, SnapCook offers you two exciting features:
+   - **Generate New Recipes**: Get unique and innovative recipes curated for your ingredients.
+   - **Search Existing Recipes**: Browse our vast database for recipes that match your available ingredients.
+3. **Visual Presentation**: Every recommended recipe comes with an image to inspire your cooking and plating techniques.
+4. **Cross-Platform Availability**: Use SnapCook on your browser, Android, and iOS devices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Why SnapCook? 📸🥗
+- **Minimize Food Waste**: Use what you have to create delicious meals.
+- **Discover New Recipes**: Break the monotony with new culinary explorations.
+- **Easy to Use**: User-friendly design and seamless UI/UX.
+- **Build in Public**: We believe in the power of community. Our project is openly available on GitHub, allowing real-time feedback, collaborations, and transparency in our development process.
 
-## Expanding the ESLint configuration
+## Getting Started 🏁
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites:
+- Android/iOS device or a web browser.
+- An active internet connection.
 
-- Configure the top-level `parserOptions` property like this:
+### Installation:
+1. For web users: Visit our [website](https://github.com/michalzaczek/SnapCook).
+2. For Android users: Download SnapCook from the Google Play Store.
+3. For iOS users: Download SnapCook from the Apple App Store.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Contributions 💡
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+We welcome contributors to our project! Whether you're a developer, designer, or a food enthusiast with feedback, we'd love to hear from you. Check out our `CONTRIBUTING.md` file for guidelines.
+
+## Built With 🛠️
+- [Firebase](https://firebase.google.com/)
+- [React](https://react.dev/)
+
+## Roadmap 🛣️
+
+We're continuously working to improve SnapCook. Here are some features we're currently working on:
+1. Dietary and Allergy Filters.
+2. Social sharing of recipes.
+3. Integration with smart kitchen appliances.
+
+## Contact Us ✉️
+
+For feedback, inquiries, or collaborations, please reach out to:
+- **Filip Marzec** - [https://github.com/Filipos93](https://github.com/Filipos93)
+- **Michał Zaczek** - [http://github.com/michalzaczek](http://github.com/michalzaczek)
+
+## License 📜
+
+This project is licensed under the [SnapCook License] - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments 👍
+
+- A huge shoutout to our community for their continuous feedback and contributions.
+- Logo designed by [Michał Zaczek](http://github.com/michalzaczek).
+- Thanks to OpenAI for the AI-driven image recognition API.
+
+---
+
+Dive into the world of flavors with **SnapCook**. Happy Cooking! 🍳🌍
+
+---

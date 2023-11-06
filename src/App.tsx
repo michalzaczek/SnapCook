@@ -16,7 +16,6 @@ import SettingsPage from './pages/settings-page/settings-page';
 import LoginPage from './pages/login-page/login-page';
 import SubscriptionPage from './pages/subscription-page/subscription-page';
 import ScrollToTop from './components/scroll-to-top';
-import { AuthProvider } from './contexts/auth/auth-context';
 
 function App() {
   return (
@@ -31,51 +30,46 @@ function App() {
             minHeight: '100vh',
           }}
         >
-          <AuthProvider>
-            <IngredientsProvider>
-              <RecipesProvider>
-                <RecipeInfoProvider>
-                  <BrowserRouter>
-                    <ScrollToTop />
-                    <TopBar title={''}></TopBar>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexGrow: '1',
-                        justifyContent: 'center',
-                        pb: { xs: 10, md: 0 },
-                        background: "url('./public/background.png')",
-                      }}
-                    >
-                      <Routes>
-                        <Route
-                          path="ingredients"
-                          element={<IngredientsPage />}
-                        ></Route>
-                        <Route path="/" element={<MainPage />}></Route>
-                        <Route path="recipes" element={<RecipesPage />}></Route>
-                        <Route
-                          path="recipe/:id"
-                          element={<RecipePage />}
-                        ></Route>
-                        <Route path="account" element={<AccountPage />}></Route>
-                        <Route
-                          path="account/settings"
-                          element={<SettingsPage />}
-                        ></Route>
-                        <Route path="login" element={<LoginPage />}></Route>
-                        <Route
-                          path="subscription"
-                          element={<SubscriptionPage />}
-                        ></Route>
-                      </Routes>
-                    </Box>
-                    <Navbar></Navbar>
-                  </BrowserRouter>
-                </RecipeInfoProvider>
-              </RecipesProvider>
-            </IngredientsProvider>
-          </AuthProvider>
+          <IngredientsProvider>
+            <RecipesProvider>
+              <RecipeInfoProvider>
+                <BrowserRouter>
+                  <ScrollToTop />
+                  <TopBar title={''}></TopBar>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexGrow: '1',
+                      justifyContent: 'center',
+                      pb: { xs: 10, md: 0 },
+                      background: "url('./public/background.png')",
+                    }}
+                  >
+                    <Routes>
+                      <Route
+                        path="ingredients"
+                        element={<IngredientsPage />}
+                      ></Route>
+                      <Route path="/" element={<MainPage />}></Route>
+                      <Route path="recipes" element={<RecipesPage />}></Route>
+                      <Route path="recipe/:id" element={<RecipePage />}></Route>
+                      <Route path="account" element={<AccountPage />}></Route>
+                      <Route
+                        path="account/settings"
+                        element={<SettingsPage />}
+                      ></Route>
+                      <Route path="login" element={<LoginPage />}></Route>
+                      <Route
+                        path="subscription"
+                        element={<SubscriptionPage />}
+                      ></Route>
+                    </Routes>
+                  </Box>
+                  <Navbar></Navbar>
+                </BrowserRouter>
+              </RecipeInfoProvider>
+            </RecipesProvider>
+          </IngredientsProvider>
         </Box>
       </ThemeProvider>
     </>

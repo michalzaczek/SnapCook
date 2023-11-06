@@ -5,8 +5,12 @@ import { fetchIngredients } from '../../services/ingredients/ingredients.service
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { CircularProgress, Input, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
+import { useGetData } from '../../hooks/useGetData';
 
 export default function MainPage() {
+  const { data, loading, error } = useGetData('users');
+  console.log(data, loading, error);
+
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,18 +42,18 @@ export default function MainPage() {
           style={{ height: 'auto', width: '250px' }}
           onClick={handleClick}
           src={snapCookLogo}
-          alt=''
+          alt=""
         />
       )}
       <Input
         inputRef={inputRef}
-        type='file'
+        type="file"
         inputProps={{ accept: 'image/*', capture: 'environment' }}
         onChange={handleUpload}
         sx={{ display: 'none' }}
       />
       <Typography
-        variant='subtitle1'
+        variant="subtitle1"
         sx={{ mt: 4, fontSize: '25px', color: 'primary.text' }}
       >
         Tap to take a photo...

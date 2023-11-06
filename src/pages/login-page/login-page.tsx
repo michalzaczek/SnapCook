@@ -2,15 +2,15 @@ import { Box, Button, SxProps, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import { useAuth } from '../../contexts/auth/auth-context';
+// import { useAuth } from '../../contexts/auth/auth-context';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
-  const { loginGoogle } = useAuth();
+  // const { loginGoogle } = useAuth();
   const navigate = useNavigate();
 
   const googleLogin = async () => {
-    await loginGoogle();
+    // await loginGoogle();
 
     navigate('/');
   };
@@ -31,7 +31,7 @@ export default function LoginPage() {
 
   return (
     <MainLayout>
-      <Typography variant='subtitle1' sx={{ mb: 7 }}>
+      <Typography variant="subtitle1" sx={{ mb: 7 }}>
         Please sing in to continue ...
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>

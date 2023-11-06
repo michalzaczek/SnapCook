@@ -3,14 +3,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Typography } from '@mui/material';
 import { Box, SxProps } from '@mui/system';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth/auth-context';
+// import { useAuth } from '../../contexts/auth/auth-context';
 
 export default function SettingsPage() {
-  const { logOut } = useAuth();
+  // const { logOut } = useAuth();
   const navigate = useNavigate();
 
   const signOut = async () => {
-    await logOut();
+    // await logOut();
     navigate('/login');
   };
 
@@ -62,7 +62,7 @@ export default function SettingsPage() {
         }}
       >
         <Typography
-          variant='h1'
+          variant="h1"
           sx={{
             fontFamily: 'Lato',
             fontSize: '28px',
@@ -82,29 +82,29 @@ export default function SettingsPage() {
         }}
       >
         <Typography
-          variant='body1'
+          variant="body1"
           sx={{ fontSize: '16px', mb: 3, fontWeight: 700 }}
         >
           Unlock unlimited search recipes and start to cook whenever you want!
         </Typography>
-        <Button variant='cta' component={NavLink} to='/subscription'>
+        <Button variant="cta" component={NavLink} to="/subscription">
           Upgrade Plan
         </Button>
       </Box>
       <Box sx={{ ...borderStyle, textAlign: 'left', mb: 2 }}>
-        <Typography variant='h2' sx={{ ...h2Style }}>
+        <Typography variant="h2" sx={{ ...h2Style }}>
           Current Plan
         </Typography>
-        <Typography variant='body1' sx={body1Style}>
+        <Typography variant="body1" sx={body1Style}>
           Free
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'left', mb: 2 }}>
-        <Typography variant='h2' sx={{ ...h2Style }}>
+        <Typography variant="h2" sx={{ ...h2Style }}>
           Displayed Name
         </Typography>
         <Typography
-          variant='body1'
+          variant="body1"
           sx={{
             ...body1Style,
             textTransform: 'uppercase',
@@ -114,10 +114,10 @@ export default function SettingsPage() {
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'left', mb: 4 }}>
-        <Typography variant='h2' sx={{ ...h2Style }}>
+        <Typography variant="h2" sx={{ ...h2Style }}>
           Measurement System
         </Typography>
-        <Typography variant='body1' sx={body1Style}>
+        <Typography variant="body1" sx={body1Style}>
           Metric
         </Typography>
       </Box>
@@ -125,7 +125,7 @@ export default function SettingsPage() {
         <Button onClick={() => signOut()}>Sign Out</Button>
       </Box>
       <Box sx={{ textAlign: 'left' }}>
-        <Typography variant='body1' sx={body1Style}>
+        <Typography variant="body1" sx={body1Style}>
           Delete Account
         </Typography>
       </Box>

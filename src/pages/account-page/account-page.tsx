@@ -12,7 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
 import RecipeList from '../../components/recipe-list/recipe-list';
-import { useAuth } from '../../contexts/auth/auth-context';
+// import { useAuth } from '../../contexts/auth/auth-context';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -28,8 +28,12 @@ export default function AccountPage() {
       return prev;
     }, []);
   });
-
-  const { user } = useAuth();
+  const user = {
+    displayName: 'Test User',
+    email: 'asdas',
+    photoURL: '',
+  };
+  // const { user } = useAuth();
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {
@@ -102,7 +106,7 @@ export default function AccountPage() {
           }}
         >
           <Typography
-            variant='subtitle1'
+            variant="subtitle1"
             sx={{
               lineHeight: '1',
               textAlign: 'left',
@@ -110,10 +114,10 @@ export default function AccountPage() {
               textTransform: 'uppercase',
             }}
           >
-            {user?.displayName}
+            {/* {user?.displayName} */}
           </Typography>
           <Typography
-            variant='subtitle1'
+            variant="subtitle1"
             sx={{
               lineHeight: '1',
               textAlign: 'left',
@@ -126,7 +130,7 @@ export default function AccountPage() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton component={NavLink} to='settings'>
+          <IconButton component={NavLink} to="settings">
             <SettingsOutlinedIcon
               sx={{ fontSize: '50px', color: 'primary.dark' }}
             />
@@ -134,16 +138,16 @@ export default function AccountPage() {
         </Box>
       </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth'>
-          <Tab label='Favorite Recipes' />
-          <Tab label='Search History' />
+        <Tabs value={activeTab} onChange={handleTabChange} variant="fullWidth">
+          <Tab label="Favorite Recipes" />
+          <Tab label="Search History" />
         </Tabs>
       </Box>
       <TabPanel value={activeTab} index={0}>
         <TextField
           onChange={handleSearch}
           value={searchQuery}
-          label='Search for a recipe...'
+          label="Search for a recipe..."
           InputProps={{ endAdornment: <SearchIcon /> }}
           sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
         ></TextField>
@@ -153,7 +157,7 @@ export default function AccountPage() {
         <TextField
           onChange={handleSearch}
           value={searchQuery}
-          label='Search for a recipe...'
+          label="Search for a recipe..."
           InputProps={{ endAdornment: <SearchIcon /> }}
           sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
         ></TextField>

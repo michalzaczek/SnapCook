@@ -25,7 +25,6 @@ export default function AppContent() {
                 display: 'flex',
                 flexGrow: '1',
                 justifyContent: 'center',
-                alignItems: 'center',
                 pb: { xs: 10, md: 0 },
                 background: "url('./public/background.png')",
               }}

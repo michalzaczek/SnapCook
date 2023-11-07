@@ -1,17 +1,7 @@
 // AuthContext.tsx
-import React, { createContext, useReducer, useContext, ReactNode } from 'react';
-import { UserState, AuthAction } from './authTypes';
+import React, { createContext, useReducer, useContext } from 'react';
+import { AuthContextProps, AuthProviderProps } from './authTypes';
 import { authReducer, initialAuthState } from './authReducer';
-
-// Define the shape of the context
-interface AuthContextProps {
-  state: UserState;
-  dispatch: React.Dispatch<AuthAction>;
-}
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 // Create the context
 export const AuthContext = createContext<AuthContextProps>(

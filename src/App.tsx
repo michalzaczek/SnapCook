@@ -16,6 +16,7 @@ import SettingsPage from './pages/settings-page/settings-page';
 import LoginPage from './pages/login-page/login-page';
 import SubscriptionPage from './pages/subscription-page/subscription-page';
 import ScrollToTop from './components/scroll-to-top';
+import TestAuthComponent from './contexts/auth/TestAuthComponent';
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
                         path="subscription"
                         element={<SubscriptionPage />}
                       ></Route>
+                      <Route path="/test" element={<TestAuthComponent />} />
                     </Routes>
                   </Box>
                   <Navbar></Navbar>

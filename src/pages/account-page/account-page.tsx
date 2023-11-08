@@ -12,7 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
 import RecipeList from '../../components/recipe-list/recipe-list';
-// import { useAuth } from '../../contexts/auth/auth-context';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -28,12 +28,9 @@ export default function AccountPage() {
       return prev;
     }, []);
   });
-  const user = {
-    displayName: 'Test User',
-    email: 'asdas',
-    photoURL: '',
-  };
-  // const { user } = useAuth();
+
+  const { state } = useAuth();
+  const { user } = state;
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {
@@ -114,7 +111,7 @@ export default function AccountPage() {
               textTransform: 'uppercase',
             }}
           >
-            {/* {user?.displayName} */}
+            {user?.displayName}
           </Typography>
           <Typography
             variant="subtitle1"

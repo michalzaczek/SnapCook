@@ -50,6 +50,8 @@ function App() {
                     <Routes>
                       <Route path="/" element={<MainPage />} />
                       <Route path="login" element={<LoginPage />} />
+                      <Route path="test" element={<TestAuthComponent />} />
+                      <Route path="*" element={<MainPage />} />
 
                       <Route element={<ProtectedRoute />}>
                         <Route
@@ -67,7 +69,6 @@ function App() {
                           path="subscription"
                           element={<SubscriptionPage />}
                         />
-                        <Route path="*" />
                       </Route>
                     </Routes>
                   </Box>

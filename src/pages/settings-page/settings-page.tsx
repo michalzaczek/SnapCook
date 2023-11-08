@@ -3,15 +3,16 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Typography } from '@mui/material';
 import { Box, SxProps } from '@mui/system';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../contexts/auth/auth-context';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function SettingsPage() {
-  // const { logOut } = useAuth();
+  const { state, dispatch } = useAuth();
+  const user = state.user;
   const navigate = useNavigate();
 
-  const signOut = async () => {
-    // await logOut();
-    navigate('/login');
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+    navigate('/');
   };
 
   const borderStyle: SxProps = {
@@ -110,7 +111,7 @@ export default function SettingsPage() {
             textTransform: 'uppercase',
           }}
         >
-          Name surname
+          {user?.displayName ?? 'Unknown'}
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'left', mb: 4 }}>
@@ -122,7 +123,7 @@ export default function SettingsPage() {
         </Typography>
       </Box>
       <Box sx={{ mb: 4 }}>
-        <Button onClick={() => signOut()}>Sign Out</Button>
+        <Button onClick={handleLogout}>Sign Out</Button>
       </Box>
       <Box sx={{ textAlign: 'left' }}>
         <Typography variant="body1" sx={body1Style}>

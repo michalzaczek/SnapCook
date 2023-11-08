@@ -5,12 +5,8 @@ import { fetchIngredients } from '../../services/ingredients/ingredients.service
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { CircularProgress, Input, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
-import { useGetData } from '../../hooks/useGetData';
 
 export default function MainPage() {
-  const { data, loading, error } = useGetData('users');
-  console.log(data, loading, error);
-
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);

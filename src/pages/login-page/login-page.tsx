@@ -2,16 +2,16 @@ import { Box, Button, SxProps, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-// import { useAuth } from '../../contexts/auth/auth-context';
+import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
-  // const { loginGoogle } = useAuth();
   const navigate = useNavigate();
+  const googleLogin = useGoogleLogin();
 
-  const googleLogin = async () => {
-    // await loginGoogle();
-
+  const handleGoogleLogin = async () => {
+    await googleLogin();
+    // Assuming googleLogin resolves after successful login and rejects or throws otherwise
     navigate('/');
   };
 
@@ -38,7 +38,7 @@ export default function LoginPage() {
         <Button
           sx={{ ...buttonStyle, mb: 3 }}
           startIcon={<GoogleIcon sx={iconStyle} />}
-          onClick={() => googleLogin()}
+          onClick={handleGoogleLogin}
         >
           Sign in with Google
         </Button>

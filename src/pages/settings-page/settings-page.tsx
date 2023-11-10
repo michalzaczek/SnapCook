@@ -7,7 +7,7 @@ import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function SettingsPage() {
   const { state, dispatch } = useAuth();
-  const user = state.user;
+  const { user } = state;
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -74,30 +74,32 @@ export default function SettingsPage() {
           Settings
         </Typography>
       </Box>
-      <Box
-        sx={{
-          backgroundColor: 'primary.light',
-          borderRadius: '8px',
-          p: 4,
-          mb: 4,
-        }}
-      >
-        <Typography
-          variant="body1"
-          sx={{ fontSize: '16px', mb: 3, fontWeight: 700 }}
+      {!state.isPremium && (
+        <Box
+          sx={{
+            backgroundColor: 'primary.light',
+            borderRadius: '8px',
+            p: 4,
+            mb: 4,
+          }}
         >
-          Unlock unlimited search recipes and start to cook whenever you want!
-        </Typography>
-        <Button variant="cta" component={NavLink} to="/subscription">
-          Upgrade Plan
-        </Button>
-      </Box>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: '16px', mb: 3, fontWeight: 700 }}
+          >
+            Unlock unlimited search recipes and start to cook whenever you want!
+          </Typography>
+          <Button variant="cta" component={NavLink} to="/subscription">
+            Upgrade Plan
+          </Button>
+        </Box>
+      )}
       <Box sx={{ ...borderStyle, textAlign: 'left', mb: 2 }}>
         <Typography variant="h2" sx={{ ...h2Style }}>
           Current Plan
         </Typography>
         <Typography variant="body1" sx={body1Style}>
-          Free
+          {state.isPremium ? 'Premium' : 'Free'}
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'left', mb: 2 }}>

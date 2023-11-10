@@ -7,6 +7,8 @@ export const useStripePayment = () => {
   const { state, dispatch } = useContext(AuthContext);
   const currentUser = state.user;
 
+  dispatch({ type: 'LOADING' });
+
   const redirectToCheckout = async (priceId: string) => {
     if (!currentUser || !currentUser.uid) {
       dispatch({ type: 'FAILURE', payload: 'User is not authenticated' });
@@ -40,7 +42,7 @@ export const useStripePayment = () => {
           unsubscribe();
           dispatch({
             type: 'FAILURE',
-            payload: 'An error occurred while listening to the session',
+            payload: 'An error occurred while listening to the session: ' + err,
           });
         }
       );

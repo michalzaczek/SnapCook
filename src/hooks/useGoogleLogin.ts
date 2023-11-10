@@ -2,10 +2,12 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useContext } from 'react';
 import { auth } from '../firebase/config';
 import { AuthContext } from '../contexts/auth/AuthContext';
+import { useUpdateSubscriptionStatus } from './useUpdateSubscriptionStatus';
 
 // Define your hook
 export const useGoogleLogin = () => {
   const { dispatch } = useContext(AuthContext);
+  const updateSubscriptionStatus = useUpdateSubscriptionStatus();
 
   const googleLogin = async () => {
     dispatch({ type: 'LOADING' });
@@ -18,15 +20,12 @@ export const useGoogleLogin = () => {
       //   const credential = GoogleAuthProvider.credentialFromResult(result);
       const user = result.user;
 
-      // Here subscription status if needed.
-      // const subscriptionStatus = (await user.getIdTokenResult()).claims.subscriptionStatus || 'none';
+      await updateSubscriptionStatus(user.uid);
 
       // Dispatch login success action
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: user,
-        // subscription status:
-        // subscriptionStatus: subscriptionStatus,
       });
 
       // additional logic to handle after a successful login

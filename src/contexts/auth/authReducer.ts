@@ -3,9 +3,9 @@ import { UserState, AuthAction } from './authTypes';
 // Define the initial state for authentication
 export const initialAuthState: UserState = {
   isAuthenticated: false,
-  loading: false,
+  isPremium: false,
   user: null,
-  subscriptionStatus: 'none',
+  loading: false,
   error: null,
 };
 
@@ -28,7 +28,7 @@ export const authReducer = (
         ...state,
         isAuthenticated: false,
         user: null,
-        subscriptionStatus: 'none',
+        isPremium: false,
         loading: false,
         error: null,
       };
@@ -39,10 +39,10 @@ export const authReducer = (
         loading: false,
         error: null,
       };
-    case 'SET_SUBSCRIPTION_STATUS':
+    case 'SET_PREMIUM_STATUS':
       return {
         ...state,
-        subscriptionStatus: action.payload,
+        isPremium: action.payload,
         loading: false,
         error: null,
       };

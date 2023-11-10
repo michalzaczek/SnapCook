@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 // Define the shape of the user state
 export interface UserState {
   isAuthenticated: boolean;
-  loading: boolean;
+  isPremium: boolean;
   user: User | null;
-  subscriptionStatus: 'none' | 'pending' | 'active';
+  loading: boolean;
   error: string | null;
 }
 
@@ -15,7 +15,7 @@ export type AuthAction =
   | { type: 'LOGIN_SUCCESS'; payload: User }
   | { type: 'LOGOUT' }
   | { type: 'LOAD_USER'; payload: User }
-  | { type: 'SET_SUBSCRIPTION_STATUS'; payload: 'none' | 'pending' | 'active' }
+  | { type: 'SET_PREMIUM_STATUS'; payload: boolean }
   | { type: 'LOADING' }
   | { type: 'FAILURE'; payload: string | null };
 

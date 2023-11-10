@@ -4,8 +4,10 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function LoginPage() {
+  const { state } = useAuth();
   const navigate = useNavigate();
   const googleLogin = useGoogleLogin();
 
@@ -31,8 +33,10 @@ export default function LoginPage() {
 
   return (
     <MainLayout>
+      {}
       <Typography variant="subtitle1" sx={{ mb: 7 }}>
-        Please sing in to continue ...
+        {state.loading ? 'Loading ...' : 'Please sing in to continue ...'}
+        {state.error && state.error}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Button

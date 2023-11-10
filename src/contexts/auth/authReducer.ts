@@ -3,7 +3,7 @@ import { UserState, AuthAction } from './authTypes';
 // Define the initial state for authentication
 export const initialAuthState: UserState = {
   isAuthenticated: false,
-  loading: true,
+  loading: false,
   user: null,
   subscriptionStatus: 'none',
   error: null,
@@ -44,6 +44,12 @@ export const authReducer = (
         ...state,
         subscriptionStatus: action.payload,
         loading: false,
+        error: null,
+      };
+    case 'LOADING':
+      return {
+        ...state,
+        loading: true,
         error: null,
       };
     case 'FAILURE':

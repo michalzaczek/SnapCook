@@ -8,6 +8,8 @@ export const useGoogleLogin = () => {
   const { dispatch } = useContext(AuthContext);
 
   const googleLogin = async () => {
+    dispatch({ type: 'LOADING' });
+
     const provider = new GoogleAuthProvider();
     try {
       // Start the sign-in process with a popup.

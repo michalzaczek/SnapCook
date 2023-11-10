@@ -7,7 +7,7 @@ export interface UserState {
   loading: boolean;
   user: User | null;
   subscriptionStatus: 'none' | 'pending' | 'active';
-  error: Error | null;
+  error: string | null;
 }
 
 // Define the actions types
@@ -16,7 +16,8 @@ export type AuthAction =
   | { type: 'LOGOUT' }
   | { type: 'LOAD_USER'; payload: User }
   | { type: 'SET_SUBSCRIPTION_STATUS'; payload: 'none' | 'pending' | 'active' }
-  | { type: 'FAILURE'; payload: Error | null };
+  | { type: 'LOADING' }
+  | { type: 'FAILURE'; payload: string | null };
 
 // Define the shape of the context
 export interface AuthContextProps {

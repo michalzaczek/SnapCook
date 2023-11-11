@@ -37,7 +37,7 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
           { ...ingredient, name: ingredient.name.toLowerCase() },
         ];
       }
-      throw 'Ingredient is already on the list';
+      return [...ingredients];
     });
   }
 

@@ -1,5 +1,6 @@
 import Ingredient from '../../components/ingredient/ingredient';
 import {
+  AlertColor,
   Box,
   Button,
   Checkbox,
@@ -15,12 +16,14 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PageHeader from '../../components/page-header/page-header';
+import MessageSnackbar from '../../components/message-snackbar/message-snackbar';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
-
   const [newIngredient, setNewIngredient] = useState<string>('');
-
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [messageSeverity, setMessageSeverity] = useState<AlertColor>('error');
   const { setRecipes } = useRecipes();
 
   const {
@@ -64,11 +67,18 @@ export default function IngredientsPage() {
       .filter((i) => i.isConfirmed)
       .map((i) => i.name);
 
-    await setRecipes(selectedIngredients);
+    try {
+      await setRecipes(selectedIngredients);
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    navigate('/recipes');
+      navigate('/recipes');
+    } catch (err: any) {
+      setIsLoading(false);
+      setMessageSeverity('error');
+      setErrorMessage(err);
+      setShowErrorMessage(true);
+    }
   };
 
   const handleNewIngredientChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,11 +90,17 @@ export default function IngredientsPage() {
       return;
     }
 
-    addIngredient({
-      isConfirmed: true,
-      name: newIngredient!,
-      percentage: 100,
-    });
+    if (ingredients.find((i) => i.name === newIngredient)) {
+      setMessageSeverity('info');
+      setErrorMessage('Ingredient is already on the list');
+      setShowErrorMessage(true);
+    } else {
+      addIngredient({
+        isConfirmed: true,
+        name: newIngredient!,
+        percentage: 100,
+      });
+    }
 
     setNewIngredient('');
   };
@@ -178,6 +194,12 @@ export default function IngredientsPage() {
           </LoadingButton>
         </Box>
       </Container>
+      <MessageSnackbar
+        open={showErrorMessage}
+        handleClose={() => setShowErrorMessage(false)}
+        message={errorMessage}
+        severity={messageSeverity}
+      ></MessageSnackbar>
     </Box>
   );
 }

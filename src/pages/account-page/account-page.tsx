@@ -1,18 +1,24 @@
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import { Box } from '@mui/system';
 import { useState, SyntheticEvent, useMemo, ChangeEvent } from 'react';
 import { TabPanel } from '../../components/tab-panel/tab-panel';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { CardMedia, IconButton, TextField, Typography } from '@mui/material';
+import {
+  CardMedia,
+  Container,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
 import RecipeList from '../../components/recipe-list/recipe-list';
 import { useAuth } from '../../contexts/auth/auth-context';
+import AccountPageTabs from './account-page-tabs';
+import SettingsPage from '../settings-page/settings-page';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -65,9 +71,11 @@ export default function AccountPage() {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: { xs: 'space-between', md: 'flex-end' },
           backgroundColor: 'primary.light',
-          p: 3,
+          p: { xs: 3, md: 0 },
+          pb: { md: '20px' },
+          pr: { md: '40px' },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
@@ -98,7 +106,7 @@ export default function AccountPage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            flexGrow: '1',
+            flexGrow: { xs: '1', md: '0' },
           }}
         >
           <Typography
@@ -134,33 +142,35 @@ export default function AccountPage() {
         </Box>
       </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={activeTab} onChange={handleTabChange} variant='fullWidth'>
-          <Tab label='Favorite Recipes' />
-          <Tab label='Search History' />
-        </Tabs>
+        <AccountPageTabs onChange={handleTabChange} activeTab={activeTab} />
       </Box>
-      <TabPanel value={activeTab} index={0}>
-        <TextField
-          onChange={handleSearch}
-          value={searchQuery}
-          label='Search for a recipe...'
-          InputProps={{ endAdornment: <SearchIcon /> }}
-          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
-        ></TextField>
-        <RecipeList recipes={filteredFavorites} />
-      </TabPanel>
-      <TabPanel value={activeTab} index={1}>
-        <TextField
-          onChange={handleSearch}
-          value={searchQuery}
-          label='Search for a recipe...'
-          InputProps={{ endAdornment: <SearchIcon /> }}
-          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
-        ></TextField>
-        <Box>
-          <RecipeList recipes={filteredHistory} />
-        </Box>
-      </TabPanel>
+      <Container>
+        <TabPanel value={activeTab} index={0}>
+          <TextField
+            onChange={handleSearch}
+            value={searchQuery}
+            label='Search for a recipe...'
+            InputProps={{ endAdornment: <SearchIcon /> }}
+            sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+          ></TextField>
+          <RecipeList recipes={filteredFavorites} />
+        </TabPanel>
+        <TabPanel value={activeTab} index={1}>
+          <TextField
+            onChange={handleSearch}
+            value={searchQuery}
+            label='Search for a recipe...'
+            InputProps={{ endAdornment: <SearchIcon /> }}
+            sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+          ></TextField>
+          <Box>
+            <RecipeList recipes={filteredHistory} />
+          </Box>
+        </TabPanel>
+        <TabPanel value={activeTab} index={2}>
+          <SettingsPage />
+        </TabPanel>
+      </Container>
     </Box>
   );
 }

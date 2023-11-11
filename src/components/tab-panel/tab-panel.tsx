@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { IProps } from './props.interface';
 
@@ -12,7 +11,7 @@ export function TabPanel(props: IProps) {
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
     </div>
   );
 }

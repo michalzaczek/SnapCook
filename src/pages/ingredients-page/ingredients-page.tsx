@@ -1,6 +1,5 @@
 import Ingredient from '../../components/ingredient/ingredient';
 import {
-  AlertColor,
   Box,
   Button,
   Checkbox,
@@ -16,15 +15,13 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PageHeader from '../../components/page-header/page-header';
-import MessageSnackbar from '../../components/message-snackbar/message-snackbar';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [newIngredient, setNewIngredient] = useState<string>('');
-  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [messageSeverity, setMessageSeverity] = useState<AlertColor>('error');
   const { setRecipes } = useRecipes();
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   const {
     ingredients,
@@ -75,9 +72,9 @@ export default function IngredientsPage() {
       navigate('/recipes');
     } catch (err: any) {
       setIsLoading(false);
-      setMessageSeverity('error');
-      setErrorMessage(err);
-      setShowErrorMessage(true);
+      setSeverity('error');
+      setMessage(err);
+      setOpen(true);
     }
   };
 
@@ -91,9 +88,9 @@ export default function IngredientsPage() {
     }
 
     if (ingredients.find((i) => i.name === newIngredient)) {
-      setMessageSeverity('info');
-      setErrorMessage('Ingredient is already on the list');
-      setShowErrorMessage(true);
+      setSeverity('info');
+      setMessage('Ingredient is already on the list');
+      setOpen(true);
     } else {
       addIngredient({
         isConfirmed: true,
@@ -194,12 +191,6 @@ export default function IngredientsPage() {
           </LoadingButton>
         </Box>
       </Container>
-      <MessageSnackbar
-        open={showErrorMessage}
-        handleClose={() => setShowErrorMessage(false)}
-        message={errorMessage}
-        severity={messageSeverity}
-      ></MessageSnackbar>
     </Box>
   );
 }

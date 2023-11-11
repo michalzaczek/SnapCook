@@ -1,4 +1,4 @@
-import { CircularProgress, Box, LinearProgress } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 import ScrollToTop from '../scroll-to-top';
@@ -8,9 +8,12 @@ import { RecipeInfoProvider } from '../../contexts/recipe-info/recipe-info-conte
 import { RecipesProvider } from '../../contexts/recipes/recipes.context';
 import { useAuth } from '../../contexts/auth/auth-context';
 import AppRoutes from '../app-routes/app-routes';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
+import MessageSnackbar from '../message-snackbar/message-snackbar';
 
 export default function AppContent() {
   const { isLoading } = useAuth();
+  const { open, message, severity, setOpen } = useUIMessage();
 
   return (
     <IngredientsProvider>
@@ -32,6 +35,12 @@ export default function AppContent() {
               {!isLoading && <AppRoutes />}
             </Box>
             <Navbar />
+            <MessageSnackbar
+              severity={severity}
+              open={open}
+              message={message}
+              handleClose={() => setOpen(false)}
+            />
           </BrowserRouter>
         </RecipeInfoProvider>
       </RecipesProvider>

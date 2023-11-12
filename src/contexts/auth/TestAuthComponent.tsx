@@ -1,7 +1,9 @@
 // TestAuthComponent.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { useGoogleLogin } from '../../hooks/useGoogleLogin';
+import { httpsCallable } from 'firebase/functions';
+import { functions } from '../../firebase/config';
 
 const TestAuthComponent: React.FC = () => {
   const { state, dispatch } = useAuth();
@@ -12,6 +14,18 @@ const TestAuthComponent: React.FC = () => {
     // Dispatch a logout action
     dispatch({ type: 'LOGOUT' });
   };
+
+  useEffect(() => {
+    const testFunction = httpsCallable(functions, 'testFunction');
+
+    testFunction()
+      .then((result) => {
+        console.log('Result from testFunction:', result);
+      })
+      .catch((err) => {
+        console.error('Error calling testFunction:', err);
+      });
+  }, []);
 
   return (
     <div>
@@ -25,3 +39,6 @@ const TestAuthComponent: React.FC = () => {
 };
 
 export default TestAuthComponent;
+function setData(data: unknown) {
+  throw new Error('Function not implemented.');
+}

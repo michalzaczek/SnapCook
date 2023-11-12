@@ -24,6 +24,7 @@ export type AuthAction =
 export interface AuthContextProps {
   state: UserState;
   dispatch: Dispatch<AuthAction>;
+  updateSubscriptionStatus: (userId: string) => Promise<void>;
 }
 
 export interface AuthProviderProps {

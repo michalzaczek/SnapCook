@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function SettingsPage() {
-  const { dispatch } = useAuth();
+  const { dispatch, state } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -108,7 +108,7 @@ export default function SettingsPage() {
             Current Plan
           </Typography>
           <Typography variant='body1' sx={body1Style}>
-            Free
+            {state.isPremium ? 'Premium' : 'Free'}
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'left', mb: 2 }}>

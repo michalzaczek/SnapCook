@@ -2,12 +2,10 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useContext } from 'react';
 import { auth } from '../firebase/config';
 import { AuthContext } from '../contexts/auth/AuthContext';
-import { useUpdateSubscriptionStatus } from './useUpdateSubscriptionStatus';
 
 // Define your hook
 export const useGoogleLogin = () => {
-  const { dispatch } = useContext(AuthContext);
-  const updateSubscriptionStatus = useUpdateSubscriptionStatus();
+  const { dispatch, updateSubscriptionStatus } = useContext(AuthContext);
 
   const googleLogin = async () => {
     dispatch({ type: 'LOADING' });

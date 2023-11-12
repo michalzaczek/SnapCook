@@ -17,7 +17,8 @@ export type AuthAction =
   | { type: 'LOAD_USER'; payload: User }
   | { type: 'SET_PREMIUM_STATUS'; payload: boolean }
   | { type: 'LOADING' }
-  | { type: 'FAILURE'; payload: string | null };
+  | { type: 'FAILURE'; payload: string | null }
+  | { type: 'LOADED' };
 
 // Define the shape of the context
 export interface AuthContextProps {

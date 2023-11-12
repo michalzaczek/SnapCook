@@ -1,19 +1,30 @@
-// AuthContext.tsx
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import { AuthContextProps, AuthProviderProps } from './authTypes';
 import { authReducer, initialAuthState } from './authReducer';
+import { onAuthStateChanged, User } from '@firebase/auth';
+import { auth } from '../../firebase/config';
 
-// Create the context
 export const AuthContext = createContext<AuthContextProps>(
   {} as AuthContextProps
 );
 
-// Create a custom hook to use the auth context
 export const useAuth = () => useContext(AuthContext);
 
-// Define the AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser: User | null) => {
+      dispatch({ type: 'LOADING' });
+
+      if (!currentUser) {
+        dispatch({ type: 'LOADED' });
+        return;
+      }
+
+      dispatch({ type: 'LOGIN_SUCCESS', payload: currentUser });
+    });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>

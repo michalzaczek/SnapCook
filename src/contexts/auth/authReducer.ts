@@ -1,15 +1,15 @@
 import { UserState, AuthAction } from './authTypes';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
-// Define the initial state for authentication
 export const initialAuthState: UserState = {
   isAuthenticated: false,
   isPremium: false,
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
-// Define the reducer function
 export const authReducer = (
   state: UserState,
   action: AuthAction
@@ -24,6 +24,7 @@ export const authReducer = (
         error: null,
       };
     case 'LOGOUT':
+      signOut(auth);
       return {
         ...state,
         isAuthenticated: false,
@@ -57,6 +58,12 @@ export const authReducer = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case 'LOADED':
+      return {
+        ...state,
+        loading: false,
+        error: null,
       };
     default:
       return state;

@@ -16,9 +16,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavLink } from 'react-router-dom';
 import RecipeList from '../../components/recipe-list/recipe-list';
-import { useAuth } from '../../contexts/auth/auth-context';
 import AccountPageTabs from './account-page-tabs';
 import SettingsPage from '../settings-page/settings-page';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function AccountPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -35,7 +35,8 @@ export default function AccountPage() {
     }, []);
   });
 
-  const { user } = useAuth();
+  const { state } = useAuth();
+  const { user } = state;
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {

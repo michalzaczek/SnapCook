@@ -43,18 +43,18 @@ export default function HomePage() {
           style={{ height: 'auto', width: '250px' }}
           onClick={handleClick}
           src={snapCookLogo}
-          alt=''
+          alt=""
         />
       )}
       <Input
         inputRef={inputRef}
-        type='file'
+        type="file"
         inputProps={{ accept: 'image/*', capture: 'environment' }}
         onChange={handleUpload}
         sx={{ display: 'none' }}
       />
       <Typography
-        variant='subtitle1'
+        variant="subtitle1"
         sx={{ mt: 4, fontSize: '25px', color: 'primary.text' }}
       >
         Tap to take a photo...

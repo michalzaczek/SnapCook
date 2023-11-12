@@ -2,19 +2,20 @@ import { Box, Button, SxProps, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import { useAuth } from '../../contexts/auth/auth-context';
+import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useNavigate } from 'react-router-dom';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function LoginPage() {
-  const { loginGoogle } = useAuth();
+  const { state } = useAuth();
   const navigate = useNavigate();
   const { setMessage, setSeverity, setOpen } = useUIMessage();
+  const googleLogin = useGoogleLogin();
 
-  const googleLogin = async () => {
+  const handleGoogleLogin = async () => {
     try {
-      await loginGoogle();
-
+      await googleLogin();
       navigate('/');
     } catch (err) {
       setSeverity('error');
@@ -39,14 +40,16 @@ export default function LoginPage() {
 
   return (
     <MainLayout>
+      {}
       <Typography variant='subtitle1' sx={{ mb: 7 }}>
-        Please sing in to continue ...
+        {state.loading ? 'Loading ...' : 'Please sing in to continue ...'}
+        {state.error && state.error}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Button
           sx={{ ...buttonStyle, mb: 3 }}
           startIcon={<GoogleIcon sx={iconStyle} />}
-          onClick={() => googleLogin()}
+          onClick={handleGoogleLogin}
         >
           Sign in with Google
         </Button>

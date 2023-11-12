@@ -3,23 +3,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Typography } from '@mui/material';
 import { Box, SxProps } from '@mui/system';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth/auth-context';
-import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function SettingsPage() {
-  const { logOut } = useAuth();
+  const { dispatch } = useAuth();
   const navigate = useNavigate();
-  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
-  const signOut = async () => {
-    try {
-      await logOut();
-      navigate('/login');
-    } catch (err) {
-      setSeverity('error');
-      setMessage('Log out failed.');
-      setOpen(true);
-    }
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+    navigate('/');
   };
 
   const borderStyle: SxProps = {
@@ -142,7 +134,7 @@ export default function SettingsPage() {
           </Typography>
         </Box>
         <Box sx={{ mb: 4 }}>
-          <Button onClick={() => signOut()}>Sign Out</Button>
+          <Button onClick={() => handleLogout}>Sign Out</Button>
         </Box>
         <Box sx={{ textAlign: 'left' }}>
           <Typography variant='body1' sx={body1Style}>

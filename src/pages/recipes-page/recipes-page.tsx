@@ -7,6 +7,7 @@ import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import PageHeader from '../../components/page-header/page-header';
 import RecipeList from '../../components/recipe-list/recipe-list';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function RecipesPage() {
   const { recipes, setSearchQuery, searchQuery } = useRecipes();
@@ -14,6 +15,7 @@ export default function RecipesPage() {
   const { setRecipes } = useRecipes();
   const [isLoading, setIsLoading] = useState(false);
   const [filteredRecipes, setFilteredRecipes] = useState<IRecipeData[]>([]);
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -37,7 +39,13 @@ export default function RecipesPage() {
         .map((i) => i.name);
 
       setIsLoading(true);
-      await setRecipes(selectedIngredients);
+      try {
+        await setRecipes(selectedIngredients);
+      } catch (err: any) {
+        setSeverity('error');
+        setMessage(err);
+        setOpen(true);
+      }
       setIsLoading(false);
     };
 

@@ -5,25 +5,30 @@ import { fetchIngredients } from '../../services/ingredients/ingredients.service
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { CircularProgress, Input, Typography } from '@mui/material';
 import MainLayout from '../../components/main-layout/main-layout';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const { addIngredient, resetIngredients } = useIngredients();
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   async function handleUpload(e: ChangeEvent<HTMLInputElement>): Promise<void> {
     setIsLoading(true);
 
-    resetIngredients();
-
-    const ingredients = (await fetchIngredients()).data || [];
-
-    ingredients.forEach((i) => addIngredient(i));
+    try {
+      const ingredients = (await fetchIngredients()).data || [];
+      resetIngredients();
+      ingredients.forEach((i) => addIngredient(i));
+      navigate('ingredients');
+    } catch (err: any) {
+      setSeverity('error');
+      setMessage('Failed to fetch the ingredients.');
+      setOpen(true);
+    }
 
     setIsLoading(false);
-
-    navigate('ingredients');
   }
 
   function handleClick() {

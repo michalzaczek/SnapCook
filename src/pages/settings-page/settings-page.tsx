@@ -4,14 +4,22 @@ import { IconButton, Typography } from '@mui/material';
 import { Box, SxProps } from '@mui/system';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth/auth-context';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function SettingsPage() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   const signOut = async () => {
-    await logOut();
-    navigate('/login');
+    try {
+      await logOut();
+      navigate('/login');
+    } catch (err) {
+      setSeverity('error');
+      setMessage('Log out failed.');
+      setOpen(true);
+    }
   };
 
   const borderStyle: SxProps = {

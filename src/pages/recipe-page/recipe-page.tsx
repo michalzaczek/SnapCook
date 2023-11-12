@@ -14,11 +14,13 @@ import { useEffect, useState } from 'react';
 import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import FavoriteRecipeIcon from '../../components/favorite-recipe-icon/favorite-recipe-icon';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function RecipePage() {
   const { id } = useParams();
   const { getRecipeInfo, recipes } = useRecipeInfo();
   const [recipe, setRecipe] = useState<IRecipeInfo>();
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   const iconStyle: SxProps = {
     fontSize: '32px',
@@ -34,8 +36,14 @@ export default function RecipePage() {
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recipe = await getRecipeInfo(parseInt(id!));
-      setRecipe(recipe);
+      try {
+        const recipe = await getRecipeInfo(parseInt(id!));
+        setRecipe(recipe);
+      } catch (err: any) {
+        setSeverity('error');
+        setMessage(err);
+        setOpen(true);
+      }
     };
 
     getRecipe();

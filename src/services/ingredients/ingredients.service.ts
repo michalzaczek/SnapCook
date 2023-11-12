@@ -10,6 +10,6 @@ export const fetchIngredients = async (): Promise<
     });
     return new Promise((resolve) => resolve(response));
   } catch (error: any) {
-    return new Promise((resolve) => resolve(error));
+    throw error;
   }
 };

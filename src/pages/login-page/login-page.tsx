@@ -4,15 +4,23 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { useAuth } from '../../contexts/auth/auth-context';
 import { useNavigate } from 'react-router-dom';
+import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function LoginPage() {
   const { loginGoogle } = useAuth();
   const navigate = useNavigate();
+  const { setMessage, setSeverity, setOpen } = useUIMessage();
 
   const googleLogin = async () => {
-    await loginGoogle();
+    try {
+      await loginGoogle();
 
-    navigate('/');
+      navigate('/');
+    } catch (err) {
+      setSeverity('error');
+      setMessage('There was an error logging in with Google.');
+      setOpen(true);
+    }
   };
 
   const iconStyle: SxProps = {

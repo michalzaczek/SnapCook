@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth';
-import { ReactNode } from 'react';
+import { Dispatch, ReactNode } from 'react';
 
 // Define the shape of the user state
 export interface UserState {
@@ -22,7 +22,7 @@ export type AuthAction =
 // Define the shape of the context
 export interface AuthContextProps {
   state: UserState;
-  dispatch: React.Dispatch<AuthAction>;
+  dispatch: Dispatch<AuthAction>;
 }
 
 export interface AuthProviderProps {

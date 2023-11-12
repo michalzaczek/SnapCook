@@ -6,13 +6,13 @@ import TopBar from '../top-bar/top-bar';
 import { IngredientsProvider } from '../../contexts/ingredients/ingredients.context';
 import { RecipeInfoProvider } from '../../contexts/recipe-info/recipe-info-context';
 import { RecipesProvider } from '../../contexts/recipes/recipes.context';
-import { useAuth } from '../../contexts/auth/auth-context';
 import AppRoutes from '../app-routes/app-routes';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import MessageSnackbar from '../message-snackbar/message-snackbar';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 export default function AppContent() {
-  const { isLoading } = useAuth();
+  const { state } = useAuth();
   const { open, message, severity, setOpen } = useUIMessage();
 
   return (
@@ -22,7 +22,7 @@ export default function AppContent() {
           <BrowserRouter>
             <ScrollToTop />
             <TopBar />
-            {isLoading && <LinearProgress />}
+            {state.loading && <LinearProgress />}
             <Box
               sx={{
                 display: 'flex',
@@ -32,7 +32,7 @@ export default function AppContent() {
                 background: "url('./public/background.png')",
               }}
             >
-              {!isLoading && <AppRoutes />}
+              {!state.loading && <AppRoutes />}
             </Box>
             <Navbar />
             <MessageSnackbar

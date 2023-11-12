@@ -134,7 +134,7 @@ export default function SettingsPage() {
           </Typography>
         </Box>
         <Box sx={{ mb: 4 }}>
-          <Button onClick={() => handleLogout}>Sign Out</Button>
+          <Button onClick={() => handleLogout()}>Sign Out</Button>
         </Box>
         <Box sx={{ textAlign: 'left' }}>
           <Typography variant='body1' sx={body1Style}>

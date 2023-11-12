@@ -7,9 +7,9 @@ export const useStripePayment = () => {
   const { state, dispatch } = useContext(AuthContext);
   const currentUser = state.user;
 
-  dispatch({ type: 'LOADING' });
-
   const redirectToCheckout = async (priceId: string) => {
+    dispatch({ type: 'LOADING' });
+
     if (!currentUser || !currentUser.uid) {
       dispatch({ type: 'FAILURE', payload: 'User is not authenticated' });
       return;

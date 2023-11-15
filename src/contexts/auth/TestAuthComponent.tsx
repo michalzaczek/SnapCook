@@ -1,7 +1,7 @@
 // TestAuthComponent.tsx
-import React from 'react';
 import { useAuth } from './AuthContext';
 import { useGoogleLogin } from '../../hooks/useGoogleLogin';
+import ImageUploadComponent from '../../firebase/ImageUploadComponent';
 
 const TestAuthComponent: React.FC = () => {
   const { state, dispatch } = useAuth();
@@ -20,6 +20,7 @@ const TestAuthComponent: React.FC = () => {
       <p>User: {state.user ? state.user.displayName : 'No User'}</p>
       <button onClick={googleLogin}>Login</button>
       <button onClick={handleLogout}>Logout</button>
+      <ImageUploadComponent />
     </div>
   );
 };

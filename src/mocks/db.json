@@ -1,18 +1,28 @@
 {
-  "ingredients": [
-    {
-      "name": "Tomatoes",
-      "percentage": 42
+  "ingredients": {
+    "id": "chatcmpl-8Le3EAvwL8HKRdFUlksmxFzNjIHXk",
+    "object": "chat.completion",
+    "created": 1700169536,
+    "model": "gpt-4-1106-vision-preview",
+    "usage": {
+      "prompt_tokens": 951,
+      "completion_tokens": 17,
+      "total_tokens": 968
     },
-    {
-      "name": "Cheese",
-      "percentage": 68
-    },
-    {
-      "name": "Eggs",
-      "percentage": 15
-    }
-  ],
+    "choices": [
+      {
+        "message": {
+          "role": "assistant",
+          "content": "```json\n{\n  \"ingredients\": [\"egg\", \"watermelon\"]\n}\n```"
+        },
+        "finish_details": {
+          "type": "stop",
+          "stop": "<|fim_suffix|>"
+        },
+        "index": 0
+      }
+    ]
+  },
   "recipes": [
     {
       "id": 585092,

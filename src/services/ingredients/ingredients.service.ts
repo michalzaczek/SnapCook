@@ -4,9 +4,9 @@ import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
 export const fetchIngredients = async (
   userToken: string,
   base64: string
-): Promise<AxiosResponse<IIngredient[], any>> => {
+): Promise<IIngredient[]> => {
   try {
-    const response = await axios.post<IIngredient[]>(
+    const response = await axios.post<any>(
       'https://us-central1-snapcook-test.cloudfunctions.net/getIngredients',
       { image: base64 },
       {
@@ -15,7 +15,21 @@ export const fetchIngredients = async (
         },
       }
     );
-    return new Promise((resolve) => resolve(response));
+
+    const responseString: string = response.data.choices[0].message.content;
+
+    const jsonString = responseString
+      .replace(/^```json\n/, '')
+      .replace(/```$/, '');
+
+    const ingredients: IIngredient[] = (
+      JSON.parse(jsonString).ingredients as string[]
+    ).map((i) => ({
+      isConfirmed: true,
+      name: i,
+    }));
+
+    return new Promise((resolve) => resolve(ingredients));
   } catch (error: any) {
     throw error;
   }

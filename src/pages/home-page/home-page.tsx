@@ -43,8 +43,7 @@ export default function HomePage() {
       setIsLoading(true);
 
       try {
-        const ingredients =
-          (await fetchIngredients(userToken, base64)).data || [];
+        const ingredients = (await fetchIngredients(userToken, base64)) || [];
         resetIngredients();
         ingredients.forEach((i) => addIngredient(i));
         navigate('ingredients');

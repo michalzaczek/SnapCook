@@ -95,7 +95,6 @@ export default function IngredientsPage() {
       addIngredient({
         isConfirmed: true,
         name: newIngredient!,
-        percentage: 100,
       });
     }
 

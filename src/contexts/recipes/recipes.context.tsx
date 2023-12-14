@@ -57,7 +57,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     try {
       const recipes = (await fetchRecipes(ingredients)).data;
 
-      if (!recipes.length) {
+      if (!recipes?.length) {
         throw 'No recipes found for this query.';
       }
 

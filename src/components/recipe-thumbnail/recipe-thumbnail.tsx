@@ -1,4 +1,11 @@
-import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Box,
+  alpha,
+} from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { IProps } from './props.interface';
 
@@ -10,6 +17,7 @@ export default function RecipeThumbnail({ recipe }: IProps) {
       sx={{
         display: 'flex',
         boxShadow: 4,
+        borderRadius: '28px',
         height: { xs: '50vw', sm: '25vw' },
         maxHeight: { xs: '215px', sm: '250px' },
         width: '100%',
@@ -18,7 +26,6 @@ export default function RecipeThumbnail({ recipe }: IProps) {
     >
       <CardMedia
         sx={{
-          p: 2,
           textAlign: 'left',
           position: 'relative',
           display: 'flex',
@@ -28,33 +35,30 @@ export default function RecipeThumbnail({ recipe }: IProps) {
         image={recipe.image}
       >
         <Box
-          sx={{
-            backgroundColor: 'black',
-            position: 'absolute',
-            left: '0',
-            bottom: '0',
+          sx={(theme) => ({
+            p: 2,
+            backgroundColor: alpha(theme.palette.primary.dark, 0.75),
             width: '100%',
-            height: '100px',
-            background:
-              'linear-gradient(0deg, rgba(0,0,0,0.7456232492997199) 0%, rgba(0,0,0,0.4907212885154062) 50%, rgba(0,212,255,0) 100%)',
+            borderTopRightRadius: '28px',
             display: { sm: 'none' },
-          }}
-        />
-        <Typography
-          sx={{
-            color: 'secondary.main',
-            position: 'relative',
-            fontSize: '20px',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxHeight: '75%',
-            display: { sm: 'none' },
-          }}
-          variant='h5'
-          component='h2'
+          })}
         >
-          {recipe.title}
-        </Typography>
+          <Typography
+            sx={{
+              color: 'secondary.main',
+              position: 'relative',
+              fontSize: '20px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxHeight: '75%',
+              display: { sm: 'none' },
+            }}
+            variant='h5'
+            component='h2'
+          >
+            {recipe.title}
+          </Typography>
+        </Box>
       </CardMedia>
       <CardContent
         sx={{

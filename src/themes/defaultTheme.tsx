@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
-import { FormLabel } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface SimplePaletteColorOptions {

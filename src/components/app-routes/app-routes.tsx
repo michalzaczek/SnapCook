@@ -9,6 +9,7 @@ import SettingsPage from '../../pages/settings-page/settings-page';
 import SubscriptionPage from '../../pages/subscription-page/subscription-page';
 import { ProtectedRoute } from '../../routes/ProtectedRoute';
 import TestAuthComponent from '../../contexts/auth/TestAuthComponent';
+import FavoritesPage from '../../pages/favorites-page/favorites-page';
 
 export default function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ export default function AppRoutes() {
         <Route path='account' element={<AccountPage />} />
         <Route path='account/settings' element={<SettingsPage />} />
         <Route path='subscription' element={<SubscriptionPage />} />
+        <Route path='favorites' element={<FavoritesPage />} />
       </Route>
     </Routes>
   );

@@ -7,6 +7,8 @@ export default function PageHeader({ title }: { title: string }) {
         backgroundColor: { xs: 'primary.light', md: 'transparent' },
         p: '25px',
         mb: 2,
+        borderBottomLeftRadius: '28px',
+        borderBottomRightRadius: '28px',
       }}
     >
       <Typography

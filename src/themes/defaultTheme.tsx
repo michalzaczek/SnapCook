@@ -132,7 +132,7 @@ const deafultTheme = createTheme({
     },
   },
   typography: (palette) => ({
-    fontFamily: 'Lato',
+    fontFamily: 'Roboto',
     allVariants: {
       color: palette.text.primary,
       fontSize: '20px',
@@ -149,6 +149,11 @@ const deafultTheme = createTheme({
     },
     h4: {
       fontFamily: 'Lobster',
+    },
+    subtitle1: {
+      fontFamily: 'Roboto',
+      fontWeight: 500,
+      fontSize: '20px',
     },
   }),
 });

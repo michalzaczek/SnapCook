@@ -4,18 +4,19 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Input,
   TextField,
+  Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
 import { ChangeEvent, useState } from 'react';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PageHeader from '../../components/page-header/page-header';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -107,14 +108,17 @@ export default function IngredientsPage() {
       <Container
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
+        <Box sx={{ width: '100%', textAlign: 'left' }}>
+          <Typography variant='subtitle1'>Select your ingredients</Typography>
+        </Box>
         <Box
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
             width: '100%',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
-            flexDirection: { xs: 'column', md: 'row' },
+            flexDirection: { xs: 'row', md: 'row' },
           }}
         >
           {ingredients?.map((i) => (
@@ -129,66 +133,87 @@ export default function IngredientsPage() {
         {ingredients.length > 0 && (
           <Box
             sx={{
+              width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'flex-start',
+              paddingLeft: '20px',
             }}
           >
             <FormControlLabel
               sx={{ mb: 2 }}
               control={
-                <Checkbox onChange={handleSelectAll} checked={allSelected} />
+                <Checkbox
+                  onChange={handleSelectAll}
+                  checked={allSelected}
+                  size='large'
+                  sx={{
+                    '&&.MuiCheckbox-root': { color: 'primary.dark' },
+                  }}
+                />
               }
               label='Select all'
             />
-            <Button
-              variant='outlined'
-              startIcon={<DeleteIcon />}
-              sx={{
-                mb: 2,
-                mt: 1,
-                width: '100%',
-                maxWidth: '280px',
-              }}
-              onClick={resetIngredients}
-            >
-              Remove ingredients
-            </Button>
           </Box>
         )}
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
+            justifyContent: { xs: 'space-between', sm: 'center' },
             alignItems: 'center',
             width: '100%',
+            mb: 3,
           }}
         >
-          <TextField
-            label='New ingredient'
-            variant='outlined'
+          <Input
+            placeholder='Add ingredient'
             onChange={handleNewIngredientChange}
             value={newIngredient}
-            sx={{ mt: 6, width: '100%', maxWidth: '280px', mb: 2 }}
+            sx={{
+              width: '100%',
+              maxWidth: { sm: '320px' },
+              height: '56px',
+              backgroundColor: '#f2f0f0',
+              color: 'text.primary',
+              paddingLeft: '20px',
+              borderRadius: '100px',
+              borderBottom: 'none',
+              '&&:after, &&:before': {
+                display: 'none',
+              },
+            }}
           />
-          <Button
-            variant='outlined'
-            startIcon={<AddIcon />}
-            sx={{ mb: 2, mt: 1, width: '100%', maxWidth: '280px' }}
+          <Box
+            sx={{
+              display: 'flex',
+              backgroundColor: 'primary.dark',
+              width: '70px',
+              height: '56px',
+              borderTopLeftRadius: '100px',
+              borderBottomLeftRadius: '100px',
+              borderBottomRightRadius: { sm: '100px' },
+              borderTopRightRadius: { sm: '100px' },
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              right: '-16px',
+            }}
             onClick={addNewIngredient}
           >
-            Add more
-          </Button>
-          <LoadingButton
-            loading={isLoading}
-            variant='cta'
-            onClick={handleSearchRecipe}
-            disabled={!ingredients.length}
-            sx={{ my: 2, width: '100%', maxWidth: '400px' }}
-          >
-            Find Recipe
-          </LoadingButton>
+            <AddIcon sx={{ color: 'secondary.main', fontSize: '45px' }} />
+          </Box>
         </Box>
+
+        <LoadingButton
+          loading={isLoading}
+          variant='cta'
+          onClick={handleSearchRecipe}
+          disabled={!ingredients.length}
+          sx={{ my: 2, width: '100%', maxWidth: '400px' }}
+        >
+          Find Recipes
+        </LoadingButton>
       </Container>
     </Box>
   );

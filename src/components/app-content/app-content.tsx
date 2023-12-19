@@ -29,7 +29,6 @@ export default function AppContent() {
                 flexGrow: '1',
                 justifyContent: 'center',
                 pb: { xs: 10, md: 0 },
-                background: "url('./public/background.png')",
               }}
             >
               {!state.loading && <AppRoutes />}

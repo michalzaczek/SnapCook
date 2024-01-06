@@ -116,7 +116,7 @@ export default function IngredientsPage() {
             display: 'flex',
             flexWrap: 'wrap',
             width: '100%',
-            justifyContent: 'flex-start',
+            justifyContent: { xs: 'flex-start', md: 'center' },
             alignItems: 'center',
             flexDirection: { xs: 'row', md: 'row' },
           }}

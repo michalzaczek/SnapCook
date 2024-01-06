@@ -3,9 +3,14 @@ import { useState, useMemo, ChangeEvent } from 'react';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { TextField } from '@mui/material';
+import { Container, SxProps, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RecipeList from '../../components/recipe-list/recipe-list';
+
+const titleStyle: SxProps = {
+  paddingLeft: 1,
+  marginBottom: 2,
+};
 
 export default function FavoritesPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -47,16 +52,29 @@ export default function FavoritesPage() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <TextField
-        onChange={handleSearch}
-        value={searchQuery}
-        label='Search for a recipe...'
-        InputProps={{ endAdornment: <SearchIcon /> }}
-        sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
-      ></TextField>
-      <RecipeList recipes={filteredHistory} />
-      <RecipeList recipes={filteredFavorites} />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        paddingTop: 3,
+      }}
+    >
+      <Box>
+        <TextField
+          onChange={handleSearch}
+          value={searchQuery}
+          label='Search for a recipe...'
+          InputProps={{ endAdornment: <SearchIcon /> }}
+          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+        ></TextField>
+      </Box>
+      <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
+        <Typography sx={titleStyle}>Favorites</Typography>
+        <RecipeList recipes={filteredFavorites} />
+        <Typography sx={{ ...titleStyle, marginTop: 3 }}>History</Typography>
+        <RecipeList recipes={filteredHistory} />
+      </Box>
     </Box>
   );
 }

@@ -44,9 +44,9 @@ const deafultTheme = createTheme({
           borderRadius: '50px',
           fontSize: '20px',
           color: theme.palette.primary.text,
-          fontWeight: 700,
+          fontWeight: 400,
           backgroundColor: theme.palette.secondary.main,
-          padding: '4px 30px',
+          padding: '4px 20px',
           border: `2px solid ${theme.palette.primary.text}`,
           textTransform: 'capitalize',
           '&&:hover': {

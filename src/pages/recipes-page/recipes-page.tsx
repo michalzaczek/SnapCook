@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import SearchIcon from '@mui/icons-material/Search';
@@ -54,15 +54,25 @@ export default function RecipesPage() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <PageHeader title='Find a Recipe' />
+      <PageHeader>
+        <Typography
+          variant='subtitle1'
+          sx={{ fontSize: '25px', textAlign: 'left', lineHeight: 1 }}
+        >
+          Let's cook!
+        </Typography>
+        <Typography variant='subtitle1' sx={{ textAlign: 'left' }}>
+          Find the recipe for yourself
+        </Typography>
+      </PageHeader>
       <Container>
         <TextField
           onChange={handleSearch}
           value={searchQuery}
-          label='Search for a recipe...'
+          label='Filter recipes...'
           inputMode='search'
           InputProps={{ endAdornment: <SearchIcon /> }}
-          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+          sx={{ mt: 2, mb: 4, width: '100%', maxWidth: '400px' }}
         ></TextField>
         <RecipeList recipes={filteredRecipes} isLoading={isLoading} />
       </Container>

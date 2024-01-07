@@ -104,9 +104,24 @@ export default function IngredientsPage() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <PageHeader title='Select Ingredients'></PageHeader>
+      <PageHeader>
+        <Typography
+          variant='subtitle1'
+          sx={{ fontSize: '25px', textAlign: 'left', lineHeight: 1 }}
+        >
+          Scanning succesful!
+        </Typography>
+        <Typography variant='subtitle1' sx={{ textAlign: 'left' }}>
+          Look what I found
+        </Typography>
+      </PageHeader>
       <Container
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pt: { md: 4 },
+        }}
       >
         <Box sx={{ width: '100%', textAlign: 'left' }}>
           <Typography variant='subtitle1'>Select your ingredients</Typography>

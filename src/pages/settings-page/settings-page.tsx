@@ -117,7 +117,7 @@ export default function SettingsPage() {
           </Box>
         </Box>
       </PageHeader>
-      <Box sx={{ display: 'flex', flexDirection: 'column', pt: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
           variant='h1'
           sx={{

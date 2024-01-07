@@ -60,7 +60,7 @@ export default function RecipePage() {
             backgroundColor: 'grey.800',
             color: 'secondary.main',
             mb: 0,
-            height: { xs: '300px' },
+            height: { xs: '200px' },
             pt: 5,
             pl: 5,
             pb: 3,

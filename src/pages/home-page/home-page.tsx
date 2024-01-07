@@ -30,6 +30,7 @@ export default function HomePage() {
                 width: '50px',
                 height: '50px',
                 display: 'flex',
+                alignItems: 'center',
                 placeContent: 'center',
               }}
             >
@@ -95,7 +96,7 @@ export default function HomePage() {
           pt: 7,
           pb: 4,
           position: 'relative',
-          top: '-25px',
+          top: '-39px',
         }}
         boxShadow={4}
       >
@@ -131,6 +132,7 @@ export default function HomePage() {
           p: '30px',
           pt: 4,
         }}
+        boxShadow={4}
       >
         <Typography
           variant='subtitle1'
@@ -156,13 +158,21 @@ export default function HomePage() {
         >
           <Button
             variant='cta'
-            sx={{ boxShadow: 3, mb: 2 }}
+            sx={{ mb: 2, border: 'none' }}
             component={NavLink}
             to='/subscription'
           >
             Upgrade now!
           </Button>
-          <Button variant='outlined' sx={{ boxShadow: 3, mb: 2 }}>
+          <Button
+            variant='outlined'
+            sx={{
+              mb: 2,
+              backgroundColor: 'primary.light',
+              color: 'primary.dark',
+              fontWeight: 700,
+            }}
+          >
             See details
           </Button>
         </Box>

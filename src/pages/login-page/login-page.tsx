@@ -6,6 +6,7 @@ import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useNavigate } from 'react-router-dom';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import { useAuth } from '../../contexts/auth/AuthContext';
+import snapCookLogo from '../../assets/logo.png';
 
 export default function LoginPage() {
   const { state } = useAuth();
@@ -24,13 +25,12 @@ export default function LoginPage() {
     }
   };
 
-  const iconStyle: SxProps = {
-    color: '#2457c5',
-  };
-
   const buttonStyle: SxProps = {
     borderColor: 'primary.dark',
+    backgroundColor: 'primary.light',
     color: 'primary.dark',
+    fontWeight: 700,
+    width: '320px',
     p: '8px 40px',
     boxShadow: 2,
     '&&:hover': {
@@ -39,27 +39,45 @@ export default function LoginPage() {
   };
 
   return (
-    <MainLayout>
-      {}
-      <Typography variant='subtitle1' sx={{ mb: 7 }}>
-        {state.loading ? 'Loading ...' : 'Please sing in to continue ...'}
-        {state.error && state.error}
+    <Box
+      sx={{
+        width: '100%',
+        minHeight: '100vh',
+        backgroundColor: 'primary.light',
+        pt: 5,
+        px: 4,
+      }}
+    >
+      <img
+        style={{ height: 'auto', width: '250px', marginBottom: 20 }}
+        src={snapCookLogo}
+        alt=''
+      />
+      <Typography
+        variant='h1'
+        sx={{
+          fontSize: '80px',
+          display: { md: 'none' },
+          textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          mb: 5,
+        }}
+      >
+        Snapcook
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
         <Button
           sx={{ ...buttonStyle, mb: 3 }}
-          startIcon={<GoogleIcon sx={iconStyle} />}
+          startIcon={<GoogleIcon />}
           onClick={handleGoogleLogin}
         >
           Sign in with Google
         </Button>
-        <Button
-          sx={buttonStyle}
-          startIcon={<FacebookRoundedIcon sx={iconStyle} />}
-        >
+        <Button sx={buttonStyle} startIcon={<FacebookRoundedIcon />}>
           Sign in with Facebook
         </Button>
       </Box>
-    </MainLayout>
+    </Box>
   );
 }

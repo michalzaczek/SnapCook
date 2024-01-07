@@ -6,6 +6,7 @@ import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import { Container, SxProps, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RecipeList from '../../components/recipe-list/recipe-list';
+import PageHeader from '../../components/page-header/page-header';
 
 const titleStyle: SxProps = {
   paddingLeft: 1,
@@ -52,28 +53,41 @@ export default function FavoritesPage() {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        paddingTop: 3,
-      }}
-    >
-      <Box>
-        <TextField
-          onChange={handleSearch}
-          value={searchQuery}
-          label='Search for a recipe...'
-          InputProps={{ endAdornment: <SearchIcon /> }}
-          sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
-        ></TextField>
-      </Box>
-      <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
-        <Typography sx={titleStyle}>Favorites</Typography>
-        <RecipeList recipes={filteredFavorites} />
-        <Typography sx={{ ...titleStyle, marginTop: 3 }}>History</Typography>
-        <RecipeList recipes={filteredHistory} />
+    <Box sx={{ width: '100%' }}>
+      <PageHeader>
+        <Typography
+          variant='subtitle1'
+          sx={{ fontSize: '25px', textAlign: 'left', lineHeight: 1 }}
+        >
+          Your favourites
+        </Typography>
+        <Typography variant='subtitle1' sx={{ textAlign: 'left' }}>
+          Choose the recipe for today
+        </Typography>
+      </PageHeader>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          paddingTop: 3,
+        }}
+      >
+        <Box>
+          <TextField
+            onChange={handleSearch}
+            value={searchQuery}
+            label='Filter recipes...'
+            InputProps={{ endAdornment: <SearchIcon /> }}
+            sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+          ></TextField>
+        </Box>
+        <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
+          <Typography sx={titleStyle}>Favorites</Typography>
+          <RecipeList recipes={filteredFavorites} />
+          <Typography sx={{ ...titleStyle, marginTop: 3 }}>History</Typography>
+          <RecipeList recipes={filteredHistory} />
+        </Box>
       </Box>
     </Box>
   );

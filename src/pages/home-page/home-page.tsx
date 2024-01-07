@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import snapCookLogo from '../../assets/logo.png';
-import { Box, Button, CardMedia, IconButton, Typography } from '@mui/material';
+import { Box, Button, CardMedia, Typography } from '@mui/material';
 import ImageInput from '../../components/image-input/image-input';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { NavLink } from 'react-router-dom';
+import PageHeader from '../../components/page-header/page-header';
 import { useAuth } from '../../contexts/auth/AuthContext';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -14,41 +14,7 @@ export default function HomePage() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box
-        sx={{
-          display: { xs: 'flex', md: 'none' },
-          flexDirection: 'column',
-          backgroundColor: 'primary.light',
-          pt: 5,
-          px: 3,
-          pb: 3,
-          borderBottomLeftRadius: '28px',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            mb: 3,
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            variant='h1'
-            sx={{
-              fontSize: '42px',
-              display: { md: 'none' },
-              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            }}
-          >
-            Snapcook
-          </Typography>
-          <IconButton component={NavLink} to='settings'>
-            <SettingsIcon sx={{ fontSize: '45px', color: 'primary.dark' }} />
-          </IconButton>
-        </Box>
+      <PageHeader>
         <Box
           sx={{
             display: 'flex',
@@ -116,7 +82,7 @@ export default function HomePage() {
             </Typography>
           </Box>
         </Box>
-      </Box>
+      </PageHeader>
       <Box
         sx={{
           backgroundColor: 'primary.dark',
@@ -188,7 +154,12 @@ export default function HomePage() {
             maxWidth: '366px',
           }}
         >
-          <Button variant='cta' sx={{ boxShadow: 3, mb: 2 }}>
+          <Button
+            variant='cta'
+            sx={{ boxShadow: 3, mb: 2 }}
+            component={NavLink}
+            to='/subscription'
+          >
             Upgrade now!
           </Button>
           <Button variant='outlined' sx={{ boxShadow: 3, mb: 2 }}>

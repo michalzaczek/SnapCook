@@ -1,27 +1,46 @@
-import { Box, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { ReactNode } from 'react';
 
-export default function PageHeader({ title }: { title: string }) {
+export default function PageHeader({ children }: { children?: ReactNode }) {
   return (
     <Box
       sx={{
-        backgroundColor: { xs: 'primary.light', md: 'transparent' },
-        p: '25px',
-        mb: 2,
+        display: { xs: 'flex', md: 'none' },
+        flexDirection: 'column',
+        backgroundColor: 'primary.light',
+        pt: 5,
+        px: 3,
+        pb: 3,
         borderBottomLeftRadius: '28px',
-        borderBottomRightRadius: '28px',
+        position: 'relative',
+        zIndex: 1,
       }}
     >
-      <Typography
-        variant='h2'
+      <Box
         sx={{
-          fontSize: { xs: '40px', md: '64px' },
-          fontFamily: { md: 'Lato' },
-          color: 'primary.dark',
-          fontWeight: { md: 700 },
+          display: 'flex',
+          justifyContent: 'space-between',
+          mb: 3,
+          alignItems: 'center',
         }}
       >
-        {title}
-      </Typography>
+        <Typography
+          variant='h1'
+          sx={{
+            fontSize: '42px',
+            display: { md: 'none' },
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          }}
+        >
+          Snapcook
+        </Typography>
+        <IconButton component={NavLink} to='/settings'>
+          <SettingsIcon sx={{ fontSize: '45px', color: 'primary.dark' }} />
+        </IconButton>
+      </Box>
+      {children}
     </Box>
   );
 }

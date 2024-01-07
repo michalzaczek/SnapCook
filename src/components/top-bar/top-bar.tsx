@@ -89,11 +89,11 @@ export default function TopBar() {
           <Button
             startIcon={<PersonIcon sx={iconStyle} />}
             component={NavLink}
-            to='account'
+            to='settings'
             variant='outlined'
             sx={navButtonStyle}
           >
-            Account
+            Settings
           </Button>
         </nav>
       </Toolbar>

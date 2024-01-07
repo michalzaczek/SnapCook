@@ -1,147 +1,164 @@
-import { Button, Container } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { IconButton, Typography } from '@mui/material';
-import { Box, SxProps } from '@mui/system';
+import { Button, CardMedia } from '@mui/material';
+import { Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth/AuthContext';
+import PageHeader from '../../components/page-header/page-header';
+import PersonIcon from '@mui/icons-material/Person';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsItem from './settings-item';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 export default function SettingsPage() {
   const { dispatch, state } = useAuth();
   const navigate = useNavigate();
+  const { user } = state;
 
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' });
     navigate('/');
   };
 
-  const borderStyle: SxProps = {
-    borderBottom: '1px solid',
-    borderColor: 'primary.text',
-  };
-
-  const h2Style: SxProps = {
-    fontFamily: 'Lato',
-    fontSize: '20px',
-    fontWeight: 700,
-    mb: 0.5,
-  };
-
-  const body1Style: SxProps = {
-    fontSize: '18px',
-    mb: 1,
-    fontWeight: 700,
-    color: 'primary.text',
-  };
-
   return (
-    <Container>
-      <Box
-        sx={{
-          backgroundColor: 'secondary.main',
-          minHeight: '100%',
-          width: '100%',
-          padding: '20px',
-        }}
-      >
-        <Box sx={{ textAlign: 'left', mb: '25px', display: { md: 'none' } }}>
-          <IconButton component={NavLink} to={-1 as any} sx={{ p: 0 }}>
-            <ArrowBackIcon
-              sx={{
-                fontSize: '40px',
-                color: 'primary.text',
-                position: 'relative',
-                left: '-5px',
-              }}
-            />
-          </IconButton>
-        </Box>
+    <Box sx={{ width: '100%' }}>
+      <PageHeader>
         <Box
           sx={{
-            ...borderStyle,
-            pb: 2,
-            mb: 3,
-            display: { md: 'none' },
-          }}
-        >
-          <Typography
-            variant='h1'
-            sx={{
-              fontFamily: 'Lato',
-              fontSize: '28px',
-              fontWeight: 700,
-              textAlign: 'left',
-            }}
-          >
-            Settings
-          </Typography>
-        </Box>
-        <Box
-          sx={{
+            display: 'flex',
+            justifyContent: { xs: 'space-between', md: 'flex-end' },
             backgroundColor: 'primary.light',
-            borderRadius: '8px',
-            p: 4,
-            mb: 4,
-            pt: { md: 8 },
           }}
         >
-          <Typography
-            variant='body1'
+          <Box sx={{ display: 'flex', mr: 1 }}>
+            <Box
+              sx={{
+                backgroundColor: 'primary.dark',
+                borderRadius: '100px',
+                width: '100px',
+                height: '100px',
+                display: 'flex',
+                placeContent: 'center',
+              }}
+            >
+              {user?.photoURL ? (
+                <CardMedia
+                  sx={{
+                    height: '100%',
+                    width: '100%',
+                    borderRadius: '100px',
+                  }}
+                  image={user?.photoURL || ''}
+                ></CardMedia>
+              ) : (
+                <PersonIcon
+                  sx={{ color: 'primary.light', fontSize: '33px' }}
+                ></PersonIcon>
+              )}
+            </Box>
+          </Box>
+          <Box
             sx={{
-              fontSize: { xs: '16px', md: '24px' },
-              mb: { xs: 3, md: 5 },
-              fontWeight: 700,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              flexGrow: { xs: '1', md: '0' },
             }}
           >
-            Unlock unlimited search recipes and start to cook whenever you want!
-          </Typography>
-          <Button
-            variant='cta'
-            component={NavLink}
-            to='/subscription'
-            sx={{ px: { md: 10 }, py: { md: 1.5 }, fontSize: { md: '22px' } }}
-          >
-            Upgrade Plan
-          </Button>
+            <Typography
+              variant='subtitle1'
+              sx={{
+                lineHeight: '1',
+                textAlign: 'left',
+                fontSize: '20px',
+                textTransform: 'capitalize',
+                fontWeight: 700,
+                mb: '7px',
+              }}
+            >
+              {user?.displayName}
+            </Typography>
+            <Typography
+              variant='subtitle1'
+              sx={{
+                lineHeight: '1',
+                textAlign: 'left',
+                fontSize: '17px',
+                mb: 2,
+              }}
+            >
+              {user?.email}
+            </Typography>
+            <Typography
+              variant='subtitle1'
+              sx={{
+                lineHeight: '1',
+                textAlign: 'left',
+                fontSize: '18px',
+                mb: 1,
+              }}
+            >
+              Current plan: <b>{state.isPremium ? 'Premium' : 'Free'}</b>
+            </Typography>
+            <Button
+              variant='cta'
+              component={NavLink}
+              to='/subscription'
+              sx={{
+                alignSelf: 'flex-start',
+                p: '20px',
+                py: 0,
+                fontSize: '16px',
+              }}
+            >
+              Upgrade
+            </Button>
+          </Box>
         </Box>
-        <Box sx={{ ...borderStyle, textAlign: 'left', mb: 2 }}>
-          <Typography variant='h2' sx={{ ...h2Style }}>
-            Current Plan
-          </Typography>
-          <Typography variant='body1' sx={body1Style}>
-            {state.isPremium ? 'Premium' : 'Free'}
-          </Typography>
-        </Box>
-        <Box sx={{ textAlign: 'left', mb: 2 }}>
-          <Typography variant='h2' sx={{ ...h2Style }}>
-            Displayed Name
-          </Typography>
-          <Typography
-            variant='body1'
-            sx={{
-              ...body1Style,
-              textTransform: 'uppercase',
-            }}
-          >
-            Name surname
-          </Typography>
-        </Box>
-        <Box sx={{ textAlign: 'left', mb: 4 }}>
-          <Typography variant='h2' sx={{ ...h2Style }}>
-            Measurement System
-          </Typography>
-          <Typography variant='body1' sx={body1Style}>
-            Metric
-          </Typography>
-        </Box>
-        <Box sx={{ mb: 4 }}>
-          <Button onClick={() => handleLogout()}>Sign Out</Button>
-        </Box>
-        <Box sx={{ textAlign: 'left' }}>
-          <Typography variant='body1' sx={body1Style}>
-            Delete Account
-          </Typography>
-        </Box>
+      </PageHeader>
+      <Box sx={{ display: 'flex', flexDirection: 'column', pt: 3 }}>
+        <Typography
+          variant='h1'
+          sx={{
+            fontFamily: 'Lato',
+            fontSize: '28px',
+            fontWeight: 700,
+            textAlign: 'left',
+            pl: 3,
+            pb: 3,
+            borderBottom: '1px solid rgba(103, 125, 115, 0.50)',
+          }}
+        >
+          Settings
+        </Typography>
+        <SettingsItem
+          icon={SubscriptionsIcon}
+          text='Manage subscription'
+          arrow={true}
+          top={4}
+          onClick={() => navigate('/subscription')}
+        />
+        <SettingsItem
+          icon={PaymentIcon}
+          text='Payment history'
+          arrow={true}
+          top={4}
+        />
+        <SettingsItem
+          icon={LogoutIcon}
+          text='Log out'
+          arrow={false}
+          top={3}
+          onClick={handleLogout}
+        />
+        <SettingsItem
+          icon={DeleteIcon}
+          text='Delete account'
+          arrow={false}
+          top={3}
+        />
       </Box>
-    </Container>
+    </Box>
   );
 }

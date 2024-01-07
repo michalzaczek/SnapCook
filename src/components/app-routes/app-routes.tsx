@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import AccountPage from '../../pages/account-page/account-page';
 import HomePage from '../../pages/home-page/home-page';
 import IngredientsPage from '../../pages/ingredients-page/ingredients-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -23,8 +22,7 @@ export default function AppRoutes() {
         <Route path='ingredients' element={<IngredientsPage />} />
         <Route path='recipes' element={<RecipesPage />} />
         <Route path='recipe/:id' element={<RecipePage />} />
-        <Route path='account' element={<AccountPage />} />
-        <Route path='account/settings' element={<SettingsPage />} />
+        <Route path='settings' element={<SettingsPage />} />
         <Route path='subscription' element={<SubscriptionPage />} />
         <Route path='favorites' element={<FavoritesPage />} />
       </Route>

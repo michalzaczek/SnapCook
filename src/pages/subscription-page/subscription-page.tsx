@@ -1,13 +1,38 @@
 import {
   Box,
   Button,
+  IconButton,
   List,
   ListItem,
+  ListItemIcon,
+  ListItemText,
   SxProps,
   Typography,
 } from '@mui/material';
-import MainLayout from '../../components/main-layout/main-layout';
 import { useStripePayment } from '../../hooks/useStripePayment';
+import PageHeader from '../../components/page-header/page-header';
+import { NavLink } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CheckIcon from '@mui/icons-material/Check';
+
+const textStyle: SxProps = {
+  textAlign: 'left',
+  fontSize: '20px',
+  textTransform: 'capitalize',
+  fontWeight: 500,
+  lineHeight: 1,
+};
+
+const listItemStyle: SxProps = {
+  pl: 0,
+};
+
+const listItemTextStyle: SxProps = {
+  mb: 1,
+  '&& .MuiListItemText-primary': { color: 'secondary.main', fontSize: '23px' },
+};
+
+const iconStyle: SxProps = { color: 'secondary.main', fontSize: '40px' };
 
 export default function SubscriptionPage() {
   const { redirectToCheckout } = useStripePayment();
@@ -17,56 +42,164 @@ export default function SubscriptionPage() {
     redirectToCheckout(priceId);
   };
 
-  const body2Style: SxProps = { fontSize: '20px', mb: 1 };
-
   return (
-    <MainLayout>
+    <Box sx={{ width: '100%' }}>
+      <PageHeader>
+        <IconButton
+          component={NavLink}
+          to={-1 as any}
+          sx={{ justifyContent: 'flex-start' }}
+        >
+          <ArrowBackIosIcon
+            sx={{
+              color: 'primary.dark',
+              position: 'relative',
+            }}
+          />
+          <Typography sx={{ fontWeight: 700 }}>Back</Typography>
+        </IconButton>
+      </PageHeader>
       <Box
         sx={{
-          backgroundColor: 'primary.light',
-          borderRadius: '8px',
-          p: 4,
-          mb: 4,
-          boxShadow: 3,
+          px: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Typography
-          variant='body1'
-          sx={{ fontSize: '22px', mb: 3, fontWeight: 700 }}
-        >
-          Save food, save the planet
-          <br /> with SnapCook Premium
-        </Typography>
-        <List
+        <Box
           sx={{
-            listStyleType: 'disc',
-            border: '1px solid #aaa',
-            borderRight: 'none',
-            borderLeft: 'none',
-            mb: 4,
-            pl: 3,
+            pt: 5,
+            pb: 2,
           }}
         >
-          <ListItem disableGutters sx={{ display: 'list-item' }}>
-            <Typography variant='body2' sx={body2Style}>
-              Unlimited recipe searches
+          <Box
+            sx={{
+              display: 'flex',
+              aligni: 'center',
+              borderBottom: '1px solid black',
+              width: '100%',
+              mb: 3,
+              pb: 2,
+            }}
+          >
+            <Typography
+              variant='subtitle1'
+              sx={{
+                ...textStyle,
+                mr: 3,
+              }}
+            >
+              Current plan
             </Typography>
+            <Box>
+              <Typography
+                variant='subtitle1'
+                sx={{
+                  ...textStyle,
+                  mb: 1,
+                }}
+              >
+                Premium
+              </Typography>
+              <Typography
+                variant='subtitle1'
+                sx={{
+                  ...textStyle,
+                  fontSize: '18px',
+                  fontWeight: 400,
+                  color: 'primary.dark',
+                }}
+              >
+                Monthly subscription
+              </Typography>
+            </Box>
+          </Box>
+          <Typography
+            variant='subtitle1'
+            sx={{
+              ...textStyle,
+              fontSize: '16px',
+              fontWeight: 400,
+              color: 'primary.dark',
+              width: '100%',
+              lineHeight: 1.2,
+              textAlign: 'center',
+            }}
+          >
+            Your plan will be automatically extended on 05.12.2023. You will
+            then be charged a fee od $2 per month.
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            backgroundColor: 'primary.dark',
+            borderRadius: '28px',
+            borderTopLeftRadius: 0,
+            p: 4,
+            mb: 4,
+            boxShadow: 3,
+            mt: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            color: 'secondary.main',
+            maxWidth: '560px',
+          }}
+        >
+          <Typography
+            variant='body1'
+            sx={{
+              fontSize: '25px',
+              mb: 3,
+              textAlign: 'left',
+              color: 'secondary.main',
+            }}
+          >
+            Your plan includes
+          </Typography>
+          <ListItem sx={listItemStyle}>
+            <ListItemIcon>
+              <CheckIcon sx={iconStyle} />
+            </ListItemIcon>
+            <ListItemText
+              sx={listItemTextStyle}
+              primary='Unlimited recipe searches'
+            />
           </ListItem>
-          <ListItem disableGutters sx={{ display: 'list-item' }}>
-            <Typography variant='body2' sx={body2Style}>
-              Ad-free, pure cooking experience
-            </Typography>
+          <ListItem sx={listItemStyle}>
+            <ListItemIcon>
+              <CheckIcon sx={iconStyle} />
+            </ListItemIcon>
+            <ListItemText
+              sx={listItemTextStyle}
+              primary='Ad-free, pure cooking experience'
+            />
           </ListItem>
-          <ListItem disableGutters sx={{ display: 'list-item' }}>
-            <Typography variant='body2' sx={body2Style}>
-              Exclusive access to premium recipes
-            </Typography>
+          <ListItem sx={listItemStyle}>
+            <ListItemIcon>
+              <CheckIcon sx={iconStyle} />
+            </ListItemIcon>
+            <ListItemText
+              sx={listItemTextStyle}
+              primary='Exclusive access to premium recipes'
+            />
           </ListItem>
-        </List>
-        <Button onClick={handleSubscribe} variant='cta' sx={{ boxShadow: 3 }}>
-          Subscribe for 2$/monthly
-        </Button>
+          <Button
+            onClick={handleSubscribe}
+            variant='cta'
+            sx={{
+              boxShadow: 3,
+              mt: 2,
+              backgroundColor: 'primary.light',
+              color: 'primary.dark',
+              fontWeight: 700,
+              border: 'none',
+            }}
+          >
+            Subscribe for 2$/monthly
+          </Button>
+        </Box>
       </Box>
-    </MainLayout>
+    </Box>
   );
 }

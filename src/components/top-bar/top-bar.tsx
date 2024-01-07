@@ -4,6 +4,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import { NavLink } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function TopBar() {
   const navButtonStyle: SxProps = {
@@ -85,6 +86,15 @@ export default function TopBar() {
             sx={navButtonStyle}
           >
             Search
+          </Button>
+          <Button
+            startIcon={<FavoriteIcon sx={iconStyle} />}
+            component={NavLink}
+            to='favorites'
+            variant='outlined'
+            sx={navButtonStyle}
+          >
+            Favorites
           </Button>
           <Button
             startIcon={<PersonIcon sx={iconStyle} />}

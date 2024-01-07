@@ -13,8 +13,15 @@ export default function HomePage() {
   const { user } = state;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <PageHeader>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <PageHeader sx={{ width: '100%' }}>
         <Box
           sx={{
             display: 'flex',
@@ -91,12 +98,14 @@ export default function HomePage() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          borderBottomLeftRadius: '90px',
-          borderBottomRightRadius: '90px',
+          borderBottomLeftRadius: { xs: '90px', md: 0 },
+          borderBottomRightRadius: { xs: '90px', md: 0 },
           pt: 7,
           pb: 4,
           position: 'relative',
-          top: '-39px',
+          top: { xs: '-39px', md: 0 },
+          width: '100%',
+          mb: { md: 4 },
         }}
         boxShadow={4}
       >
@@ -126,6 +135,7 @@ export default function HomePage() {
           alignItems: 'center',
           flexDirection: 'column',
           width: '90%',
+          maxWidth: '700px',
           margin: '0 auto',
           borderRadius: '28px',
           borderTopLeftRadius: 0,

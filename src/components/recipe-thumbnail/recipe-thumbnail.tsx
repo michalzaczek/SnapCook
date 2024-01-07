@@ -12,6 +12,7 @@ import { IProps } from './props.interface';
 export default function RecipeThumbnail({ recipe }: IProps) {
   return (
     <Card
+      draggable={false}
       component={NavLink}
       to={`/recipe/${recipe.id}`}
       sx={{

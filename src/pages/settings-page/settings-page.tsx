@@ -22,8 +22,15 @@ export default function SettingsPage() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <PageHeader>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <PageHeader sx={{ width: '100%' }}>
         <Box
           sx={{
             display: 'flex',
@@ -117,7 +124,15 @@ export default function SettingsPage() {
           </Box>
         </Box>
       </PageHeader>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          maxWidth: { md: '1000px' },
+          mt: { md: 4 },
+        }}
+      >
         <Typography
           variant='h1'
           sx={{

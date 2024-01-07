@@ -1,10 +1,16 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, SxProps, Typography } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ReactNode } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function PageHeader({ children }: { children?: ReactNode }) {
+export default function PageHeader({
+  children,
+  sx,
+}: {
+  children?: ReactNode;
+  sx?: SxProps;
+}) {
   const { pathname } = useLocation();
 
   return (
@@ -20,6 +26,7 @@ export default function PageHeader({ children }: { children?: ReactNode }) {
         borderBottomLeftRadius: '28px',
         position: 'relative',
         zIndex: 1,
+        ...sx,
       }}
     >
       <Box

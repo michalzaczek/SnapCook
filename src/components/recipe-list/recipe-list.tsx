@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton } from '@mui/material';
+import { Box } from '@mui/material';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import RecipeThumbnail from '../recipe-thumbnail/recipe-thumbnail';
 import Carousel from 'react-multi-carousel';
@@ -14,7 +14,6 @@ const responsive = {
 
 export default function RecipeList({
   recipes,
-  isLoading,
 }: {
   recipes: IRecipeData[];
   isLoading?: boolean;

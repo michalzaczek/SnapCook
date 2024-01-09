@@ -70,9 +70,9 @@ const deafultTheme = createTheme({
         },
         {
           props: { variant: 'cta', disabled: true },
-          style: ({ theme }) => ({
+          style: {
             backgroundColor: 'transparent',
-          }),
+          },
         },
       ],
     },
@@ -84,9 +84,9 @@ const deafultTheme = createTheme({
           height: '45px',
           color: theme.palette.text.secondary,
         }),
-        notchedOutline: ({ theme }) => ({
+        notchedOutline: {
           borderWidth: '2px',
-        }),
+        },
       },
     },
     MuiInputLabel: {

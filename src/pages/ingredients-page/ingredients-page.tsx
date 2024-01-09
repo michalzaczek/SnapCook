@@ -1,11 +1,9 @@
 import Ingredient from '../../components/ingredient/ingredient';
 import {
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   Input,
-  TextField,
   Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
@@ -29,7 +27,6 @@ export default function IngredientsPage() {
     toggleIngredient,
     setIngredientSelection,
     addIngredient,
-    resetIngredients,
   } = useIngredients();
 
   const [allSelected, setAllSelected] = useState(
@@ -161,6 +158,7 @@ export default function IngredientsPage() {
                 <Checkbox
                   onChange={handleSelectAll}
                   checked={allSelected}
+                  //@ts-ignore
                   size='large'
                   sx={{
                     '&&.MuiCheckbox-root': { color: 'primary.dark' },

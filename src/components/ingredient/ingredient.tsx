@@ -18,11 +18,11 @@ export default function Ingredient({ name, onSelect, selected }: IProps) {
         onClick={onSelect}
         icon={
           <CloseIcon
-            color={'secondary.main'}
-            sx={{
+            sx={(template) => ({
               transform: selected ? 'rotate(0deg)' : 'rotate(45deg)',
               transition: 'transform 0.3s ease',
-            }}
+              fill: template.palette.secondary.main,
+            })}
           />
         }
         sx={{

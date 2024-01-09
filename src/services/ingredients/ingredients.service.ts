@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
 
 export const fetchIngredients = async (

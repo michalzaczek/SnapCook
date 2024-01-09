@@ -4,7 +4,6 @@ import {
   Box,
   CardMedia,
   Container,
-  Grid,
   IconButton,
   SxProps,
   Typography,

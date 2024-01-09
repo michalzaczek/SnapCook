@@ -3,7 +3,7 @@ import { useState, useMemo, ChangeEvent } from 'react';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { Container, SxProps, TextField, Typography } from '@mui/material';
+import { SxProps, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RecipeList from '../../components/recipe-list/recipe-list';
 import PageHeader from '../../components/page-header/page-header';

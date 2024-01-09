@@ -1,15 +1,12 @@
 import { Box, Button, SxProps, Typography } from '@mui/material';
-import MainLayout from '../../components/main-layout/main-layout';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useNavigate } from 'react-router-dom';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
-import { useAuth } from '../../contexts/auth/AuthContext';
 import snapCookLogo from '../../assets/logo.png';
 
 export default function LoginPage() {
-  const { state } = useAuth();
   const navigate = useNavigate();
   const { setMessage, setSeverity, setOpen } = useUIMessage();
   const googleLogin = useGoogleLogin();

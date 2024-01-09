@@ -9,6 +9,8 @@ import {
 import { fetchRecipeInfo } from '../../services/recipe-info/recipe-info.service';
 import { IRecipeInfo } from './recipe-info.interface';
 import { IRecipeInfoContext } from './recipe-info-context.interface';
+import { AxiosError, AxiosResponse } from 'axios';
+import { IRecipeInfoData } from '../../services/recipe-info/recipe-info-data.interface';
 
 const RecipeInfoContext = createContext<IRecipeInfoContext | undefined>(
   undefined
@@ -35,10 +37,16 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const recipeInfoData = (await fetchRecipeInfo(id)).data;
+      const response = await fetchRecipeInfo(id);
+
+      if (!(response as AxiosResponse<IRecipeInfoData, any>).data) {
+        throw `Failed to fetch the recipe information. Error: ${
+          (response as AxiosError).message
+        }`;
+      }
 
       const recipeInfo: IRecipeInfo = {
-        ...recipeInfoData,
+        ...(response as AxiosResponse<IRecipeInfoData, any>).data,
         isFavorite: false,
       };
 

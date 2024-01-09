@@ -1,9 +1,9 @@
 import { IRecipeInfoData } from './recipe-info-data.interface';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export const fetchRecipeInfo = async (
   id: number
-): Promise<AxiosResponse<IRecipeInfoData, any>> => {
+): Promise<AxiosResponse<IRecipeInfoData, any> | AxiosError<unknown, any>> => {
   const options = {
     method: 'GET',
     url: `https://us-central1-snapcook-test.cloudfunctions.net/getRecipeInformation/recipes/${id}/information`,

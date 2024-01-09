@@ -176,6 +176,8 @@ export default function HomePage() {
           </Button>
           <Button
             variant='outlined'
+            component={NavLink}
+            to='/subscription'
             sx={{
               mb: 2,
               backgroundColor: 'primary.light',

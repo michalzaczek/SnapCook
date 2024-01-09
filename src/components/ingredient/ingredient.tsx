@@ -8,8 +8,8 @@ export default function Ingredient({ name, onSelect, selected }: IProps) {
       sx={{
         px: 2,
         width: { xs: '50%', md: 'auto' },
-        ':nth-child(odd)': { paddingLeft: { xs: 0, sm: 2 } },
-        ':nth-child(even)': { paddingRight: { xs: 0, sm: 2 } },
+        ':nth-of-type(odd)': { paddingLeft: { xs: 0, sm: 2 } },
+        ':nth-of-type(even)': { paddingRight: { xs: 0, sm: 2 } },
       }}
     >
       <Chip

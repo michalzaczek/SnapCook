@@ -48,7 +48,7 @@ export default function RecipeThumbnail({ recipe }: IProps) {
             sx={{
               color: 'secondary.main',
               position: 'relative',
-              fontSize: '20px',
+              fontSize: '4vw',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               maxHeight: '75%',
@@ -57,7 +57,9 @@ export default function RecipeThumbnail({ recipe }: IProps) {
             variant='h5'
             component='h2'
           >
-            {recipe.title}
+            {recipe.title.length <= 41
+              ? recipe.title
+              : recipe.title.slice(0, 40) + '...'}
           </Typography>
         </Box>
       </CardMedia>

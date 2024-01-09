@@ -28,7 +28,7 @@ export default function AppContent() {
                 display: 'flex',
                 flexGrow: '1',
                 justifyContent: 'center',
-                pb: { xs: 10, md: 0 },
+                pb: { xs: '100px', md: 0 },
               }}
             >
               {!state.loading && <AppRoutes />}

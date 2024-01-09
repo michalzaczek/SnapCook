@@ -34,11 +34,11 @@ export default function SettingsPage() {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: { xs: 'space-between', md: 'flex-end' },
+            justifyContent: { xs: 'flex-start', md: 'flex-end' },
             backgroundColor: 'primary.light',
           }}
         >
-          <Box sx={{ display: 'flex', mr: 1 }}>
+          <Box sx={{ display: 'flex', mr: 3 }}>
             <Box
               sx={{
                 backgroundColor: 'primary.dark',
@@ -70,7 +70,6 @@ export default function SettingsPage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              flexGrow: { xs: '1', md: '0' },
             }}
           >
             <Typography
@@ -113,7 +112,7 @@ export default function SettingsPage() {
               component={NavLink}
               to='/subscription'
               sx={{
-                alignSelf: 'flex-start',
+                alignSelf: 'center',
                 p: '20px',
                 py: 0,
                 fontSize: '16px',

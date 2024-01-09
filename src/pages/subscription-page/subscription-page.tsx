@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   IconButton,
-  List,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -14,6 +13,8 @@ import PageHeader from '../../components/page-header/page-header';
 import { NavLink } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CheckIcon from '@mui/icons-material/Check';
+import { useAuth } from '../../contexts/auth/AuthContext';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const textStyle: SxProps = {
   textAlign: 'left',
@@ -36,6 +37,7 @@ const iconStyle: SxProps = { color: 'secondary.main', fontSize: '40px' };
 
 export default function SubscriptionPage() {
   const { redirectToCheckout } = useStripePayment();
+  const { state } = useAuth();
 
   const handleSubscribe = async () => {
     const priceId = 'price_1O6sV2Jl4ItknVoyRfpPhykF';
@@ -100,7 +102,7 @@ export default function SubscriptionPage() {
                   mb: 1,
                 }}
               >
-                Premium
+                {state.isPremium ? 'Premium' : 'Free trial'}
               </Typography>
               <Typography
                 variant='subtitle1'
@@ -111,7 +113,9 @@ export default function SubscriptionPage() {
                   color: 'primary.dark',
                 }}
               >
-                Monthly subscription
+                {state.isPremium
+                  ? 'Monthly subscription'
+                  : '14-day trial period'}
               </Typography>
             </Box>
           </Box>
@@ -155,7 +159,7 @@ export default function SubscriptionPage() {
               color: 'secondary.main',
             }}
           >
-            Your plan includes
+            {state.isPremium ? 'Your plan includes' : 'Premium includes'}
           </Typography>
           <ListItem sx={listItemStyle}>
             <ListItemIcon>
@@ -184,21 +188,43 @@ export default function SubscriptionPage() {
               primary='Exclusive access to premium recipes'
             />
           </ListItem>
-          <Button
-            onClick={handleSubscribe}
-            variant='cta'
+          {!state.isPremium && (
+            <Button
+              onClick={handleSubscribe}
+              variant='cta'
+              sx={{
+                boxShadow: 3,
+                mt: 2,
+                backgroundColor: 'primary.light',
+                color: 'primary.dark',
+                fontWeight: 700,
+                border: 'none',
+              }}
+            >
+              Subscribe for 2$/monthly
+            </Button>
+          )}
+        </Box>
+        {state.isPremium && (
+          <IconButton
             sx={{
-              boxShadow: 3,
-              mt: 2,
-              backgroundColor: 'primary.light',
-              color: 'primary.dark',
-              fontWeight: 700,
-              border: 'none',
+              justifyContent: 'flex-start',
+              alignSelf: 'flex-start',
+              '&&:focus': { outline: 'none' },
             }}
           >
-            Subscribe for 2$/monthly
-          </Button>
-        </Box>
+            <DeleteIcon
+              sx={{
+                color: 'primary.dark',
+                position: 'relative',
+                top: '-1px',
+              }}
+            />
+            <Typography sx={{ fontSize: '18px' }}>
+              Cancel subscription
+            </Typography>
+          </IconButton>
+        )}
       </Box>
     </Box>
   );

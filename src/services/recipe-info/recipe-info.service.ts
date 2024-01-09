@@ -6,7 +6,7 @@ export const fetchRecipeInfo = async (
 ): Promise<AxiosResponse<IRecipeInfoData, any>> => {
   const options = {
     method: 'GET',
-    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
+    url: `https://us-central1-snapcook-test.cloudfunctions.net/getRecipeInformation/recipes/${id}/information`,
     headers: {
       'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
       'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',

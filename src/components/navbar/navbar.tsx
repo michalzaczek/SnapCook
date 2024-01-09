@@ -54,51 +54,59 @@ export default function Navbar() {
           to='favorites'
           icon={<FavoriteIcon sx={iconStyle} />}
         />
-        <Box
+        <BottomNavigationAction
           sx={{
-            display: 'flex',
-            flexGrow: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            minWidth: 80,
-            maxWidth: 168,
+            '&&.Mui-selected .MuiSvgIcon-root': { color: 'primary.light' },
+            '&&:focus': { outline: 'none' },
           }}
-          ref={cameraTrigger}
-        >
-          <ImageInput triggerElement={cameraTrigger} />
-          <Box
-            sx={{
-              backgroundColor: '#677d73',
-              width: 82,
-              height: 82,
-              display: 'flex',
-              flexGrow: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 41,
-              position: 'absolute',
-              top: -20,
-              minWidth: 80,
-              maxWidth: 168,
-            }}
-          >
+          icon={
             <Box
               sx={{
-                backgroundColor: 'primary.dark',
-                width: 60,
-                height: 60,
                 display: 'flex',
+                flexGrow: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 30,
+                minWidth: 80,
+                maxWidth: 168,
               }}
+              ref={cameraTrigger}
             >
-              <CameraAltIcon
-                sx={{ ...iconStyle, position: 'relative', top: '2px' }}
-              />
+              <ImageInput triggerElement={cameraTrigger} />
+              <Box
+                sx={{
+                  backgroundColor: '#677d73',
+                  width: 82,
+                  height: 82,
+                  display: 'flex',
+                  flexGrow: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 41,
+                  position: 'absolute',
+                  top: -20,
+                  minWidth: 80,
+                  maxWidth: 168,
+                }}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: 'primary.dark',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 30,
+                  }}
+                >
+                  <CameraAltIcon
+                    sx={{ ...iconStyle, position: 'relative', top: '2px' }}
+                  />
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
+          }
+        />
         <BottomNavigationAction
           component={Link}
           to='ingredients'

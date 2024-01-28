@@ -8,14 +8,21 @@ import {
 } from 'react';
 import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
 import { IIngredientsContext } from './ingredients-context.interface';
+import { useAuth } from '../auth/AuthContext';
 
 const IngredientsContext = createContext<IIngredientsContext | undefined>(
   undefined
 );
 
+const localStorageKeyBase = 'ingredients';
+
 function IngredientsProvider({ children }: { children: ReactNode }) {
-  const localStorageKey = 'ingredients';
-  const [ingredients, setIngredients] = useState<IIngredient[]>(() => {
+  const { state } = useAuth();
+  const { user } = state;
+  const [localStorageKey, setLocalStorageKey] = useState<string>(
+    () => localStorageKeyBase
+  );
+  const getCurrentIngredients = () => {
     const stored = localStorage.getItem(localStorageKey);
 
     if (!stored) {
@@ -23,11 +30,29 @@ function IngredientsProvider({ children }: { children: ReactNode }) {
     }
 
     return JSON.parse(stored);
-  });
+  };
+
+  const [ingredients, setIngredients] = useState<IIngredient[]>(() =>
+    getCurrentIngredients()
+  );
 
   useEffect(() => {
     localStorage.setItem(localStorageKey, JSON.stringify(ingredients));
   }, [ingredients]);
+
+  useEffect(() => {
+    let key = localStorageKeyBase;
+
+    if (user) {
+      key += `_${user.uid}`;
+    }
+
+    setLocalStorageKey(key);
+  }, [user]);
+
+  useEffect(() => {
+    setIngredients(getCurrentIngredients());
+  }, [localStorageKey]);
 
   function addIngredient(ingredient: IIngredient): void {
     setIngredients((ingredients) => {

@@ -7,7 +7,6 @@ import RecipesPage from '../../pages/recipes-page/recipes-page';
 import SettingsPage from '../../pages/settings-page/settings-page';
 import SubscriptionPage from '../../pages/subscription-page/subscription-page';
 import { ProtectedRoute } from '../../routes/ProtectedRoute';
-import TestAuthComponent from '../../contexts/auth/TestAuthComponent';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 
 export default function AppRoutes() {
@@ -15,7 +14,6 @@ export default function AppRoutes() {
     <Routes>
       <Route path='/' element={<HomePage />} />
       <Route path='login' element={<LoginPage />} />
-      <Route path='test' element={<TestAuthComponent />} />
       <Route path='*' element={<HomePage />} />
 
       <Route element={<ProtectedRoute />}>

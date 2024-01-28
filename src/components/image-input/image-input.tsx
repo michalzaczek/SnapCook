@@ -18,9 +18,17 @@ export default function ImageInput({
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const { setIsLoading } = useLoadingScreen();
+  const { state } = useAuth();
 
   useEffect(() => {
-    const listener = () => (inputRef.current as any).click();
+    const listener = () => {
+      if (!state.isPremium) {
+        navigate('/subscription');
+        return;
+      }
+
+      (inputRef.current as any).click();
+    };
 
     triggerElement.current?.addEventListener('click', listener);
 

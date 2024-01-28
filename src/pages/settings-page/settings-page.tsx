@@ -107,19 +107,21 @@ export default function SettingsPage() {
             >
               Current plan: <b>{state.isPremium ? 'Premium' : 'Free'}</b>
             </Typography>
-            <Button
-              variant='cta'
-              component={NavLink}
-              to='/subscription'
-              sx={{
-                alignSelf: 'center',
-                p: '20px',
-                py: 0,
-                fontSize: '16px',
-              }}
-            >
-              Upgrade
-            </Button>
+            {!state.isPremium && (
+              <Button
+                variant='cta'
+                component={NavLink}
+                to='/subscription'
+                sx={{
+                  alignSelf: 'center',
+                  p: '20px',
+                  py: 0,
+                  fontSize: '16px',
+                }}
+              >
+                Upgrade
+              </Button>
+            )}
           </Box>
         </Box>
       </PageHeader>

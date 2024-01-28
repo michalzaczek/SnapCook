@@ -128,67 +128,69 @@ export default function HomePage() {
           Tap to take a photo!
         </Typography>
       </Box>
-      <Box
-        sx={{
-          backgroundColor: 'primary.light',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          width: '90%',
-          maxWidth: '700px',
-          margin: '0 auto',
-          borderRadius: '28px',
-          borderTopLeftRadius: 0,
-          p: '30px',
-          pt: 4,
-        }}
-        boxShadow={4}
-      >
-        <Typography
-          variant='subtitle1'
-          sx={{
-            fontSize: '18px',
-            fontWeight: 400,
-            textAlign: 'left',
-            mb: 3,
-          }}
-        >
-          Unlock <b>unlimited</b> search recipes and start to cook whenever you
-          want!
-        </Typography>
+      {user && !state.isPremium && (
         <Box
           sx={{
+            backgroundColor: 'primary.light',
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
             alignItems: 'center',
-            width: '100%',
-            maxWidth: '366px',
+            flexDirection: 'column',
+            width: '90%',
+            maxWidth: '700px',
+            margin: '0 auto',
+            borderRadius: '28px',
+            borderTopLeftRadius: 0,
+            p: '30px',
+            pt: 4,
           }}
+          boxShadow={4}
         >
-          <Button
-            variant='cta'
-            sx={{ mb: 2, border: 'none' }}
-            component={NavLink}
-            to='/subscription'
-          >
-            Upgrade now!
-          </Button>
-          <Button
-            variant='outlined'
-            component={NavLink}
-            to='/subscription'
+          <Typography
+            variant='subtitle1'
             sx={{
-              mb: 2,
-              backgroundColor: 'primary.light',
-              color: 'primary.dark',
-              fontWeight: 700,
+              fontSize: '18px',
+              fontWeight: 400,
+              textAlign: 'left',
+              mb: 3,
             }}
           >
-            See details
-          </Button>
+            Unlock <b>unlimited</b> search recipes and start to cook whenever
+            you want!
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: '366px',
+            }}
+          >
+            <Button
+              variant='cta'
+              sx={{ mb: 2, border: 'none' }}
+              component={NavLink}
+              to='/subscription'
+            >
+              Upgrade now!
+            </Button>
+            <Button
+              variant='outlined'
+              component={NavLink}
+              to='/subscription'
+              sx={{
+                mb: 2,
+                backgroundColor: 'primary.light',
+                color: 'primary.dark',
+                fontWeight: 700,
+              }}
+            >
+              See details
+            </Button>
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 }

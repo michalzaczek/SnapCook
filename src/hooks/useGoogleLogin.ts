@@ -11,6 +11,9 @@ export const useGoogleLogin = () => {
     dispatch({ type: 'LOADING' });
 
     const provider = new GoogleAuthProvider();
+
+    provider.setCustomParameters({ prompt: 'select_account' });
+
     try {
       // Start the sign-in process with a popup.
       const result = await signInWithPopup(auth, provider);

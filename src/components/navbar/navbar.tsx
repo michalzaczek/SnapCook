@@ -33,6 +33,7 @@ export default function Navbar() {
         left: 0,
         right: 0,
         display: { md: 'none' },
+        backgroundColor: 'transparent',
       }}
       elevation={3}
     >

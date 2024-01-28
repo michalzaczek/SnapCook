@@ -10,10 +10,16 @@ import AppRoutes from '../app-routes/app-routes';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import MessageSnackbar from '../message-snackbar/message-snackbar';
 import { useAuth } from '../../contexts/auth/AuthContext';
+import { useLoadingScreen } from '../../contexts/loading-screen/loading-screen-context';
 
 export default function AppContent() {
   const { state } = useAuth();
   const { open, message, severity, setOpen } = useUIMessage();
+  const { isLoading } = useLoadingScreen();
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <IngredientsProvider>

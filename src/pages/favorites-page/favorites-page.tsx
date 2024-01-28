@@ -3,7 +3,7 @@ import { useState, useMemo, ChangeEvent } from 'react';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { SxProps, TextField, Typography } from '@mui/material';
+import { Container, SxProps, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RecipeList from '../../components/recipe-list/recipe-list';
 import PageHeader from '../../components/page-header/page-header';
@@ -59,7 +59,7 @@ export default function FavoritesPage() {
           variant='subtitle1'
           sx={{ fontSize: '25px', textAlign: 'left', lineHeight: 1 }}
         >
-          Your favourites
+          Your favorites
         </Typography>
         <Typography variant='subtitle1' sx={{ textAlign: 'left' }}>
           Choose the recipe for today
@@ -73,7 +73,7 @@ export default function FavoritesPage() {
           paddingTop: 3,
         }}
       >
-        <Box>
+        <Container>
           <TextField
             onChange={handleSearch}
             value={searchQuery}
@@ -81,7 +81,7 @@ export default function FavoritesPage() {
             InputProps={{ endAdornment: <SearchIcon /> }}
             sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
           ></TextField>
-        </Box>
+        </Container>
         <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
           <Typography sx={titleStyle}>Favorites</Typography>
           <RecipeList recipes={filteredFavorites} />

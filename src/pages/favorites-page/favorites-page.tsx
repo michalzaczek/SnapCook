@@ -16,20 +16,10 @@ const titleStyle: SxProps = {
 export default function FavoritesPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { allRecipes } = useRecipes();
-  const [recipes] = useState<IRecipeData[]>(() => {
-    const recipes = allRecipes.flatMap((r) => r.recipes) || [];
-
-    return recipes.reduce((prev: IRecipeData[], r) => {
-      if (!prev.find((recipe) => recipe.id === r.id)) {
-        prev.push(r);
-      }
-      return prev;
-    }, []);
-  });
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {
-    return recipes.filter((r) => isFavorite(r.id));
+    return allRecipes.filter((r) => isFavorite(r.id));
   });
 
   const [filteredFavorites, setFilteredFavorites] = useState<IRecipeData[]>([]);
@@ -37,8 +27,8 @@ export default function FavoritesPage() {
 
   useMemo(() => {
     setFilteredFavorites(filterRecipes(favorites));
-    setFilteredHistory(filterRecipes(recipes));
-  }, [searchQuery]);
+    setFilteredHistory(filterRecipes(allRecipes));
+  }, [searchQuery, allRecipes]);
 
   function filterRecipes(recipes: IRecipeData[]): IRecipeData[] {
     return searchQuery.length > 0
@@ -85,8 +75,18 @@ export default function FavoritesPage() {
         <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
           <Typography sx={titleStyle}>Favorites</Typography>
           <RecipeList recipes={filteredFavorites} />
+          {!filteredFavorites.length && (
+            <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
+              Nothing here yet. Snap to cook and find your favs!
+            </Typography>
+          )}
           <Typography sx={{ ...titleStyle, marginTop: 3 }}>History</Typography>
           <RecipeList recipes={filteredHistory} />
+          {!filteredHistory.length && (
+            <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
+              No history yet. Snap to cook and search for some recipes!
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

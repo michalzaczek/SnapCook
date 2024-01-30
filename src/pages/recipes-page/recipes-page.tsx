@@ -10,7 +10,7 @@ import RecipeList from '../../components/recipe-list/recipe-list';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 
 export default function RecipesPage() {
-  const { recipes, setSearchQuery, searchQuery } = useRecipes();
+  const { recipesForQuery, setSearchQuery, searchQuery } = useRecipes();
   const { ingredients } = useIngredients();
   const { setRecipes } = useRecipes();
   const [isLoading, setIsLoading] = useState(false);
@@ -24,13 +24,13 @@ export default function RecipesPage() {
   useMemo(() => {
     const filteredRecipes =
       searchQuery.length > 0
-        ? recipes.filter((recipe) =>
+        ? recipesForQuery.filter((recipe) =>
             recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
           )
-        : recipes;
+        : recipesForQuery;
 
     setFilteredRecipes(filteredRecipes);
-  }, [recipes, searchQuery]);
+  }, [recipesForQuery, searchQuery]);
 
   useEffect(() => {
     const fetchRecipes = async () => {

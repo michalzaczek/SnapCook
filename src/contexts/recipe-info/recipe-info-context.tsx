@@ -11,15 +11,21 @@ import { IRecipeInfo } from './recipe-info.interface';
 import { IRecipeInfoContext } from './recipe-info-context.interface';
 import { AxiosError, AxiosResponse } from 'axios';
 import { IRecipeInfoData } from '../../services/recipe-info/recipe-info-data.interface';
+import { useAuth } from '../auth/AuthContext';
 
 const RecipeInfoContext = createContext<IRecipeInfoContext | undefined>(
   undefined
 );
 
-function RecipeInfoProvider({ children }: { children: ReactNode }) {
-  const localStorageKey = 'recipeInfo';
+const localStorageKeyBase = 'recipeInfo';
 
-  const [recipes, setRecipes] = useState<IRecipeInfo[]>(() => {
+function RecipeInfoProvider({ children }: { children: ReactNode }) {
+  const { state } = useAuth();
+  const { user } = state;
+  const [localStorageKey, setLocalStorageKey] = useState<string>(
+    () => localStorageKeyBase
+  );
+  const getCurrentRecipes = () => {
     const stored = localStorage.getItem(localStorageKey);
 
     if (!stored) {
@@ -27,7 +33,25 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     }
 
     return JSON.parse(stored);
-  });
+  };
+
+  const [recipes, setRecipes] = useState<IRecipeInfo[]>(() =>
+    getCurrentRecipes()
+  );
+
+  useEffect(() => {
+    let key = localStorageKeyBase;
+
+    if (user) {
+      key += `_${user.uid}`;
+    }
+
+    setLocalStorageKey(key);
+  }, [user]);
+
+  useEffect(() => {
+    setRecipes(getCurrentRecipes());
+  }, [localStorageKey]);
 
   async function getRecipeInfo(id: number) {
     const recipe = recipes.find((r) => r.id === id);

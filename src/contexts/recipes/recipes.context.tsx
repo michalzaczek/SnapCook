@@ -11,15 +11,21 @@ import { IRecipeData } from '../../services/recipe/recipe-data.interface';
 import { IRecipeStorage } from './recipe-storage.interface';
 import { fetchRecipes } from '../../services/recipe/recipe.service';
 import { useIngredients } from '../ingredients/ingredients.context';
+import { useAuth } from '../auth/AuthContext';
 
 const RecipesContext = createContext<IRecipesContext | undefined>(undefined);
+const localStorageKeyBase = 'recipes';
 
 function RecipesProvider({ children }: { children: ReactNode }) {
   const { ingredients } = useIngredients();
-  const localStorageKey = 'recipes';
+  const [localStorageKey, setLocalStorageKey] = useState<string>(
+    () => localStorageKeyBase
+  );
   const [searchQuery, setSearchQuery] = useState('');
+  const { state } = useAuth();
+  const { user } = state;
 
-  const [allRecipes, setAllRecipes] = useState<IRecipeStorage[]>(() => {
+  const getCurrentRecipes = () => {
     const storage = localStorage.getItem(localStorageKey);
 
     if (storage) {
@@ -27,13 +33,31 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     }
 
     return [];
-  });
+  };
+
+  const [allRecipes, setAllRecipes] = useState<IRecipeStorage[]>(() =>
+    getCurrentRecipes()
+  );
 
   useEffect(() => {
     localStorage.setItem(localStorageKey, JSON.stringify(allRecipes));
   }, [allRecipes]);
 
-  const [recipes, setRecipes] = useState<IRecipeData[]>(() => {
+  useEffect(() => {
+    setAllRecipes(getCurrentRecipes());
+  }, [localStorageKey]);
+
+  useEffect(() => {
+    let key = localStorageKeyBase;
+
+    if (user) {
+      key += `_${user.uid}`;
+    }
+
+    setLocalStorageKey(key);
+  }, [user]);
+
+  const [recipesForQuery, setRecipesForQuery] = useState<IRecipeData[]>(() => {
     const selectedIngredients = ingredients
       .filter((i) => i.isConfirmed)
       .map((i) => i.name);
@@ -49,7 +73,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     const recipesForQuery = getRecipesForQuery(ingredients);
 
     if (recipesForQuery.length) {
-      setRecipes(recipesForQuery);
+      setRecipesForQuery(recipesForQuery);
 
       return;
     }
@@ -70,7 +94,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
       ];
 
       setAllRecipes(updatedStorage);
-      setRecipes(recipes);
+      setRecipesForQuery(recipes);
 
       return;
     } catch (error) {
@@ -90,14 +114,23 @@ function RecipesProvider({ children }: { children: ReactNode }) {
   }
 
   const value: IRecipesContext = useMemo(() => {
+    const all = allRecipes
+      .flatMap((r) => r.recipes)
+      .reduce((prev: IRecipeData[], r) => {
+        if (!prev.find((recipe) => recipe.id === r.id)) {
+          prev.push(r);
+        }
+        return prev;
+      }, []);
+
     return {
-      allRecipes,
-      recipes,
+      allRecipes: all,
+      recipesForQuery,
       setRecipes: fetchAndSet,
       searchQuery,
       setSearchQuery,
     };
-  }, [recipes, searchQuery]);
+  }, [recipesForQuery, searchQuery, allRecipes]);
 
   return (
     <RecipesContext.Provider value={value}>{children}</RecipesContext.Provider>

@@ -14,9 +14,10 @@ import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 import FavoriteRecipeIcon from '../../components/favorite-recipe-icon/favorite-recipe-icon';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import dishImage from '../../assets/placeholder_dish.png';
 
 export default function RecipePage() {
-  const { id } = useParams();
+  const { ingredients, title, category } = useParams();
   const { getRecipeInfo, recipes } = useRecipeInfo();
   const [recipe, setRecipe] = useState<IRecipeInfo>();
   const { setMessage, setSeverity, setOpen } = useUIMessage();
@@ -36,7 +37,11 @@ export default function RecipePage() {
   useEffect(() => {
     const getRecipe = async () => {
       try {
-        const recipe = await getRecipeInfo(parseInt(id!));
+        const recipe = await getRecipeInfo(
+          ingredients!.split(','),
+          title!,
+          category!
+        );
         setRecipe(recipe);
       } catch (err: any) {
         setSeverity('error');
@@ -64,7 +69,7 @@ export default function RecipePage() {
             pl: 5,
             pb: 3,
           }}
-          image={recipe?.image}
+          image={dishImage}
         >
           <Box
             sx={{
@@ -161,14 +166,14 @@ export default function RecipePage() {
               <AccessTimeFilledIcon
                 sx={{ mr: 1, fontSize: { xs: '30px', md: '30px' } }}
               />
-              {recipe?.readyInMinutes} minutes
+              {recipe?.cookingTime} minutes
             </Typography>
           </Box>
           <Box mb={3}>
             <Typography variant='h2' sx={h2Style}>
               Ingredients
             </Typography>
-            {recipe?.extendedIngredients.map((ingredient, index) => {
+            {recipe?.ingredients.map((ingredient, index) => {
               return (
                 <Box
                   key={index}
@@ -179,14 +184,7 @@ export default function RecipePage() {
                     pb: 0.5,
                   }}
                 >
-                  <span>
-                    <b>
-                      {ingredient.amount} {ingredient.unit}{' '}
-                    </b>
-                  </span>
-                  <span>
-                    {ingredient.originalName || ingredient.originalString}
-                  </span>
+                  <span>{ingredient}</span>
                 </Box>
               );
             })}

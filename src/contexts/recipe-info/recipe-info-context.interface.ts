@@ -1,8 +1,12 @@
 import { IRecipeInfo } from './recipe-info.interface';
 
 export interface IRecipeInfoContext {
-  getRecipeInfo(id: number): Promise<IRecipeInfo>;
-  setIsFavorite(id: number, value: boolean): void;
-  isFavorite(id: number): boolean;
+  getRecipeInfo(
+    ingredients: string[],
+    title: string,
+    category: string
+  ): Promise<IRecipeInfo>;
+  setIsFavorite(title: string, value: boolean): void;
+  isFavorite(title: string): boolean;
   recipes: IRecipeInfo[];
 }

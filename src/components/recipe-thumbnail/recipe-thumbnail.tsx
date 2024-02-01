@@ -8,13 +8,14 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { IProps } from './props.interface';
+import dishImage from '../../assets/placeholder_dish.png';
 
 export default function RecipeThumbnail({ recipe }: IProps) {
   return (
     <Card
       draggable={false}
       component={NavLink}
-      to={`/recipe/${recipe.id}`}
+      to={`/recipe/${recipe.title}/${recipe.category}/${recipe.ingredients}`}
       sx={{
         display: 'flex',
         boxShadow: 4,
@@ -33,7 +34,7 @@ export default function RecipeThumbnail({ recipe }: IProps) {
           alignItems: 'end',
           width: { xs: '100%', sm: '50%' },
         }}
-        image={recipe.image}
+        image={dishImage}
       >
         <Box
           sx={(theme) => ({
@@ -104,14 +105,13 @@ export default function RecipeThumbnail({ recipe }: IProps) {
               '&& .separator': { fontSize: '10px', mx: 0.5 },
             }}
           >
-            {recipe.usedIngredients.map((i, index) => {
+            {recipe.ingredients.map((i, index) => {
               const separator =
-                index + 1 === recipe.usedIngredients.length ? '' : '•';
+                index + 1 === recipe.ingredients.length ? '' : '•';
 
               return (
-                <span key={i.originalName}>
-                  {i.originalName}{' '}
-                  <span className='separator'>{separator} </span>
+                <span key={i}>
+                  {i} <span className='separator'>{separator} </span>
                 </span>
               );
             })}

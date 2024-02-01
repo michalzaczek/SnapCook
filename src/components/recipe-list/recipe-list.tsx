@@ -27,7 +27,7 @@ export default function RecipeList({
     >
       {recipes?.map((recipe) => (
         <Box
-          key={recipe.id}
+          key={recipe.title}
           sx={{
             justifyContent: 'center',
             display: 'flex',

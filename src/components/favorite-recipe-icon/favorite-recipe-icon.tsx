@@ -16,10 +16,13 @@ export default function FavoriteRecipeIcon({
   return (
     <>
       {recipe?.isFavorite ? (
-        <FavoriteIcon onClick={() => setIsFavorite(recipe.id, false)} sx={sx} />
+        <FavoriteIcon
+          onClick={() => setIsFavorite(recipe.title, false)}
+          sx={sx}
+        />
       ) : recipe ? (
         <FavoriteBorderOutlinedIcon
-          onClick={() => setIsFavorite(recipe.id, true)}
+          onClick={() => setIsFavorite(recipe.title, true)}
           sx={sx}
         />
       ) : null}

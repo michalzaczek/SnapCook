@@ -79,7 +79,8 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const recipes = (await fetchRecipes(ingredients)).data;
+      const token = (await user?.getIdToken()) || '';
+      const recipes = (await fetchRecipes(ingredients, token)).data;
 
       if (!recipes?.length) {
         throw 'No recipes found for this query.';
@@ -114,14 +115,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
   }
 
   const value: IRecipesContext = useMemo(() => {
-    const all = allRecipes
-      .flatMap((r) => r.recipes)
-      .reduce((prev: IRecipeData[], r) => {
-        if (!prev.find((recipe) => recipe.id === r.id)) {
-          prev.push(r);
-        }
-        return prev;
-      }, []);
+    const all = allRecipes.flatMap((r) => r.recipes);
 
     return {
       allRecipes: all,

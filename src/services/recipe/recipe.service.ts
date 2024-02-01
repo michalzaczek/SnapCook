@@ -2,26 +2,59 @@ import { IRecipeData } from './recipe-data.interface';
 import axios, { AxiosResponse } from 'axios';
 
 export const fetchRecipes = async (
-  ingredients: string[]
+  ingredients: string[],
+  token: string
 ): Promise<AxiosResponse<IRecipeData[], any>> => {
   const options = {
     method: 'GET',
-    url: 'https://us-central1-snapcook-test.cloudfunctions.net/findByIngredients',
+    url: 'https://us-central1-snapcook-test.cloudfunctions.net/api/getRecipesList',
     headers: {
-      'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
-      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
+      Authorization: `Bearer ${token}`,
     },
     params: {
       ingredients: ingredients.toString(),
-      number: '5',
-      ignorePantry: 'false',
-      ranking: '1',
     },
   };
 
   try {
-    const response = await axios.request<IRecipeData[]>(options);
-    return new Promise((resolve) => resolve(response));
+    const res = {
+      data: [
+        {
+          title: 'Scrambled Eggs',
+          ingredients: ['egg', 'salt', 'pepper', 'butter'],
+          category: 'Breakfast and Brunch',
+        },
+        {
+          title: 'Egg Salad Sandwich',
+          ingredients: ['egg', 'mayonnaise', 'mustard', 'lettuce', 'bread'],
+          category: 'Lunch',
+        },
+        {
+          title: 'Deviled Eggs',
+          ingredients: [
+            'egg',
+            'mayonnaise',
+            'mustard',
+            'pickle relish',
+            'paprika',
+          ],
+          category: 'Appetizers',
+        },
+        {
+          title: 'Frittata',
+          ingredients: ['egg', 'vegetables', 'cheese', 'milk'],
+          category: 'Breakfast and Brunch',
+        },
+        {
+          title: 'Noodle Soup with Poached Egg',
+          ingredients: ['egg', 'noodles', 'broth', 'vegetables'],
+          category: 'Soups and Stews',
+        },
+      ],
+    } as any;
+
+    // const response = await axios.request<IRecipeData[]>(options);
+    return new Promise((resolve) => resolve(res));
   } catch (error: any) {
     return new Promise((resolve) => resolve(error));
   }

@@ -19,7 +19,7 @@ export default function FavoritesPage() {
 
   const { isFavorite } = useRecipeInfo();
   const [favorites] = useState<IRecipeData[]>(() => {
-    return allRecipes.filter((r) => isFavorite(r.id));
+    return allRecipes.filter((r) => isFavorite(r.title));
   });
 
   const [filteredFavorites, setFilteredFavorites] = useState<IRecipeData[]>([]);

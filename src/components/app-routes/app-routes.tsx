@@ -19,7 +19,10 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path='ingredients' element={<IngredientsPage />} />
         <Route path='recipes' element={<RecipesPage />} />
-        <Route path='recipe/:id' element={<RecipePage />} />
+        <Route
+          path='recipe/:title/:category/:ingredients'
+          element={<RecipePage />}
+        />
         <Route path='settings' element={<SettingsPage />} />
         <Route path='subscription' element={<SubscriptionPage />} />
         <Route path='favorites' element={<FavoritesPage />} />

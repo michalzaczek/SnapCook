@@ -10,7 +10,6 @@ import { fetchRecipeInfo } from '../../services/recipe-info/recipe-info.service'
 import { IRecipeInfo } from './recipe-info.interface';
 import { IRecipeInfoContext } from './recipe-info-context.interface';
 import { AxiosError, AxiosResponse } from 'axios';
-import { IRecipeInfoData } from '../../services/recipe-info/recipe-info-data.interface';
 import { useAuth } from '../auth/AuthContext';
 
 const RecipeInfoContext = createContext<IRecipeInfoContext | undefined>(
@@ -53,25 +52,38 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     setRecipes(getCurrentRecipes());
   }, [localStorageKey]);
 
-  async function getRecipeInfo(id: number) {
-    const recipe = recipes.find((r) => r.id === id);
-
-    if (recipe) {
-      return new Promise<IRecipeInfo>((resolve) => resolve(recipe!));
-    }
-
+  async function getRecipeInfo(
+    ingredients: string[],
+    title: string,
+    category: string
+  ) {
     try {
-      const response = await fetchRecipeInfo(id);
+      const recipe = recipes.find((r) => r.title === title);
 
-      if (!(response as AxiosResponse<IRecipeInfoData, any>).data) {
+      if (recipe) {
+        return new Promise<IRecipeInfo>((resolve) => resolve(recipe!));
+      }
+
+      const token = (await user?.getIdToken()) || '';
+      const response = await fetchRecipeInfo(
+        ingredients,
+        title,
+        category,
+        token
+      );
+
+      if (!(response as AxiosResponse<IRecipeInfo, any>).data) {
         throw `Failed to fetch the recipe information. Error: ${
           (response as AxiosError).message
         }`;
       }
 
       const recipeInfo: IRecipeInfo = {
-        ...(response as AxiosResponse<IRecipeInfoData, any>).data,
+        ...(response as AxiosResponse<IRecipeInfo, any>).data,
         isFavorite: false,
+        title,
+        category,
+        ingredients,
       };
 
       setRecipes((r) => [...r, recipeInfo]);
@@ -81,8 +93,8 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  function isFavorite(id: number): boolean {
-    const recipe = recipes.find((r) => r.id === id);
+  function isFavorite(title: string): boolean {
+    const recipe = recipes.find((r) => r.title === title);
 
     if (!recipe) {
       return false;
@@ -95,7 +107,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(localStorageKey, JSON.stringify(recipes));
   }, [recipes]);
 
-  function setIsFavorite(id: number, value: boolean) {
+  function setIsFavorite(title: string, value: boolean) {
     const errorMsg =
       'Tried setting isFavorite property of an unexisting recipeInfo';
 
@@ -107,7 +119,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
 
     const recipes = JSON.parse(stored) as IRecipeInfo[];
 
-    const recipe = recipes.find((r) => r.id === id);
+    const recipe = recipes.find((r) => r.title === title);
 
     if (!recipe) {
       throw errorMsg;

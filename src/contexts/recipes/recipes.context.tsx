@@ -12,6 +12,8 @@ import { IRecipeStorage } from './recipe-storage.interface';
 import { fetchRecipes } from '../../services/recipe/recipe.service';
 import { useIngredients } from '../ingredients/ingredients.context';
 import { useAuth } from '../auth/AuthContext';
+import { AxiosResponse } from 'axios';
+import { IRecipeDto } from '../../services/recipe/recipe-dto.interface';
 
 const RecipesContext = createContext<IRecipesContext | undefined>(undefined);
 const localStorageKeyBase = 'recipes';
@@ -80,9 +82,10 @@ function RecipesProvider({ children }: { children: ReactNode }) {
 
     try {
       const token = (await user?.getIdToken()) || '';
-      const recipes = (await fetchRecipes(ingredients, token)).data;
+      const response = await fetchRecipes(ingredients, token);
+      const recipes = (response as AxiosResponse<IRecipeDto, any>).data.recipes;
 
-      if (!recipes?.length) {
+      if (!recipes.length) {
         throw 'No recipes found for this query.';
       }
 

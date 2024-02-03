@@ -220,7 +220,7 @@ export default function IngredientsPage() {
         <LoadRecipesButton
           loading={isLoading}
           onClick={handleSearchRecipe}
-          disabled={!ingredients.length}
+          disabled={!ingredients.filter((i) => i.isConfirmed).length}
         />
       </Container>
     </Box>

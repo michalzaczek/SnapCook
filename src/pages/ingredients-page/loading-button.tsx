@@ -18,7 +18,6 @@ export function LoadRecipesButton({
   return (
     <LoadingButton
       loading={loading}
-      loadingPosition='end'
       variant='cta'
       onClick={() => onClick()}
       disabled={disabled}
@@ -37,6 +36,10 @@ export function LoadRecipesButton({
         },
         '&& .MuiCircularProgress-root': {
           ml: 1,
+        },
+        '&&.Mui-disabled': {
+          backgroundColor: 'primary.dark',
+          opacity: '50%',
         },
       }}
     >

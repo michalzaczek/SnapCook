@@ -5,6 +5,7 @@ import {
   CardMedia,
   Container,
   IconButton,
+  Skeleton,
   SxProps,
   Typography,
 } from '@mui/material';
@@ -21,6 +22,7 @@ export default function RecipePage() {
   const { getRecipeInfo, recipes } = useRecipeInfo();
   const [recipe, setRecipe] = useState<IRecipeInfo>();
   const { setMessage, setSeverity, setOpen } = useUIMessage();
+  const [isLoading, setIsLoading] = useState(false);
 
   const iconStyle: SxProps = {
     fontSize: '32px',
@@ -37,12 +39,16 @@ export default function RecipePage() {
   useEffect(() => {
     const getRecipe = async () => {
       try {
+        setIsLoading(true);
+
         const recipe = await getRecipeInfo(
           ingredients!.split(','),
           title!,
           category!
         );
+
         setRecipe(recipe);
+        setIsLoading(false);
       } catch (err: any) {
         setSeverity('error');
         setMessage(err);
@@ -140,54 +146,80 @@ export default function RecipePage() {
               justifyContent: 'space-between',
             }}
           >
-            <Typography
-              variant='h1'
-              sx={{
-                textAlign: 'left',
-                fontSize: { xs: '28px', md: '34px' },
-                fontFamily: 'Lato',
-                fontWeight: 700,
-              }}
-            >
-              {recipe?.title}
-            </Typography>
-            <FavoriteRecipeIcon recipe={recipe} sx={{ fontSize: '40px' }} />
+            {isLoading ? (
+              <Skeleton width={'75%'} />
+            ) : (
+              <Typography
+                variant='h1'
+                sx={{
+                  textAlign: 'left',
+                  fontSize: { xs: '28px', md: '34px' },
+                  fontFamily: 'Lato',
+                  fontWeight: 700,
+                }}
+              >
+                {recipe?.title}
+              </Typography>
+            )}
+            {isLoading ? (
+              <Skeleton variant='circular' width={40} height={40} />
+            ) : (
+              <FavoriteRecipeIcon recipe={recipe} sx={{ fontSize: '40px' }} />
+            )}
           </Box>
           <Box mb={3}>
-            <Typography
-              variant='h6'
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                fontSize: { xs: '18px', md: '24px' },
-              }}
-            >
-              <AccessTimeFilledIcon
-                sx={{ mr: 1, fontSize: { xs: '30px', md: '30px' } }}
-              />
-              {recipe?.cookingTime} minutes
-            </Typography>
+            {isLoading ? (
+              <Box sx={{ display: 'flex' }}>
+                <Skeleton width={150} />
+              </Box>
+            ) : (
+              <Typography
+                variant='h6'
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  fontSize: { xs: '18px', md: '24px' },
+                }}
+              >
+                <AccessTimeFilledIcon
+                  sx={{ mr: 1, fontSize: { xs: '30px', md: '30px' } }}
+                />
+                {recipe?.cookingTime} minutes
+              </Typography>
+            )}
           </Box>
           <Box mb={3}>
-            <Typography variant='h2' sx={h2Style}>
-              Ingredients
-            </Typography>
-            {recipe?.ingredients.map((ingredient, index) => {
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    textAlign: 'left',
-                    borderBottom: '1px dotted',
-                    mb: 2,
-                    pb: 0.5,
-                  }}
-                >
-                  <span>{ingredient}</span>
-                </Box>
-              );
-            })}
+            {isLoading ? (
+              <>
+                <Skeleton width={120} />
+                <Skeleton />
+                <Skeleton width={'75%'} />
+                <Skeleton width={'50%'} />
+                <Skeleton />
+              </>
+            ) : (
+              <>
+                <Typography variant='h2' sx={h2Style}>
+                  Ingredients
+                </Typography>
+                {recipe?.ingredients.map((ingredient, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        textAlign: 'left',
+                        borderBottom: '1px dotted',
+                        mb: 2,
+                        pb: 0.5,
+                      }}
+                    >
+                      <span>{ingredient}</span>
+                    </Box>
+                  );
+                })}
+              </>
+            )}
           </Box>
         </Box>
         <Box
@@ -196,16 +228,28 @@ export default function RecipePage() {
             p: 5,
           }}
         >
-          <Typography variant='h2' sx={h2Style}>
-            Instructions
-          </Typography>
-          <Typography variant='subtitle1' sx={{ fontSize: { md: '26px' } }}>
-            {recipe?.instructions.map((i, index) => (
-              <p key={index}>
-                {index + 1}. {i}
-              </p>
-            ))}
-          </Typography>
+          {isLoading ? (
+            <>
+              <Skeleton width={120} />
+              <Skeleton />
+              <Skeleton width={'75%'} />
+              <Skeleton width={'50%'} />
+              <Skeleton />
+            </>
+          ) : (
+            <>
+              <Typography variant='h2' sx={h2Style}>
+                Instructions
+              </Typography>
+              <Typography variant='subtitle1' sx={{ fontSize: { md: '26px' } }}>
+                {recipe?.instructions.map((i, index) => (
+                  <p key={index}>
+                    {index + 1}. {i}
+                  </p>
+                ))}
+              </Typography>
+            </>
+          )}
         </Box>
       </Box>
     </Container>

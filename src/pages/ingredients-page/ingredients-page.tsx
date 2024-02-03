@@ -11,10 +11,10 @@ import { ChangeEvent, useState } from 'react';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
-import LoadingButton from '@mui/lab/LoadingButton';
 import PageHeader from '../../components/page-header/page-header';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import AddIcon from '@mui/icons-material/Add';
+import { LoadRecipesButton } from './loading-button';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -217,16 +217,11 @@ export default function IngredientsPage() {
             <AddIcon sx={{ color: 'secondary.main', fontSize: '45px' }} />
           </Box>
         </Box>
-
-        <LoadingButton
+        <LoadRecipesButton
           loading={isLoading}
-          variant='cta'
           onClick={handleSearchRecipe}
           disabled={!ingredients.length}
-          sx={{ my: 2, width: '100%', maxWidth: '400px' }}
-        >
-          Find Recipes
-        </LoadingButton>
+        />
       </Container>
     </Box>
   );

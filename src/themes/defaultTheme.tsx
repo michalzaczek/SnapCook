@@ -62,6 +62,7 @@ const deafultTheme = createTheme({
           style: ({ theme }) => ({
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
+            minHeight: '47px',
             '&&:hover': {
               backgroundColor: theme.palette.primary.main,
               color: theme.palette.primary.dark,

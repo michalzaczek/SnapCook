@@ -6,7 +6,7 @@ export const useGetPaymentHistory = (uid: string | undefined) => {
   const [paymentHistory, setPaymentHistory] = useState<
     { amount_received: number; created: Date; currency: string }[]
   >([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<FirestoreError | null>(null);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const useGetPaymentHistory = (uid: string | undefined) => {
         }
       } finally {
         if (isMounted) {
-          setLoading(false);
+          setIsLoading(false);
         }
       }
     };
@@ -46,5 +46,5 @@ export const useGetPaymentHistory = (uid: string | undefined) => {
     };
   }, [uid]);
 
-  return { paymentHistory, loading, error };
+  return { paymentHistory, isLoading, error };
 };

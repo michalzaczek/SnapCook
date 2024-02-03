@@ -160,6 +160,7 @@ export default function SettingsPage() {
           text='Payment history'
           arrow={true}
           top={4}
+          onClick={() => navigate('/payment-history')}
         />
         <SettingsItem
           icon={LogoutIcon}

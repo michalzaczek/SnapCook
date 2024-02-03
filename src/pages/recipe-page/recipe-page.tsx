@@ -200,7 +200,11 @@ export default function RecipePage() {
             Instructions
           </Typography>
           <Typography variant='subtitle1' sx={{ fontSize: { md: '26px' } }}>
-            {recipe?.instructions}
+            {recipe?.instructions.map((i, index) => (
+              <p key={index}>
+                {index + 1}. {i}
+              </p>
+            ))}
           </Typography>
         </Box>
       </Box>

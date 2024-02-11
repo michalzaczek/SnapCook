@@ -19,13 +19,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const subscriptionsRef = collection(db, 'users', userId, 'subscriptions');
       const q = query(subscriptionsRef, where('status', '==', 'active'));
       const querySnapshot = await getDocs(q);
-
-      let isActive = false;
-      querySnapshot.forEach((doc) => {
-        if (doc.data().status === 'active') {
-          isActive = true;
-        }
-      });
+      const isActive = querySnapshot.docs.length > 0;
 
       dispatch({
         type: 'SET_PREMIUM_STATUS',

@@ -47,6 +47,7 @@ export default function SettingsPage() {
                 height: '100px',
                 display: 'flex',
                 placeContent: 'center',
+                alignItems: 'center',
               }}
             >
               {user?.photoURL ? (
@@ -60,7 +61,7 @@ export default function SettingsPage() {
                 ></CardMedia>
               ) : (
                 <PersonIcon
-                  sx={{ color: 'primary.light', fontSize: '33px' }}
+                  sx={{ color: 'primary.light', fontSize: '60px' }}
                 ></PersonIcon>
               )}
             </Box>

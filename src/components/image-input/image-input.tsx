@@ -33,7 +33,7 @@ export default function ImageInput({
     triggerElement.current?.addEventListener('click', listener);
 
     return () => triggerElement.current?.removeEventListener('click', listener);
-  }, []);
+  }, [state]);
 
   async function handleUpload(e: ChangeEvent<HTMLInputElement>): Promise<void> {
     if (!e.target.files || !e.target.files[0]) {

@@ -101,7 +101,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
       setRecipesForQuery(recipes);
 
       return;
-    } catch (error) {
+    } catch (error: any) {
       throw `Failed to fetch recipes. Error: ${error}`;
     }
   }

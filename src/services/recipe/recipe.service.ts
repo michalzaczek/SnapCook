@@ -20,6 +20,10 @@ export const fetchRecipes = async (
     const response = await axios.request<IRecipeDto>(options);
     return new Promise((resolve) => resolve(response));
   } catch (error: any) {
-    return new Promise((resolve) => resolve(error));
+    if ((error as AxiosError).response?.status === 403) {
+      throw error.response.data;
+    }
+
+    throw error;
   }
 };

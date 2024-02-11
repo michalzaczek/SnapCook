@@ -7,7 +7,7 @@ export const fetchIngredients = async (
 ): Promise<IIngredient[]> => {
   try {
     const response = await axios.post<any>(
-      'https://us-central1-snapcook-test.cloudfunctions.net/getIngredients',
+      `${import.meta.env.VITE_SNAPCOOK_API}/getIngredients`,
       { image: base64 },
       {
         headers: {

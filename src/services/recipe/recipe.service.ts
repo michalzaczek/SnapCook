@@ -7,7 +7,7 @@ export const fetchRecipes = async (
 ): Promise<AxiosResponse<IRecipeDto, any> | AxiosError<unknown, any>> => {
   const options = {
     method: 'GET',
-    url: 'https://us-central1-snapcook-test.cloudfunctions.net/api/getRecipesList',
+    url: `${import.meta.env.VITE_SNAPCOOK_API}/getRecipesList`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { useState, useMemo, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useRecipes } from '../../contexts/recipes/recipes.context';
 import { useRecipeInfo } from '../../contexts/recipe-info/recipe-info-context';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
@@ -18,17 +18,10 @@ export default function FavoritesPage() {
   const { allRecipes } = useRecipes();
 
   const { isFavorite } = useRecipeInfo();
-  const [favorites] = useState<IRecipeData[]>(() => {
-    return allRecipes.filter((r) => isFavorite(r.title));
-  });
 
-  const [filteredFavorites, setFilteredFavorites] = useState<IRecipeData[]>([]);
-  const [filteredHistory, setFilteredHistory] = useState<IRecipeData[]>([]);
-
-  useMemo(() => {
-    setFilteredFavorites(filterRecipes(favorites));
-    setFilteredHistory(filterRecipes(allRecipes));
-  }, [searchQuery, allRecipes]);
+  const favorites = allRecipes.filter((r) => isFavorite(r.title));
+  const filteredFavorites = filterRecipes(favorites);
+  const filteredHistory = filterRecipes(allRecipes);
 
   function filterRecipes(recipes: IRecipeData[]): IRecipeData[] {
     return searchQuery.length > 0

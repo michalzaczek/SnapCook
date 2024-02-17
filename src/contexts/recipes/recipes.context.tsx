@@ -8,57 +8,42 @@ import {
 } from 'react';
 import { IRecipesContext } from './recipes-context.interface';
 import { IRecipeData } from '../../services/recipe/recipe-data.interface';
-import { IRecipeStorage } from './recipe-storage.interface';
+import { IRecipeStorage, IRecipeStorageData } from './recipe-storage.interface';
 import { fetchRecipes } from '../../services/recipe/recipe.service';
 import { useIngredients } from '../ingredients/ingredients.context';
 import { useAuth } from '../auth/AuthContext';
 import { AxiosResponse } from 'axios';
 import { IRecipeDto } from '../../services/recipe/recipe-dto.interface';
+import { db } from '../../firebase/config';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+} from 'firebase/firestore';
 
 const RecipesContext = createContext<IRecipesContext | undefined>(undefined);
 const localStorageKeyBase = 'recipes';
 
 function RecipesProvider({ children }: { children: ReactNode }) {
   const { ingredients } = useIngredients();
-  const [localStorageKey, setLocalStorageKey] = useState<string>(
-    () => localStorageKeyBase
-  );
-  const [searchQuery, setSearchQuery] = useState('');
   const { state } = useAuth();
   const { user } = state;
+  const localStorageKey = user
+    ? `${localStorageKeyBase}_${user.uid}`
+    : localStorageKeyBase;
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const getCurrentRecipes = () => {
-    const storage = localStorage.getItem(localStorageKey);
-
-    if (storage) {
-      return JSON.parse(storage) as IRecipeStorage[];
-    }
-
-    return [];
-  };
-
-  const [allRecipes, setAllRecipes] = useState<IRecipeStorage[]>(() =>
-    getCurrentRecipes()
-  );
+  const [allRecipes, setAllRecipes] = useState<IRecipeStorageData[]>([]);
 
   useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(allRecipes));
-  }, [allRecipes]);
-
-  useEffect(() => {
-    setAllRecipes(getCurrentRecipes());
-  }, [localStorageKey]);
-
-  useEffect(() => {
-    let key = localStorageKeyBase;
-
-    if (user) {
-      key += `_${user.uid}`;
-    }
-
-    setLocalStorageKey(key);
+    syncRecipes();
   }, [user]);
 
+  //TODO: remove useState hook.
   const [recipesForQuery, setRecipesForQuery] = useState<IRecipeData[]>(() => {
     const selectedIngredients = ingredients
       .filter((i) => i.isConfirmed)
@@ -66,6 +51,57 @@ function RecipesProvider({ children }: { children: ReactNode }) {
 
     return getRecipesForQuery(selectedIngredients);
   });
+
+  async function syncRecipes(): Promise<void> {
+    if (!user) {
+      return;
+    }
+
+    const userDoc = await getDoc(doc(db, `users/${user?.uid}`));
+
+    if (!userDoc.exists()) {
+      return;
+    }
+
+    const dbTimeStamp = userDoc.data().recipeCacheTimestamp;
+
+    if (!dbTimeStamp) {
+      setAllRecipes(getLocalData()?.data || []);
+      return;
+    }
+
+    if (
+      getLocalData() === undefined ||
+      getLocalData()!.timestamp < userDoc.data().recipeCacheTimestamp
+    ) {
+      const recipesRef = collection(db, `users/${user?.uid}/recipes`);
+      const recipesSnapshot = await getDocs(query(recipesRef));
+      const recipes = recipesSnapshot.docs.map((s) =>
+        s.data()
+      ) as IRecipeStorageData[];
+
+      setAllRecipes(recipes);
+
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify({ timestamp: dbTimeStamp, data: recipes })
+      );
+
+      return;
+    }
+
+    setAllRecipes(getLocalData()?.data || []);
+  }
+
+  function getLocalData(): IRecipeStorage | undefined {
+    const localData = localStorage.getItem(localStorageKey);
+
+    if (localData) {
+      return (JSON.parse(localData) as IRecipeStorage) || undefined;
+    }
+
+    return undefined;
+  }
 
   async function fetchAndSet(ingredients: string[]): Promise<void> {
     if (!ingredients.length) {
@@ -89,16 +125,23 @@ function RecipesProvider({ children }: { children: ReactNode }) {
         throw 'No recipes found for this query.';
       }
 
-      const updatedStorage: IRecipeStorage[] = [
-        ...allRecipes,
-        {
-          queryIngredients: ingredients,
-          recipes,
-        },
-      ];
+      const updatedStorage: IRecipeStorage = {
+        timestamp: Date.now(),
+        data: [...allRecipes, { queryIngredients: ingredients, recipes }],
+      };
 
-      setAllRecipes(updatedStorage);
+      setAllRecipes(updatedStorage.data);
       setRecipesForQuery(recipes);
+      localStorage.setItem(localStorageKey, JSON.stringify(updatedStorage));
+
+      await addDoc(collection(db, `users/${user?.uid}/recipes`), {
+        queryIngredients: ingredients,
+        recipes,
+      });
+
+      await setDoc(doc(db, `users/${user?.uid}`), {
+        recipeCacheTimestamp: updatedStorage.timestamp,
+      });
 
       return;
     } catch (error: any) {

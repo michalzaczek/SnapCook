@@ -82,8 +82,6 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         ...(response as AxiosResponse<IRecipeInfo, any>).data,
         isFavorite: false,
         title,
-        category,
-        ingredients,
       };
 
       setRecipes((r) => [...r, recipeInfo]);

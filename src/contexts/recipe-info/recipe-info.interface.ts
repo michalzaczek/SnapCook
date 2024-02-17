@@ -4,6 +4,4 @@ export interface IRecipeInfo {
   instructions: string[];
   isFavorite: boolean;
   title: string;
-  ingredients: string[];
-  category: string;
 }

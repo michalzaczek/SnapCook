@@ -203,7 +203,7 @@ export default function RecipePage() {
                 <Typography variant='h2' sx={h2Style}>
                   Ingredients
                 </Typography>
-                {recipe?.ingredients.map((ingredient, index) => {
+                {ingredients!.split(',').map((ingredient, index) => {
                   return (
                     <Box
                       key={index}

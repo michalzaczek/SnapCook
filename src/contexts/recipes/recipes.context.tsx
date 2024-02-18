@@ -60,6 +60,7 @@ function RecipesProvider({ children }: { children: ReactNode }) {
     const userDoc = await getDoc(doc(db, `users/${user?.uid}`));
 
     if (!userDoc.exists()) {
+      setAllRecipes(getLocalData()?.data || []);
       return;
     }
 

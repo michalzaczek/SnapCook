@@ -6,11 +6,24 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { fetchRecipeInfo } from '../../services/recipe-info/recipe-info.service';
+import { generateRecipeInfo } from '../../services/recipe-info/recipe-info.service';
 import { IRecipeInfo } from './recipe-info.interface';
 import { IRecipeInfoContext } from './recipe-info-context.interface';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useAuth } from '../auth/AuthContext';
+import {
+  getDoc,
+  doc,
+  collection,
+  getDocs,
+  query,
+  addDoc,
+  setDoc,
+  where,
+  updateDoc,
+} from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import { IRecipeInfoStorage } from './recipe-info-storage.interface';
 
 const RecipeInfoContext = createContext<IRecipeInfoContext | undefined>(
   undefined
@@ -21,36 +34,76 @@ const localStorageKeyBase = 'recipeInfo';
 function RecipeInfoProvider({ children }: { children: ReactNode }) {
   const { state } = useAuth();
   const { user } = state;
-  const [localStorageKey, setLocalStorageKey] = useState<string>(
-    () => localStorageKeyBase
-  );
-  const getCurrentRecipes = () => {
-    const stored = localStorage.getItem(localStorageKey);
+  const localStorageKey = user
+    ? `${localStorageKeyBase}_${user.uid}`
+    : localStorageKeyBase;
 
-    if (!stored) {
-      return [];
-    }
-
-    return JSON.parse(stored);
-  };
-
-  const [recipes, setRecipes] = useState<IRecipeInfo[]>(() =>
-    getCurrentRecipes()
-  );
+  const [recipes, setRecipes] = useState<IRecipeInfo[]>([]);
 
   useEffect(() => {
-    let key = localStorageKeyBase;
-
-    if (user) {
-      key += `_${user.uid}`;
-    }
-
-    setLocalStorageKey(key);
+    syncRecipes();
   }, [user]);
 
-  useEffect(() => {
-    setRecipes(getCurrentRecipes());
-  }, [localStorageKey]);
+  async function syncRecipes(): Promise<void> {
+    if (!user) {
+      return;
+    }
+
+    const localRecipeInfoStorage = getLocalData();
+    const userDoc = await getDoc(doc(db, `users/${user?.uid}`));
+
+    if (!userDoc.exists()) {
+      setRecipes(localRecipeInfoStorage?.data || []);
+      return;
+    }
+
+    const dbTimeStamp = userDoc.data().recipeInfoCacheTimestamp;
+
+    if (!dbTimeStamp) {
+      setRecipes(localRecipeInfoStorage?.data || []);
+      return;
+    }
+
+    if (
+      localRecipeInfoStorage === undefined ||
+      !localRecipeInfoStorage?.data?.length ||
+      localRecipeInfoStorage!.timestamp <
+        userDoc.data().recipeInfoCacheTimestamp ||
+      !localRecipeInfoStorage.timestamp
+    ) {
+      const recipesRef = collection(db, `users/${user?.uid}/recipe-info`);
+      const recipesSnapshot = await getDocs(
+        query(recipesRef, where('isFavorite', '==', true))
+      );
+      const recipes = recipesSnapshot.docs.map((s) =>
+        s.data()
+      ) as IRecipeInfo[];
+
+      setRecipes(recipes);
+
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify({
+          timestamp: dbTimeStamp,
+          data: recipes,
+        } as IRecipeInfoStorage)
+      );
+
+      return;
+    }
+
+    setRecipes(getLocalData()?.data || []);
+  }
+
+  function getLocalData(): IRecipeInfoStorage | undefined {
+    const localData = localStorage.getItem(localStorageKey);
+
+    if (localData) {
+      return (JSON.parse(localData) as IRecipeInfoStorage) || undefined;
+    }
+
+    return undefined;
+  }
 
   async function getRecipeInfo(
     ingredients: string[],
@@ -64,8 +117,33 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         return new Promise<IRecipeInfo>((resolve) => resolve(recipe!));
       }
 
+      const recipeRef = collection(db, `users/${user?.uid}/recipe-info`);
+      const recipeSnapshot = await getDocs(
+        query(recipeRef, where('title', '==', title))
+      );
+
+      if (recipeSnapshot.docs.length) {
+        const recipe = recipeSnapshot.docs[0].data() as unknown as IRecipeInfo;
+        const timestamp = (
+          JSON.parse(
+            localStorage.getItem(localStorageKey) || ''
+          ) as IRecipeInfoStorage
+        ).timestamp;
+
+        setRecipes((r) => [...r, recipe]);
+        localStorage.setItem(
+          localStorageKey,
+          JSON.stringify({
+            data: [...recipes, recipe],
+            timestamp,
+          } as IRecipeInfoStorage)
+        );
+
+        return new Promise<IRecipeInfo>((resolve) => resolve(recipe));
+      }
+
       const token = (await user?.getIdToken()) || '';
-      const response = await fetchRecipeInfo(
+      const response = await generateRecipeInfo(
         ingredients,
         title,
         category,
@@ -78,14 +156,31 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         }`;
       }
 
-      const recipeInfo: IRecipeInfo = {
+      const fetchedRecipe: IRecipeInfo = {
         ...(response as AxiosResponse<IRecipeInfo, any>).data,
         isFavorite: false,
         title,
       };
 
-      setRecipes((r) => [...r, recipeInfo]);
-      return new Promise<IRecipeInfo>((resolve) => resolve(recipeInfo));
+      const recipeInfoStorage: IRecipeInfoStorage = {
+        data: [...recipes, fetchedRecipe],
+        timestamp: Date.now(),
+      };
+
+      setRecipes(recipeInfoStorage.data);
+      localStorage.setItem(localStorageKey, JSON.stringify(recipeInfoStorage));
+
+      addDoc(collection(db, `users/${user?.uid}/recipe-info`), fetchedRecipe);
+
+      setDoc(
+        doc(db, `users/${user?.uid}`),
+        {
+          recipeInfoCacheTimestamp: recipeInfoStorage.timestamp,
+        },
+        { merge: true }
+      );
+
+      return new Promise<IRecipeInfo>((resolve) => resolve(fetchedRecipe));
     } catch (error) {
       throw `Failed to fetch the recipe information. Error: ${error}`;
     }
@@ -105,7 +200,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(localStorageKey, JSON.stringify(recipes));
   }, [recipes]);
 
-  function setIsFavorite(title: string, value: boolean) {
+  async function setIsFavorite(title: string, value: boolean) {
     const errorMsg =
       'Tried setting isFavorite property of an unexisting recipeInfo';
 
@@ -126,6 +221,19 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     recipe.isFavorite = value;
 
     setRecipes(recipes);
+
+    const recipesRef = collection(db, `users/${user?.uid}/recipe-info`);
+    const recipeSnapshot = await getDocs(
+      query(recipesRef, where('title', '==', title))
+    );
+
+    setDoc(
+      doc(db, `users/${user?.uid}/recipe-info/${recipeSnapshot.docs[0].id}`),
+      {
+        isFavorite: value,
+      },
+      { merge: true }
+    );
   }
 
   const value: IRecipeInfoContext = useMemo(() => {

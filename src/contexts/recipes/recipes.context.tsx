@@ -140,9 +140,13 @@ function RecipesProvider({ children }: { children: ReactNode }) {
         recipes,
       });
 
-      await setDoc(doc(db, `users/${user?.uid}`), {
-        recipeCacheTimestamp: updatedStorage.timestamp,
-      });
+      await setDoc(
+        doc(db, `users/${user?.uid}`),
+        {
+          recipeCacheTimestamp: updatedStorage.timestamp,
+        },
+        { merge: true }
+      );
 
       return;
     } catch (error: any) {

@@ -1,3 +1,6 @@
+/**
+ * Detailed information about a recipe.
+ */
 export interface IRecipeInfo {
   description: string;
   cookingTime: number;

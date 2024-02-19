@@ -20,7 +20,6 @@ import {
   addDoc,
   setDoc,
   where,
-  updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { IRecipeInfoStorage } from './recipe-info-storage.interface';
@@ -39,10 +38,18 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     : localStorageKeyBase;
 
   const [recipes, setRecipes] = useState<IRecipeInfo[]>([]);
+  const [timestamp, setTimestamp] = useState<number>();
 
   useEffect(() => {
     syncRecipes();
   }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      localStorageKey,
+      JSON.stringify({ data: recipes, timestamp: timestamp })
+    );
+  }, [recipes]);
 
   async function syncRecipes(): Promise<void> {
     if (!user) {
@@ -79,15 +86,8 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         s.data()
       ) as IRecipeInfo[];
 
+      setTimestamp(dbTimeStamp);
       setRecipes(recipes);
-
-      localStorage.setItem(
-        localStorageKey,
-        JSON.stringify({
-          timestamp: dbTimeStamp,
-          data: recipes,
-        } as IRecipeInfoStorage)
-      );
 
       return;
     }
@@ -130,14 +130,8 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
           ) as IRecipeInfoStorage
         ).timestamp;
 
+        setTimestamp(timestamp);
         setRecipes((r) => [...r, recipe]);
-        localStorage.setItem(
-          localStorageKey,
-          JSON.stringify({
-            data: [...recipes, recipe],
-            timestamp,
-          } as IRecipeInfoStorage)
-        );
 
         return new Promise<IRecipeInfo>((resolve) => resolve(recipe));
       }
@@ -162,20 +156,17 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         title,
       };
 
-      const recipeInfoStorage: IRecipeInfoStorage = {
-        data: [...recipes, fetchedRecipe],
-        timestamp: Date.now(),
-      };
+      const timestamp = Date.now();
 
-      setRecipes(recipeInfoStorage.data);
-      localStorage.setItem(localStorageKey, JSON.stringify(recipeInfoStorage));
+      setTimestamp(timestamp);
+      setRecipes([...recipes, fetchedRecipe]);
 
       addDoc(collection(db, `users/${user?.uid}/recipe-info`), fetchedRecipe);
 
       setDoc(
         doc(db, `users/${user?.uid}`),
         {
-          recipeInfoCacheTimestamp: recipeInfoStorage.timestamp,
+          recipeInfoCacheTimestamp: timestamp,
         },
         { merge: true }
       );
@@ -196,10 +187,6 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     return recipe.isFavorite;
   }
 
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(recipes));
-  }, [recipes]);
-
   async function setIsFavorite(title: string, value: boolean) {
     const errorMsg =
       'Tried setting isFavorite property of an unexisting recipeInfo';
@@ -210,7 +197,7 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
       throw errorMsg;
     }
 
-    const recipes = JSON.parse(stored) as IRecipeInfo[];
+    const recipes = JSON.parse(stored).data as IRecipeInfo[];
 
     const recipe = recipes.find((r) => r.title === title);
 

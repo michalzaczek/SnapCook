@@ -71,6 +71,7 @@ export default function SettingsPage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              width: '53vw',
             }}
           >
             <Typography
@@ -82,6 +83,9 @@ export default function SettingsPage() {
                 textTransform: 'capitalize',
                 fontWeight: 700,
                 mb: '7px',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
               }}
             >
               {user?.displayName}
@@ -93,6 +97,9 @@ export default function SettingsPage() {
                 textAlign: 'left',
                 fontSize: '17px',
                 mb: 2,
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
               }}
             >
               {user?.email}

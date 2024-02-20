@@ -81,7 +81,7 @@ export default function ImageInput({
     <Input
       inputRef={inputRef}
       type='file'
-      inputProps={{ accept: 'image/*', capture: 'environment' }}
+      inputProps={{ accept: 'capture=camera,image/*' }}
       onChange={handleUpload}
       sx={{ display: 'none' }}
     />

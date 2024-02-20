@@ -18,8 +18,6 @@ export default function PaymentHistoryPage() {
   const { state } = useAuth();
   const { paymentHistory, isLoading } = useGetPaymentHistory(state.user?.uid);
 
-  console.log(paymentHistory);
-
   return (
     <Box sx={{ width: '100%' }}>
       <PageHeader>

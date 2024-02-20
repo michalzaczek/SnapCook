@@ -50,7 +50,7 @@ export default function SubscriptionPage() {
         <IconButton
           component={NavLink}
           to={-1 as any}
-          sx={{ justifyContent: 'flex-start' }}
+          sx={{ justifyContent: 'flex-start', alignSelf: 'flex-start' }}
         >
           <ArrowBackIosIcon
             sx={{

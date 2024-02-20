@@ -38,13 +38,24 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
     : localStorageKeyBase;
 
   const [recipes, setRecipes] = useState<IRecipeInfo[]>([]);
-  const [timestamp, setTimestamp] = useState<number>();
+  const [timestamp, setTimestamp] = useState<number | undefined>();
 
   useEffect(() => {
+    const currentTimestamp = (
+      JSON.parse(
+        localStorage.getItem(localStorageKey) || '{}'
+      ) as IRecipeInfoStorage
+    ).timestamp;
+
+    setTimestamp(currentTimestamp);
     syncRecipes();
   }, [user]);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+
     localStorage.setItem(
       localStorageKey,
       JSON.stringify({ data: recipes, timestamp: timestamp })
@@ -156,20 +167,9 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
         title,
       };
 
-      const timestamp = Date.now();
-
-      setTimestamp(timestamp);
       setRecipes([...recipes, fetchedRecipe]);
 
       addDoc(collection(db, `users/${user?.uid}/recipe-info`), fetchedRecipe);
-
-      setDoc(
-        doc(db, `users/${user?.uid}`),
-        {
-          recipeInfoCacheTimestamp: timestamp,
-        },
-        { merge: true }
-      );
 
       return new Promise<IRecipeInfo>((resolve) => resolve(fetchedRecipe));
     } catch (error) {
@@ -207,8 +207,6 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
 
     recipe.isFavorite = value;
 
-    setRecipes(recipes);
-
     const recipesRef = collection(db, `users/${user?.uid}/recipe-info`);
     const recipeSnapshot = await getDocs(
       query(recipesRef, where('title', '==', title))
@@ -218,6 +216,19 @@ function RecipeInfoProvider({ children }: { children: ReactNode }) {
       doc(db, `users/${user?.uid}/recipe-info/${recipeSnapshot.docs[0].id}`),
       {
         isFavorite: value,
+      },
+      { merge: true }
+    );
+
+    const newTimestamp = Date.now();
+
+    setTimestamp(newTimestamp);
+    setRecipes(recipes);
+
+    setDoc(
+      doc(db, `users/${user?.uid}`),
+      {
+        recipeInfoCacheTimestamp: newTimestamp,
       },
       { merge: true }
     );

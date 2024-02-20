@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 
-export const fetchRecipeInfo = async (
+export const generateRecipeInfo = async (
   ingredients: string[],
   title: string,
   category: string,

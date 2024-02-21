@@ -3,6 +3,7 @@ import snapCookLogo from '../../assets/logo.png';
 import LinearProgress from '@mui/material/LinearProgress';
 import { lighten } from '@mui/material/styles';
 import { useLoadingScreen } from '../../contexts/loading-screen/loading-screen-context';
+import { motion } from 'framer-motion';
 
 export default function LoadingScreen() {
   const { isLoading } = useLoadingScreen();
@@ -33,11 +34,24 @@ export default function LoadingScreen() {
           flexDirection: 'column',
         }}
       >
-        <img
-          style={{ height: 'auto', width: '200px', marginBottom: '15px' }}
-          src={snapCookLogo}
-          alt=''
-        />
+        <motion.div
+          animate={{
+            rotate: [-5, 5],
+            translateY: [5, 2.5, 0, 0, 2.5, 5, 5, 5, 2.5, 0, 0, 2.5, 5],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 1,
+            repeatType: 'reverse',
+            ease: 'anticipate',
+          }}
+        >
+          <img
+            style={{ height: 'auto', width: '200px', marginBottom: '15px' }}
+            src={snapCookLogo}
+            alt=''
+          />
+        </motion.div>
         <Typography
           variant='h1'
           sx={{
@@ -68,7 +82,7 @@ export default function LoadingScreen() {
           />
         </Box>
         <Typography sx={{ fontSize: '18px' }}>
-          Scanning and analyzing your photo
+          Analyzing your photo...
         </Typography>
       </Box>
     </Box>

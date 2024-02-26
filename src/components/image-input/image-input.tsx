@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchIngredients } from '../../services/ingredients/ingredients.service';
 import { Input } from '@mui/material';
 import { useLoadingScreen } from '../../contexts/loading-screen/loading-screen-context';
+import { useUIState } from '../../contexts/ui-state/ui-state.context';
 
 export default function ImageInput({
   triggerElement,
@@ -19,6 +20,7 @@ export default function ImageInput({
   const inputRef = useRef(null);
   const { setIsLoading } = useLoadingScreen();
   const { state } = useAuth();
+  const { setAnimateIngredients } = useUIState();
 
   useEffect(() => {
     const listener = () => {
@@ -65,6 +67,7 @@ export default function ImageInput({
         const ingredients = (await fetchIngredients(userToken, base64)) || [];
         resetIngredients();
         ingredients.forEach((i) => addIngredient(i));
+        setAnimateIngredients(true);
         navigate('ingredients');
       } catch (err: any) {
         setSeverity('error');

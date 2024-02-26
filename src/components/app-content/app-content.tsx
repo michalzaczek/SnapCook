@@ -11,6 +11,7 @@ import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import MessageSnackbar from '../message-snackbar/message-snackbar';
 import { useAuth } from '../../contexts/auth/AuthContext';
 import { useLoadingScreen } from '../../contexts/loading-screen/loading-screen-context';
+import { UIStateProvider } from '../../contexts/ui-state/ui-state.context';
 
 export default function AppContent() {
   const { state } = useAuth();
@@ -23,32 +24,34 @@ export default function AppContent() {
 
   return (
     <IngredientsProvider>
-      <RecipesProvider>
-        <RecipeInfoProvider>
-          <BrowserRouter>
-            <ScrollToTop />
-            <TopBar />
-            {state.loading && <LinearProgress />}
-            <Box
-              sx={{
-                display: 'flex',
-                flexGrow: '1',
-                justifyContent: 'center',
-                pb: { xs: '100px', md: 0 },
-              }}
-            >
-              {!state.loading && <AppRoutes />}
-            </Box>
-            <Navbar />
-            <MessageSnackbar
-              severity={severity}
-              open={open}
-              message={message}
-              handleClose={() => setOpen(false)}
-            />
-          </BrowserRouter>
-        </RecipeInfoProvider>
-      </RecipesProvider>
+      <UIStateProvider>
+        <RecipesProvider>
+          <RecipeInfoProvider>
+            <BrowserRouter>
+              <ScrollToTop />
+              <TopBar />
+              {state.loading && <LinearProgress />}
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexGrow: '1',
+                  justifyContent: 'center',
+                  pb: { xs: '100px', md: 0 },
+                }}
+              >
+                {!state.loading && <AppRoutes />}
+              </Box>
+              <Navbar />
+              <MessageSnackbar
+                severity={severity}
+                open={open}
+                message={message}
+                handleClose={() => setOpen(false)}
+              />
+            </BrowserRouter>
+          </RecipeInfoProvider>
+        </RecipesProvider>
+      </UIStateProvider>
     </IngredientsProvider>
   );
 }

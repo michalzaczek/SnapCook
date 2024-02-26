@@ -10,6 +10,11 @@ export interface IProps {
   name: string;
 
   /**
+   * Index.
+   */
+  index: number;
+
+  /**
    * Callback executed on selection.
    */
   onSelect: () => void;

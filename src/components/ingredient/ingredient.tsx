@@ -1,10 +1,48 @@
 import { IProps } from './props.interface';
 import { Box, Chip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { motion, useAnimate } from 'framer-motion';
+import { useUIState } from '../../contexts/ui-state/ui-state.context';
+import { useEffect } from 'react';
 
-export default function Ingredient({ name, onSelect, selected }: IProps) {
+export default function Ingredient({
+  name,
+  onSelect,
+  selected,
+  index,
+}: IProps) {
+  const {
+    animateIngredients,
+    setAnimateIngredients,
+    delayIngredientsAnimation,
+    setDelayIngredientsAnimation,
+  } = useUIState();
+  const [scope, animate] = useAnimate();
+
+  useEffect(() => {
+    if (!animateIngredients) {
+      return;
+    }
+
+    animate(
+      scope.current,
+      { x: 0, opacity: 1 },
+      {
+        duration: 0.5,
+        type: 'spring',
+        delay: delayIngredientsAnimation ? 0.1 * index : 0,
+      }
+    ).then(() => {
+      setAnimateIngredients(false);
+      setDelayIngredientsAnimation(true);
+    });
+  }, []);
+
   return (
     <Box
+      ref={scope}
+      initial={animateIngredients ? { x: -100, opacity: 0 } : false}
+      component={motion.div}
       sx={{
         px: 2,
         width: { xs: '50%', md: 'auto' },

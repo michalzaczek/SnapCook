@@ -15,12 +15,14 @@ import PageHeader from '../../components/page-header/page-header';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import AddIcon from '@mui/icons-material/Add';
 import { LoadRecipesButton } from './loading-button';
+import { useUIState } from '../../contexts/ui-state/ui-state.context';
 
 export default function IngredientsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [newIngredient, setNewIngredient] = useState<string>('');
   const { setRecipes } = useRecipes();
   const { setMessage, setSeverity, setOpen } = useUIMessage();
+  const { setAnimateIngredients, setDelayIngredientsAnimation } = useUIState();
 
   const {
     ingredients,
@@ -90,6 +92,8 @@ export default function IngredientsPage() {
       setMessage('Ingredient is already on the list');
       setOpen(true);
     } else {
+      setDelayIngredientsAnimation(false);
+      setAnimateIngredients(true);
       addIngredient({
         isConfirmed: true,
         name: newIngredient!,
@@ -133,8 +137,9 @@ export default function IngredientsPage() {
             flexDirection: { xs: 'row', md: 'row' },
           }}
         >
-          {ingredients?.map((i) => (
+          {ingredients?.map((i, index) => (
             <Ingredient
+              index={index}
               name={i.name}
               selected={i.isConfirmed}
               key={i.name}

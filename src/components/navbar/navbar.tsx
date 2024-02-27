@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useIngredients } from '../../contexts/ingredients/ingredients.context';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ImageInput from '../image-input/image-input';
@@ -22,14 +22,21 @@ const iconStyle: SxProps = {
 
 export default function Navbar() {
   const { pathname } = useLocation();
-  const [value, setValue] = useState(() => {
+  const [value, setValue] = useState(-1);
+
+  useEffect(() => {
     switch (pathname) {
       case '/favorites':
-        return 0;
+        setValue(0);
+        break;
       case '/ingredients':
-        return 2;
+        setValue(2);
+        break;
+      default:
+        setValue(-1);
     }
-  });
+  }, [pathname]);
+
   const { ingredients } = useIngredients();
   const cameraTrigger = useRef(null);
 

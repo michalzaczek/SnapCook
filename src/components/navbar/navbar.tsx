@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Badge,
   BottomNavigation,
@@ -21,7 +21,15 @@ const iconStyle: SxProps = {
 };
 
 export default function Navbar() {
-  const [value, setValue] = useState(0);
+  const { pathname } = useLocation();
+  const [value, setValue] = useState(() => {
+    switch (pathname) {
+      case '/favorites':
+        return 0;
+      case '/ingredients':
+        return 2;
+    }
+  });
   const { ingredients } = useIngredients();
   const cameraTrigger = useRef(null);
 

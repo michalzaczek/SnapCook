@@ -32,6 +32,7 @@ export default function RecipeList({
             justifyContent: 'center',
             display: 'flex',
             px: 1,
+            touchAction: 'pan-x',
           }}
         >
           <RecipeThumbnail recipe={recipe} />

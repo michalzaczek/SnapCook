@@ -1,6 +1,7 @@
 import Ingredient from '../../components/ingredient/ingredient';
 import {
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
   Input,
@@ -124,7 +125,13 @@ export default function IngredientsPage() {
           pt: { md: 4 },
         }}
       >
-        <Box sx={{ width: '100%', textAlign: 'left' }}>
+        <Box
+          sx={{
+            width: '100%',
+            textAlign: { xs: 'left', md: 'center' },
+            mb: { md: 3 },
+          }}
+        >
           <Typography variant='subtitle1'>Select your ingredients</Typography>
         </Box>
         <Box
@@ -153,7 +160,7 @@ export default function IngredientsPage() {
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start',
+              alignItems: { xs: 'flex-start', md: 'center' },
               paddingLeft: '20px',
             }}
           >
@@ -202,7 +209,8 @@ export default function IngredientsPage() {
               },
             }}
           />
-          <Box
+          <Button
+            variant='cta'
             sx={{
               display: 'flex',
               backgroundColor: 'primary.dark',
@@ -210,8 +218,8 @@ export default function IngredientsPage() {
               height: '56px',
               borderTopLeftRadius: '100px',
               borderBottomLeftRadius: '100px',
-              borderBottomRightRadius: { sm: '100px' },
-              borderTopRightRadius: { sm: '100px' },
+              borderBottomRightRadius: { xs: 0, sm: '100px' },
+              borderTopRightRadius: { xs: 0, sm: '100px' },
               alignItems: 'center',
               justifyContent: 'center',
               position: 'relative',
@@ -220,7 +228,7 @@ export default function IngredientsPage() {
             onClick={addNewIngredient}
           >
             <AddIcon sx={{ color: 'secondary.main', fontSize: '45px' }} />
-          </Box>
+          </Button>
         </Box>
         <LoadRecipesButton
           loading={isLoading}

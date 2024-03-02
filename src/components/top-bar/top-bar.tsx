@@ -67,7 +67,7 @@ export default function TopBar() {
             variant='outlined'
             sx={navButtonStyle}
           >
-            Photo
+            Upload
           </Button>
           <Button
             startIcon={<ShoppingBagIcon sx={iconStyle} />}
@@ -77,15 +77,6 @@ export default function TopBar() {
             sx={navButtonStyle}
           >
             Ingredients
-          </Button>
-          <Button
-            startIcon={<SearchIcon sx={iconStyle} />}
-            component={NavLink}
-            to='recipes'
-            variant='outlined'
-            sx={navButtonStyle}
-          >
-            Search
           </Button>
           <Button
             startIcon={<FavoriteIcon sx={iconStyle} />}

@@ -66,6 +66,14 @@ const deafultTheme = createTheme({
             '&&:hover': {
               backgroundColor: theme.palette.primary.main,
               color: theme.palette.primary.dark,
+              '@media (hover: none)': {
+                backgroundColor: theme.palette.primary.dark,
+                outline: 'none',
+              },
+            },
+            '&&: active': {
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.dark,
             },
           }),
         },

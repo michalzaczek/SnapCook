@@ -114,7 +114,7 @@ const deafultTheme = createTheme({
           backgroundColor: theme.palette.secondary.main,
         }),
         indicator: ({ theme }) => ({
-          backgroundColor: theme.palette.text.primary,
+          backgroundColor: theme.palette.primary.main,
         }),
       },
     },
@@ -126,6 +126,9 @@ const deafultTheme = createTheme({
           fontWeight: 700,
           '&&.Mui-selected': {
             color: theme.palette.text.primary,
+          },
+          '&&:hover': {
+            outline: 'none',
           },
         }),
       },

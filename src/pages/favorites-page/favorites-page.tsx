@@ -7,6 +7,10 @@ import { Container, SxProps, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RecipeList from '../../components/recipe-list/recipe-list';
 import PageHeader from '../../components/page-header/page-header';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 const titleStyle: SxProps = {
   paddingLeft: 1,
@@ -16,12 +20,16 @@ const titleStyle: SxProps = {
 export default function FavoritesPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { allRecipes } = useRecipes();
-
   const { isFavorite } = useRecipeInfo();
 
   const favorites = allRecipes.filter((r) => isFavorite(r.title));
   const filteredFavorites = filterRecipes(favorites);
   const filteredHistory = filterRecipes(allRecipes);
+  const [activeTab, setActiveTab] = useState<string>('favs');
+
+  function handleTabChange(_event: React.SyntheticEvent, newValue: string) {
+    setActiveTab(newValue);
+  }
 
   function filterRecipes(recipes: IRecipeData[]): IRecipeData[] {
     return searchQuery.length > 0
@@ -56,30 +64,49 @@ export default function FavoritesPage() {
           paddingTop: 3,
         }}
       >
-        <Container>
-          <TextField
-            onChange={handleSearch}
-            value={searchQuery}
-            label='Filter recipes...'
-            InputProps={{ endAdornment: <SearchIcon /> }}
-            sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
-          ></TextField>
-        </Container>
-        <Box sx={{ width: '100%', textAlign: 'left', paddingLeft: '20px' }}>
-          <Typography sx={titleStyle}>Favorites</Typography>
-          <RecipeList recipes={filteredFavorites} />
-          {!filteredFavorites.length && (
-            <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
-              Nothing here yet. Snap to cook and find your favs!
-            </Typography>
-          )}
-          <Typography sx={{ ...titleStyle, marginTop: 3 }}>History</Typography>
-          <RecipeList recipes={filteredHistory} />
-          {!filteredHistory.length && (
-            <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
-              No history yet. Snap to cook and search for some recipes!
-            </Typography>
-          )}
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+          <TabContext value={activeTab}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleTabChange} centered>
+                <Tab label='Favorites' value='favs' />
+                <Tab label='History' value='history' />
+              </TabList>
+            </Box>
+            <TabPanel value='favs'>
+              <Container>
+                <TextField
+                  onChange={handleSearch}
+                  value={searchQuery}
+                  label='Filter recipes...'
+                  InputProps={{ endAdornment: <SearchIcon /> }}
+                  sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+                ></TextField>
+                <RecipeList recipes={filteredFavorites} />
+                {!filteredFavorites.length && (
+                  <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
+                    Nothing here yet. Snap to cook and find your favs!
+                  </Typography>
+                )}
+              </Container>
+            </TabPanel>
+            <TabPanel value='history'>
+              <Container>
+                <TextField
+                  onChange={handleSearch}
+                  value={searchQuery}
+                  label='Filter recipes...'
+                  InputProps={{ endAdornment: <SearchIcon /> }}
+                  sx={{ mb: 4, width: '100%', maxWidth: '400px' }}
+                ></TextField>
+                <RecipeList recipes={filteredHistory} />
+                {!filteredHistory.length && (
+                  <Typography sx={{ ...titleStyle, fontSize: '14px' }}>
+                    No history yet. Snap to cook and search for some recipes!
+                  </Typography>
+                )}
+              </Container>
+            </TabPanel>
+          </TabContext>
         </Box>
       </Box>
     </Box>

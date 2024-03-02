@@ -19,11 +19,12 @@ export default function RecipeList({
   isLoading?: boolean;
 }) {
   return (
-    <Carousel
-      responsive={responsive}
-      partialVisible
-      arrows={false}
-      additionalTransfrom={recipes.length === 2 ? -60 : 0}
+    <Box
+      sx={{
+        display: 'grid',
+        gap: '20px',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+      }}
     >
       {recipes?.map((recipe) => (
         <Box
@@ -31,13 +32,12 @@ export default function RecipeList({
           sx={{
             justifyContent: 'center',
             display: 'flex',
-            px: 1,
-            touchAction: 'pan-x',
+            mb: 3,
           }}
         >
           <RecipeThumbnail recipe={recipe} />
         </Box>
       ))}
-    </Carousel>
+    </Box>
   );
 }

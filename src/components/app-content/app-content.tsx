@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../navbar/navbar';
 import ScrollToTop from '../scroll-to-top';
 import TopBar from '../top-bar/top-bar';
-import { IngredientsProvider } from '../../contexts/ingredients/ingredients.context';
 import { RecipeInfoProvider } from '../../contexts/recipe-info/recipe-info-context';
 import { RecipesProvider } from '../../contexts/recipes/recipes.context';
 import AppRoutes from '../app-routes/app-routes';
@@ -23,35 +22,33 @@ export default function AppContent() {
   }
 
   return (
-    <IngredientsProvider>
-      <UIStateProvider>
-        <RecipesProvider>
-          <RecipeInfoProvider>
-            <BrowserRouter>
-              <ScrollToTop />
-              <TopBar />
-              {state.loading && <LinearProgress />}
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexGrow: '1',
-                  justifyContent: 'center',
-                  pb: { xs: '100px', md: 0 },
-                }}
-              >
-                {!state.loading && <AppRoutes />}
-              </Box>
-              <Navbar />
-              <MessageSnackbar
-                severity={severity}
-                open={open}
-                message={message}
-                handleClose={() => setOpen(false)}
-              />
-            </BrowserRouter>
-          </RecipeInfoProvider>
-        </RecipesProvider>
-      </UIStateProvider>
-    </IngredientsProvider>
+    <UIStateProvider>
+      <RecipesProvider>
+        <RecipeInfoProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <TopBar />
+            {state.loading && <LinearProgress />}
+            <Box
+              sx={{
+                display: 'flex',
+                flexGrow: '1',
+                justifyContent: 'center',
+                pb: { xs: '100px', md: 0 },
+              }}
+            >
+              <AppRoutes />
+            </Box>
+            <Navbar />
+            <MessageSnackbar
+              severity={severity}
+              open={open}
+              message={message}
+              handleClose={() => setOpen(false)}
+            />
+          </BrowserRouter>
+        </RecipeInfoProvider>
+      </RecipesProvider>
+    </UIStateProvider>
   );
 }

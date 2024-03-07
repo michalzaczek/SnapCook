@@ -5,6 +5,7 @@ import AppContent from './components/app-content/app-content';
 import { UIMessageProvider } from './contexts/ui-message/ui-message.context';
 import LoadingScreen from './components/loading-screen/loading-screen';
 import { LoadingScreenProvider } from './contexts/loading-screen/loading-screen-context';
+import { IngredientsProvider } from './contexts/ingredients/ingredients.context';
 
 function App() {
   return (
@@ -20,10 +21,12 @@ function App() {
           }}
         >
           <UIMessageProvider>
-            <LoadingScreenProvider>
-              <LoadingScreen />
-              <AppContent />
-            </LoadingScreenProvider>
+            <IngredientsProvider>
+              <LoadingScreenProvider>
+                <LoadingScreen />
+                <AppContent />
+              </LoadingScreenProvider>
+            </IngredientsProvider>
           </UIMessageProvider>
         </Box>
       </ThemeProvider>

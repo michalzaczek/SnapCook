@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { IIngredient } from '../../pages/ingredients-page/ingredient.interface';
+import { IIngredientsDto } from './ingredients-dto.interface';
 
 export const fetchIngredients = async (
   userToken: string,
   base64: string
 ): Promise<IIngredient[]> => {
   try {
-    const response = await axios.post<any>(
+    const response = await axios.post<IIngredientsDto>(
       `${import.meta.env.VITE_SNAPCOOK_API}/getIngredients`,
       { image: base64 },
       {
@@ -16,15 +17,7 @@ export const fetchIngredients = async (
       }
     );
 
-    const responseString: string = response.data.choices[0].message.content;
-
-    const jsonString = responseString
-      .replace(/^```json\n/, '')
-      .replace(/```$/, '');
-
-    const ingredients: IIngredient[] = (
-      JSON.parse(jsonString).ingredients as string[]
-    ).map((i) => ({
+    const ingredients: IIngredient[] = response.data.ingredients.map((i) => ({
       isConfirmed: true,
       name: i,
     }));

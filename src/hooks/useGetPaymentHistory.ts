@@ -19,7 +19,7 @@ export const useGetPaymentHistory = (uid: string | undefined) => {
         const paymentsData = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           return {
-            amount_received: data.amount_received,
+            amount_received: data.amount_received / 100,
             created: new Date(data.created * 1000), // 'created' is a Unix timestamp
             currency: data.currency,
           };

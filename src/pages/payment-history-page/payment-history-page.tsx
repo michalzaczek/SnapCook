@@ -122,7 +122,7 @@ export default function PaymentHistoryPage() {
                         fontWeight: 400,
                       }}
                     >
-                      {h.created.getDay()}/{h.created.getMonth()}/
+                      {h.created.getDate()}/{h.created.getMonth() + 1}/
                       {h.created.getFullYear()}
                     </Typography>
                     <Typography

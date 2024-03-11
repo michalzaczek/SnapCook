@@ -15,7 +15,7 @@ import { IRecipeInfo } from '../../contexts/recipe-info/recipe-info.interface';
 import FavoriteRecipeIcon from '../../components/favorite-recipe-icon/favorite-recipe-icon';
 import { useUIMessage } from '../../contexts/ui-message/ui-message.context';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import dishImage from '../../assets/placeholder_dish.png';
+import { recipeImageMap } from '../../components/recipe-image-map';
 
 export default function RecipePage() {
   const { ingredients, title, category } = useParams();
@@ -75,7 +75,7 @@ export default function RecipePage() {
             pl: 5,
             pb: 3,
           }}
-          image={dishImage}
+          image={`/src/assets/${recipeImageMap.get(category!)}`}
         >
           <Box
             sx={{

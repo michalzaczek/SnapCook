@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { IProps } from './props.interface';
-import dishImage from '../../assets/placeholder_dish.png';
+import { recipeImageMap } from '../recipe-image-map';
 
 export default function RecipeThumbnail({ recipe }: IProps) {
   return (
@@ -34,7 +34,7 @@ export default function RecipeThumbnail({ recipe }: IProps) {
           alignItems: 'end',
           width: { xs: '100%', sm: '50%' },
         }}
-        image={dishImage}
+        image={`/src/assets/${recipeImageMap.get(recipe.category)}`}
       >
         <Box
           sx={(theme) => ({
